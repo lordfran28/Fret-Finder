@@ -1,6 +1,6 @@
 # Fret Finder: working instructions
 
-Draft 1, 31 October 2026. To be revised with the owner before it's treated as settled.
+Draft 2, 31 October 2026. The Orthodox and Unorthodox choice comes from the owner; the rest is still to be revised with him before it is treated as settled.
 
 These are the standing instructions for anyone, person or Claude, changing this site. Read them before touching `index.html`.
 
@@ -8,14 +8,25 @@ These are the standing instructions for anyone, person or Claude, changing this 
 
 The owner sings and plays guitar at the same time. He feeds Fret Finder a song file and wants back a page he can play from: every bar in playing order, one diagram per hand position, notes numbered in the order they're played, the singing line with its chord changes over the words, and sound to check it by ear.
 
-There are two different jobs, and the code must always know which one it is doing.
+When a file is opened the player picks one of two ways to play it, and the code must always know which one it is doing.
 
-1. **Read a guitar part.** The file is already guitar music, as tab, notation, or both. Show exactly what is written: nothing added, nothing simplified, nothing dropped without saying so. The only freedom is fingering, and only where the file doesn't give strings.
-2. **Arrange a song.** The file is something else: a lead sheet, a piano and voice score, a band or orchestra score, or a MIDI file from a transcription tool. Build a guitar accompaniment for singing over. This is the hard job, and today the site only covers a small part of it (a grip for each chord symbol in bars with no guitar notes).
+1. **Orthodox.** Copy the piece exactly. This is what most people want most of the time, for example when transcribing a solo.
+   - Nothing added, nothing simplified, nothing dropped without saying so.
+   - It works for any instrument's part. A trumpet solo, a sax line or a piano melody comes out as guitar frets at the pitch it sounds; transposing parts such as B♭ trumpet are read through `<transpose>`.
+   - Where the file gives strings (tab), keep them. Where it doesn't, finger it the way a good guitarist playing that piece would: if you watched the player on the recording, his hand would be where the diagram says.
+   - Chord symbols with no written notes get a plain grip, nothing more.
+2. **Unorthodox.** Improvise techniques into the piece, the way a player who knows many styles would.
+   - The techniques come from books the owner provides: Jimmy Wyble's counterpoint, octaves, flamenco, Argentine folk with half triads moving up and down the neck, gypsy jazz triads and arpeggios, and others.
+   - Each technique is written up in `techniques/` in our own words as rules the arranger can follow, with the book it came from. Book text is never copied onto the site.
+   - The player can choose which techniques to allow.
+   - The owner's arranging rules below still hold, above all "never stuffed".
+   - This mode also covers turning a lead sheet, a piano and voice score or a band score into a guitar accompaniment for singing over.
+
+Valve Finder and Fret Finder are connected: where a trumpet plays, its valve fingerings can show under the bar, and a trumpet part can be opened in Fret Finder to get the guitar frets.
 
 ## What "accurate" means
 
-Each item below is a check that runs on every song in the test set. A change that breaks one is not finished.
+Each item below is a check that runs on every song in the test set. A change that breaks one is not finished. In Unorthodox mode, item 1 applies to the source's melody and harmony; added notes are allowed but must still pass items 2 to 6.
 
 1. **Nothing lost.** Every note in the source appears in exactly one diagram, or is listed on the page as left out, with the reason.
 2. **Right pitch.** Every diagram note, played on the string and fret shown, sounds the source pitch. Moving a note by an octave is allowed only with a note on the page saying so.
@@ -115,13 +126,13 @@ Each stage ends when its checks pass on the whole test set.
 4. **Harmony.**
    - Chords worked out beat by beat, with the key worked out too, and names spelled for the key.
    - Target: at least 95% agreement with the chord symbols in files that have them, with the symbols hidden.
-5. **Arranging for voice and guitar.**
-   - Lead sheet: grips, bass line and voice leading under the melody.
-   - Piano and voice: reduce the piano to the guitar.
-   - Band or orchestra: take bass moves and instrument lines into the guitar where the voice rests.
+5. **Unorthodox.**
+   - Read the owner's books one at a time and write each technique up in `techniques/`.
+   - Arranging for voice and guitar: lead sheet (grips, bass line and voice leading under the melody), piano and voice (the piano brought down to the guitar), band or orchestra (bass moves and instrument lines taken into the guitar where the voice rests).
    - Density rules so it's never stuffed.
    - Choices of arpeggio pattern and tremolo.
 6. **The page.**
+   - The Orthodox / Unorthodox choice when a file is opened.
    - Alternatives for every chord and run gathered at the bottom.
    - A printable version.
-   - Trumpet valve fingerings under bars where a trumpet plays, if the owner wants Valve Finder's work here too.
+   - Trumpet valve fingerings under bars where a trumpet plays, from Valve Finder.
