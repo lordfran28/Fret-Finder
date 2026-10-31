@@ -290,7 +290,7 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
     <p id="ownerstate" class="small"></p>
     <div id="ownerform" class="panel-body">
       <div class="btnrow"><a id="ghmake" class="btn" href="https://github.com/settings/personal-access-tokens/new?name=Fret%20Finder&description=Adds%20and%20edits%20songs%20on%20Fret%20Finder&target_name=lordfran28&expires_in=366&contents=write" target="_blank" rel="noopener">Make a key on GitHub</a></div>
-      <p class="small">On GitHub, choose fret-finder under Repository access, then Generate.</p>
+      <p class="small">On GitHub, choose Fret-Finder under Repository access, then Generate.</p>
       <div class="field"><label for="ghtoken">Paste the key</label><input id="ghtoken" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…"></div>
       <div class="btnrow"><button type="button" id="ghconnect" class="btn primary">Connect</button></div>
     </div>
@@ -434,7 +434,7 @@ function parseHarmony(el){
     var base = DEG[v] % 12, semi = DEG[v] + a;
     if (ty === "subtract"){ iv = iv.filter(function(x){ return x % 12 !== base; }); if (ktext == null) suffix += "no" + v; }
     else if (ty === "alter"){ iv = iv.filter(function(x){ return x % 12 !== base; }); iv.push(semi); if (ktext == null) suffix += accSym(a) + v; }
-    else { iv.push(semi); if (ktext == null) suffix += (/^(7|9|11|13|maj7|m7)$/.test(suffix) && !a ? "" : "add") + accSym(a) + v; }
+    else { iv.push(semi); if (ktext == null) suffix += (/(7|9|11|13)/.test(suffix) && v >= 9 ? "" : "add") + accSym(a) + v; }
   });
   var bass = root, b = kid(el, "bass");
   if (b){ var bs = txt(b, "bass-step"), ba = Math.round(parseFloat(txt(b, "bass-alter") || "0") || 0); if (bs in SEMI){ bass = (SEMI[bs] + ba + 12) % 12; suffix += "/" + bs + accSym(ba); } }
@@ -616,6 +616,8 @@ function parseGPIF(root){
     return v;
   }
   var parts = tracks.map(function(tr, tix){
+    var ty = tr.querySelector("InstrumentSet > Type"), instr = ty ? ty.textContent.trim() : "";
+    if (/drum|percussion/i.test(instr)) return null;
     var pe = tr.querySelector('Property[name="Tuning"] > Pitches'), tun = pe ? parseNums(pe.textContent) : [40,45,50,55,59,64];
     var ce = tr.querySelector('Property[name="CapoFret"] > Fret'), capo = ce ? parseInt(ce.textContent, 10) || 0 : 0;
     var measures = [], held = {};
@@ -648,9 +650,10 @@ function parseGPIF(root){
       meas.notes.sort(function(a, c){ return a.t - c.t || c.m - a.m; });
       measures.push(meas);
     });
-    return {name: txt(tr, "Name") || ("Track " + (tix + 1)), program: null, measures: measures, transpose: null, tempo: tempo, clefOct: 0,
-            tuning: tun.length === 6 ? tun.slice().reverse() : null, capo: capo, fifths: null, hasTab: tun.length === 6, lyricShare: 0, unit: "Bar"};
-  }).filter(function(p){ return p.measures.some(function(m){ return m.notes.length; }); });
+    var fretted = !instr || /guitar|ukulele|banjo|mandolin|\blute\b/i.test(instr);
+    return {name: txt(tr, "Name") || ("Track " + (tix + 1)), instr: instr.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase(), program: null, measures: measures, transpose: null, tempo: tempo, clefOct: 0,
+            tuning: fretted && tun.length === 6 ? tun.slice().reverse() : null, capo: capo, fifths: null, hasTab: fretted && tun.length === 6, lyricShare: 0, unit: "Bar"};
+  }).filter(function(p){ return p && p.measures.some(function(m){ return m.notes.length; }); });
   if (!parts.length) throw userErr("This Guitar Pro file has no notes in it.");
   return finishScore({title: title, parts: parts, hasJumps: false});
 }
@@ -778,11 +781,12 @@ function parseBytes(bytes){
 
 /* ---------- Which part does what ---------- */
 function partKind(p){
-  var n = String(p.name || ""), pr = p.program;
+  var n = String(p.name || "") + " " + (p.instr || ""), pr = p.program;
   var gtrWord = /guit|gtr|nylon|\blute\b|theorbo|banjo|mandolin|ukulele|\btab\b/i.test(n) || (/\b(acoustic|electric|classical|steel|jazz)\b/i.test(n) && !/piano|bass|organ|keys|drum|violin|cello/i.test(n));
   if (p.hasTab || gtrWord || (pr != null && pr >= 24 && pr <= 31)) return "guitar";
   if (/voice|vocal|vox|sing|soprano|mezzo|alto|tenor|baritone|bass voice|choir|lyrics|lead\b/i.test(n) || (pr != null && pr >= 52 && pr <= 54) || p.lyricShare > 0.3) return "voice";
   if (/piano|pno|keys|keyboard|organ|harp|harpsichord|rhodes|celesta/i.test(n) || (pr != null && pr <= 7)) return "keys";
+  if (/\bbass\b/i.test(n) || (pr != null && pr >= 32 && pr <= 39)) return "bass";
   if (/drum|perc|kit|cymbal/i.test(n)) return "drums";
   return "other";
 }
@@ -793,9 +797,12 @@ function sameNotes(a, b){
 }
 function defaultRoles(score){
   var kinds = score.parts.map(partKind), roles = kinds.map(function(){ return "off"; });
-  var g = [];
-  kinds.forEach(function(k, i){ if (k === "guitar" && !g.some(function(j){ return sameNotes(score.parts[i], score.parts[j]); })) g.push(i); });
-  if (g.length) g.forEach(function(i){ roles[i] = "guitar"; });
+  /* the first guitar part; any others can be switched on in Settings */
+  var g = kinds.indexOf("guitar");
+  if (g >= 0){
+    var twin = score.parts.map(function(p, i){ return i; }).filter(function(i){ return kinds[i] === "guitar" && i !== g && sameNotes(score.parts[g], score.parts[i]); })[0];
+    roles[twin != null && score.parts[twin].hasTab && !score.parts[g].hasTab ? twin : g] = "guitar";
+  }
   else if (kinds.indexOf("keys") >= 0){
     /* no guitar part: the guitar takes the piano, both hands */
     kinds.forEach(function(k, i){ if (k === "keys") roles[i] = "guitar"; });
@@ -853,6 +860,9 @@ function build(){
   var O = open.map(function(x){ return x + capo; }), lowest = Math.min.apply(null, O), highest = O[0] + MAXF, why = [];
   var gp = [], sp = roles.indexOf("sing");
   roles.forEach(function(r, i){ if (r === "guitar") gp.push(i); });
+  /* no singing part, but the guitar's own part has words: show them on top, without the sung voice */
+  state.singSilent = false;
+  if (sp < 0) gp.forEach(function(i){ if (sp < 0 && score.parts[i].lyricShare > 0.1){ sp = i; state.singSilent = true; } });
   var shift = score.parts.map(function(p, i){ return roles[i] === "guitar" ? partShift(p, open, why) : (p.transpose ? p.transpose.chrom + 12*p.transpose.oct : 0); });
   var M = 0; score.parts.forEach(function(p){ M = Math.max(M, p.measures.length); });
   var basePart = score.parts[gp.length ? gp[0] : (sp >= 0 ? sp : 0)];
@@ -1424,7 +1434,7 @@ function schedule(){
   var horizon = ctx.currentTime + 1.5;
   while (r.i < r.ev.length && r.t0 + r.ev[r.i].when < horizon){
     var x = r.ev[r.i++], at = Math.max(r.t0 + x.when, ctx.currentTime + 0.01);
-    if (x.type === "v") sing(ctx, r.out, x, at, r.live); else pluck(ctx, r.out, x, at, r.live);
+    if (x.type === "v"){ if (!x.silent) sing(ctx, r.out, x, at, r.live); } else pluck(ctx, r.out, x, at, r.live);
   }
 }
 function lightUp(r, x){
@@ -1508,9 +1518,9 @@ function buildEvents(from, to){
       var x = lastG.get(n.src.tieFrom); if (!x) return;
       x.dur = Math.max(x.dur, off + (n.t + n.durQ)*spq - x.when); lastG.set(n.src, x);
     });
-    if (singOn) ms.sing.forEach(function(n, j){
+    if (singOn || state.singSilent) ms.sing.forEach(function(n, j){
       if (n.tieFrom){ var y0 = lastV.get(n.tieFrom); if (y0){ y0.dur = Math.max(y0.dur, off + (n.t + n.durQ)*spq - y0.when); lastV.set(n.src, y0); } return; }
-      var y = {type: "v", midi: n.m, when: off + n.t*spq, dur: Math.max(0.1, n.durQ*spq), bi: b, j: j}; ev.push(y); lastV.set(n.src, y);
+      var y = {type: "v", midi: n.m, when: off + n.t*spq, dur: Math.max(0.1, n.durQ*spq), bi: b, j: j, silent: state.singSilent}; ev.push(y); lastV.set(n.src, y);
     });
     off += Math.max(ms.len || 0, 0.25)*spq;
   }
@@ -1542,6 +1552,7 @@ function prefetchSound(){
 window.FretFinder = {
   state: state,
   parse: function(bytes){ return parseBytes(bytes); },
+  show: function(bytes){ return parseBytes(bytes).then(function(res){ state.rec = null; state.tempNotes = {}; loadScore(res.score, null); return document.querySelectorAll(".bar").length; }); },
   events: function(from, to){ return buildEvents(from || 0, to == null ? state.bars.length - 1 : to).map(function(x){ return {type: x.type, midi: x.midi, s: x.s, when: +x.when.toFixed(3), dur: +x.dur.toFixed(3)}; }); },
   fingering: function(){ return state.meas.map(function(ms){ return ms.slices.map(function(sl){ return {t: sl.t, w: sl.w, notes: sl.notes.map(function(n){ return noteName(n.m) + "@" + n.s + "/" + n.f; })}; }); }); },
   render: function(list, seconds){
@@ -1655,11 +1666,11 @@ var Store = (function(){
 function requestPersist(){ try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function(){}); } catch(e){} }
 
 /* ---------- Songs on the site ----------
-   Every song is a real file in the songs folder of the fret-finder repository, which GitHub Pages
+   Every song is a real file in the songs folder of the Fret-Finder repository, which GitHub Pages
    serves with the site. A GitHub Action keeps songs/index.json listing them. A song's title, settings
    and moved notes sit beside it in "<file>.ff.json". Anyone can read; only a device holding the
    owner key can add, change or delete. */
-var SITE = {owner: "lordfran28", repo: "fret-finder", branch: "main"};
+var SITE = {owner: "lordfran28", repo: "Fret-Finder", branch: "main"};
 var KIND_EXT = {"MIDI": ".mid", "MusicXML": ".musicxml", "Guitar Pro": ".gp"};
 var archive = [];
 function siteUrl(path){ return path.split("/").map(encodeURIComponent).join("/") + "?v=" + Date.now(); }
@@ -1679,7 +1690,7 @@ var Owner = (function(){
     return fetch("https://api.github.com/repos/" + SITE.owner + "/" + SITE.repo + path, opts).then(function(r){
       if (r.ok || r.status === 404) return r;
       if (r.status === 401) throw err("auth", "The owner key has expired or isn't valid. Make a new one on the owner page.");
-      if (r.status === 403) throw err("forbidden", "GitHub refused the change. The key needs Contents set to Read and write on fret-finder.");
+      if (r.status === 403) throw err("forbidden", "GitHub refused the change. The key needs Contents set to Read and write on Fret-Finder.");
       if (r.status === 409 || r.status === 422) throw err("conflict", "GitHub reported a conflict. Try again.");
       throw err("http", "GitHub returned an error (" + r.status + "). Try again in a minute.");
     }, function(){ throw err("offline", "Couldn't reach GitHub. Changes are kept on this device and will be saved next time."); });
@@ -1689,13 +1700,13 @@ var Owner = (function(){
   function put(path, b64, message, sha){
     var body = {message: message, content: b64, branch: SITE.branch}; if (sha) body.sha = sha;
     return api("PUT", cpath(path), body).then(function(r){
-      if (r.status === 404) throw err("missing", "GitHub didn't accept the change. The key needs access to the fret-finder repository.");
+      if (r.status === 404) throw err("missing", "GitHub didn't accept the change. The key needs access to the Fret-Finder repository.");
       return r.json();
     }).then(function(j){ return j.content && j.content.sha; });
   }
   function putRetry(path, b64, message, sha){ return put(path, b64, message, sha).catch(function(e){ if (e.code === "conflict") return getSha(path).then(function(s){ return put(path, b64, message, s); }); throw e; }); }
   function del(path, message){ return getSha(path).then(function(s){ if (s) return api("DELETE", cpath(path), {message: message, sha: s, branch: SITE.branch}); }); }
-  function check(t){ return api("GET", "", null, t).then(function(r){ if (r.status === 404) throw err("missing", "This key can't see the fret-finder repository. Make a new key and choose fret-finder under Repository access."); }); }
+  function check(t){ return api("GET", "", null, t).then(function(r){ if (r.status === 404) throw err("missing", "This key can't see the Fret-Finder repository. Make a new key and choose Fret-Finder under Repository access."); }); }
   return {token: token, store: store, putRetry: putRetry, del: del, check: check};
 })();
 function isOwner(){ return !!Owner.token(); }
