@@ -199,6 +199,7 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
 .box .ct{fill:none;stroke:var(--dot-line);stroke-width:1.3;opacity:.7}
 .box .x{fill:var(--muted);font-size:12px;text-anchor:middle}
 .box .d{cursor:pointer}
+.box .barre{fill:var(--accent)}
 .box .d .bg{fill:var(--accent)}
 .box .d text{fill:var(--on-accent);font-size:11.5px;font-weight:600;text-anchor:middle;dominant-baseline:central;font-variant-numeric:lining-nums}
 .box .d.op .bg{fill:var(--surface);stroke:var(--accent);stroke-width:1.6}
@@ -221,7 +222,8 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
 .movebox{display:flex;flex-wrap:wrap;gap:2px 14px;align-items:baseline;margin-top:10px;padding:8px 12px;border-radius:3px;background:var(--well)}
 .movebox p{margin:0;flex:1 1 100%;color:var(--muted);font-size:1rem}
 .movebox .btn{font-size:1.15rem;min-height:2.2rem}
-.legend{margin:0;font-size:.98rem;font-style:italic;color:var(--muted)}
+.alts{display:flex;gap:10px;align-items:flex-start;margin-top:4px;padding-top:6px;border-top:1px dotted var(--line)}
+.alts svg.box{opacity:.85}
 
 .nowplaying{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;align-items:center;justify-content:center;gap:16px;pointer-events:none;
   padding:22px max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
@@ -1035,9 +1037,16 @@ function grip(h, O, prevW){
   var pick = null;
   perW.forEach(function(b){ if (!b) return; var c = b.c + (prevW ? Math.abs(b.w - prevW)*0.12 : 0); if (!pick || c < pick.c2){ pick = b; pick.c2 = c; } });
   if (!pick) return null;
-  var out = {w: pick.w, notes: []};
-  pick.fr.forEach(function(f, i){ if (f !== null){ var s = 6 - i; out.notes.push({s: s, f: f, m: O[s - 1] + f}); } });
-  out.notes.sort(function(a, b){ return b.m - a.m; });
+  function asGrip(b){
+    var o = {w: b.w, notes: []};
+    b.fr.forEach(function(f, i){ if (f !== null){ var s = 6 - i; o.notes.push({s: s, f: f, m: O[s - 1] + f}); } });
+    o.notes.sort(function(a, c){ return c.m - a.m; });
+    return o;
+  }
+  var out = asGrip(pick);
+  /* two other good ways to play it, somewhere else on the neck */
+  out.alts = perW.filter(function(b){ return b !== pick && Math.abs(b.w - pick.w) >= 3; }).sort(function(a, b){ return a.c - b.c; })
+    .reduce(function(acc, b){ if (acc.length < 2 && acc.every(function(x){ return Math.abs(x.w - b.w) >= 3; })) acc.push(b); return acc; }, []).map(asGrip);
   return out;
 }
 function gripsByWindow(h, O){
@@ -1076,7 +1085,7 @@ function gripsByWindow(h, O){
     var atLo = fretted.filter(function(f){ return f === lo; }).length, fingers = fretted.length - (atLo > 1 ? atLo - 1 : 0);
     if (fingers > 4) return;
     var opens = played.length - fretted.length;
-    var c = (hi - lo)*0.35 + Math.abs((lo || 1) - 5)*0.18 + opens*(lo >= 4 ? 0.6 : 0.15) + (6 - played.length)*0.25 + Object.keys(have).length*-0.2;
+    var c = [0, 0.2, 0.5, 1.6, 3][Math.min(4, hi - lo)] + Math.abs((lo || 1) - 5)*0.12 + opens*(lo >= 4 ? 0.6 : 0.15) + (6 - played.length)*0.25 + Object.keys(have).length*-0.2;
     if (!best || c < best.c) best = {c: c, fr: fr, w: Math.max(1, lo || 1)};
   }
   return perW;
@@ -1092,7 +1101,7 @@ function harmAt(meas, mi, t){
   }
   return null;
 }
-function layoutBar(ms, meas, O, comp, prevW){
+function layoutBar(ms, meas, O, comp, prevW, seen){
   var groups = [];
   ms.slices.forEach(function(sl, k){
     sl.k = k;
@@ -1127,7 +1136,8 @@ function layoutBar(ms, meas, O, comp, prevW){
       var end = i + 1 < ms.harm.length ? ms.harm[i + 1].t : ms.len;
       var sl = {t: h.t, comp: true, dur: Math.max(0.25, end - h.t), notes: gr.notes.map(function(x){ return {m: x.m, s: x.s, f: x.f, t: h.t, durQ: Math.max(0.25, end - h.t)}; })};
       sl.all = sl.notes; sl.k = ms.slices.length; ms.slices.push(sl);
-      out.push({w: gr.w, slices: [sl], comp: true, name: h.name});
+      var first = seen && !seen[h.name]; if (seen) seen[h.name] = 1;
+      out.push({w: gr.w, slices: [sl], comp: true, name: h.name, alts: first ? gr.alts : null});
     });
   }
   out.forEach(function(g){
@@ -1164,7 +1174,7 @@ function ranges(list){
 }
 
 /* ---------- Drawing ---------- */
-var SX = 20, ML = 26, MT = 24, FY = 27;
+var SX = 20, ML = 32, MT = 24, FY = 27;
 function boxSVG(g, O, capo, bi){
   var dots = {}, fretted = [];
   function addDot(n, label, kind){
@@ -1190,7 +1200,7 @@ function boxSVG(g, O, capo, bi){
   for (var i = 0; i <= nf; i++) p.push('<line class="fr" x1="' + ML + '" x2="' + (ML + 5*SX) + '" y1="' + (MT + i*FY) + '" y2="' + (MT + i*FY) + '"/>');
   for (var s = 1; s <= 6; s++) p.push('<line class="str" x1="' + x(s) + '" x2="' + x(s) + '" y1="' + MT + '" y2="' + (MT + nf*FY) + '"/>');
   if (base === 1) p.push('<line class="nut" x1="' + (ML - 1) + '" x2="' + (ML + 5*SX + 1) + '" y1="' + (MT - 1) + '" y2="' + (MT - 1) + '"/>');
-  else p.push('<text class="pos" x="' + (ML - 7) + '" y="' + (y(base) + 4) + '" text-anchor="end">' + base + '</text>');
+  else p.push('<text class="pos" x="' + (ML - 13) + '" y="' + (y(base) + 4) + '" text-anchor="end">' + base + '</text>');
   /* the rest of the chord, faintly */
   if (g.harm && g.harm.pcs && !g.strum && !g.comp){
     for (s = 1; s <= 6; s++) for (f = Math.max(1, base); f < base + nf; f++){
@@ -1201,6 +1211,16 @@ function boxSVG(g, O, capo, bi){
   if (g.strum || g.comp){
     var usedS = {}; Object.keys(dots).forEach(function(k){ usedS[dots[k].s] = 1; });
     for (s = 1; s <= 6; s++) if (!usedS[s]) p.push('<text class="x" x="' + x(s) + '" y="' + (MT - 8) + '">×</text>');
+  }
+  if ((g.strum || g.comp) && fretted.length >= 4){
+    /* a barre: one finger across every string from the lowest-fret dots up */
+    var atLo = Object.keys(dots).map(function(k){ return dots[k]; }).filter(function(d){ return d.f === lo; });
+    if (atLo.length >= 2){
+      var sMax = Math.max.apply(null, atLo.map(function(d){ return d.s; })), sMin = Math.min.apply(null, atLo.map(function(d){ return d.s; }));
+      var covered = true;
+      for (s = sMin; s <= sMax; s++){ var any = Object.keys(dots).some(function(k){ return dots[k].s === s && dots[k].f >= lo; }); if (!any) covered = false; }
+      if (covered && sMax - sMin >= 2) p.push('<rect class="barre" x="' + (x(sMax) - 9.6) + '" y="' + (y(lo) - 9.6) + '" width="' + (x(sMin) - x(sMax) + 19.2) + '" height="19.2" rx="9.6"/>');
+    }
   }
   Object.keys(dots).forEach(function(k){
     var d = dots[k], label = g.strum || g.comp ? "" : ranges(d.nums.sort(function(a, b){ return a - b; }));
@@ -1219,6 +1239,7 @@ function boxSVG(g, O, capo, bi){
   p.push("</svg>");
   return p.join("");
 }
+function shrink(svg, k){ return svg.replace(/width="(\d+)" height="(\d+)"/, function(_, w, h){ return 'width="' + Math.round(w*k) + '" height="' + Math.round(h*k) + '"'; }); }
 function svgW(svg){ var m = /width="(\d+)/.exec(svg || ""); return m ? +m[1] : 0; }
 function boxLabel(g, dots, base){
   var parts = [];
@@ -1289,8 +1310,8 @@ function render(){
   var score = state.score; if (!score) return;
   var b = build(), meas = b.meas;
   finger(meas, b.O);
-  var comp = $("comp").checked, prevW = 5;
-  meas.forEach(function(ms){ ms.groups = layoutBar(ms, meas, b.O, comp, prevW); ms.groups.forEach(function(g){ if (g.w) prevW = g.w; }); });
+  var comp = $("comp").checked, prevW = 5, seen = {};
+  meas.forEach(function(ms){ ms.groups = layoutBar(ms, meas, b.O, comp, prevW, seen); ms.groups.forEach(function(g){ if (g.w) prevW = g.w; }); });
   state.meas = meas; state.open = b.open; state.capo = b.capo; state.O = b.O;
   var seq = $("repeats").checked ? unroll(meas) : meas.map(function(m, k){ return {mi: k, pass: 1}; });
   /* trim empty bars at the very end */
@@ -1307,9 +1328,16 @@ function render(){
     var figs = ms.groups.map(function(g, gi){
       var name = (g.name ? esc(g.name) + (g.more && g.more.length ? " <small>then " + esc(g.more.join(", ")) + "</small>" : "") : "") +
         (g.rep ? " <small>" + (g.rep === 2 ? "twice" : g.rep + " times") + "</small>" : "");
-      var bx = boxSVG(g, b.O, b.capo, bi), st = stripSVG(g, ms);
+      var bx = boxSVG(g, b.O, b.capo, bi), st = stripSVG(g, ms), alts = "";
       widthNeed += Math.max(svgW(bx), svgW(st)) + 20;
-      return '<figure class="dg" data-g="' + gi + '"><figcaption class="dg-name">' + name + "</figcaption>" + bx + st + "</figure>";
+      if (g.alts && g.alts.length){
+        /* the first time a chord comes up, two other grips for it sit just under the main one */
+        alts = '<div class="alts" aria-label="Other ways to play ' + esc(g.name) + '">' + g.alts.map(function(a){
+          var ag = {w: a.w, comp: true, slices: [{t: 0, k: -1, notes: a.notes}]};
+          return shrink(boxSVG(ag, b.O, b.capo, bi), 0.62);
+        }).join("") + "</div>";
+      }
+      return '<figure class="dg" data-g="' + gi + '"><figcaption class="dg-name">' + name + "</figcaption>" + bx + st + alts + "</figure>";
     }).join("");
     var wide = widthNeed > 300 || (sing && ms.sing.length > 9);
     html.push('<section class="bar' + (wide ? " wide" : "") + '" data-bi="' + bi + '" aria-label="Bar ' + (bi + 1) + '"><div class="bar-head"><div class="bar-title"><h3>Bar ' + (bi + 1) + "</h3>" +
@@ -1505,11 +1533,14 @@ function buildEvents(from, to){
   var spq = 60/clampTempo($("tempo").value), ev = [], off = 0, lastG = new Map(), lastV = new Map(), singOn = $("singon").checked;
   for (var b = from; b <= to; b++){
     var ms = state.bars[b];
+    var beatQ = ms.beatType === 8 && ms.beats % 3 === 0 && ms.beats > 3 ? 1.5 : 4/(ms.beatType || 4);
     ms.slices.forEach(function(sl){
       var notes = sl.notes.filter(function(n){ return n.s; }).slice().sort(function(a, c){ return c.s - a.s; });
-      notes.forEach(function(n, j){
-        var when = off + sl.t*spq + (notes.length >= 3 ? j*0.014 : 0), dur = n.grace ? 0.12 : Math.max(0.08, (n.durQ || sl.dur || 1)*spq);
-        var x = {type: "g", midi: n.m, s: n.s, when: when, dur: dur, bi: b, k: sl.k, vel: n.vel};
+      /* a grip from a chord symbol is strummed on each beat it lasts */
+      var hits = sl.comp ? Math.max(1, Math.round(sl.dur/beatQ)) : 1;
+      for (var h = 0; h < hits; h++) notes.forEach(function(n, j){
+        var when = off + (sl.t + h*beatQ)*spq + (notes.length >= 3 ? j*0.014 : 0), dur = n.grace ? 0.12 : Math.max(0.08, (sl.comp ? beatQ : (n.durQ || sl.dur || 1))*spq);
+        var x = {type: "g", midi: n.m, s: n.s, when: when, dur: dur, bi: b, k: sl.k, vel: n.vel, soft: h > 0};
         ev.push(x); if (n.src) lastG.set(n.src, x);
       });
     });
@@ -1539,7 +1570,7 @@ function buildEvents(from, to){
   ev.forEach(function(x){ if (x.type !== "g") return; var p = onString[x.s]; if (p && p.when + p.dur + 0.35 > x.when && x.when > p.when) p.cut = x.when - p.when; onString[x.s] = x; });
   var vs = ev.filter(function(x){ return x.vel > 0; }).map(function(x){ return x.vel; }).sort(function(a, c){ return a - c; });
   var mid = vs.length ? vs[vs.length >> 1] : 0;
-  ev.forEach(function(x){ x.level = mid && x.vel ? Math.max(0.55, Math.min(1.3, Math.pow(x.vel/mid, 0.7))) : 1; });
+  ev.forEach(function(x){ x.level = (mid && x.vel ? Math.max(0.55, Math.min(1.3, Math.pow(x.vel/mid, 0.7))) : 1)*(x.soft ? 0.7 : 1); });
   return ev;
 }
 function playBars(from, to, opts){ startRun(buildEvents(from, to), opts); }
