@@ -281,7 +281,7 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
     </div>
 
     <footer class="foot">
-      <p class="credits">Vermeer, <a href="https://en.wikipedia.org/wiki/The_Guitar_Player_(Vermeer)" target="_blank" rel="noopener">The Guitar Player</a> · Venetian damask, <a href="https://www.metmuseum.org/art/collection/search/216471" target="_blank" rel="noopener">The Met</a> · Guitar recordings, <a href="https://theremin.music.uiowa.edu/MISguitar.html" target="_blank" rel="noopener">University of Iowa</a> · <a href="#example">Example song</a></p>
+      <p class="credits">Vermeer, <a href="https://en.wikipedia.org/wiki/The_Guitar_Player_(Vermeer)" target="_blank" rel="noopener">The Guitar Player</a> · Venetian damask, <a href="https://www.metmuseum.org/art/collection/search/216471" target="_blank" rel="noopener">The Met</a> · Guitar recordings, <a href="https://theremin.music.uiowa.edu/MISguitar.html" target="_blank" rel="noopener">University of Iowa</a> · <a href="#example">Example song</a> · For the trumpet, <a href="https://lordfran28.github.io/Valve-Finder/">Valve Finder</a></p>
       <p class="credits">Behind the songs: Baburen, ter Brugghen, Hals, Honthorst, Netscher, Watteau, Caravaggio, Leyster, Bronckhorst, the Master of the Annunciation to the Shepherds, Andreotti, Sani.</p>
     </footer>
   </section>
@@ -1146,7 +1146,7 @@ function layoutBar(ms, meas, O, comp, prevW, seen){
     var inside = ms.harm.filter(function(x){ return x.t > t0 + 1e-3 && (!g.slices.length || x.t <= g.slices[g.slices.length - 1].t + 1e-3); });
     if (!g.name){
       if (h && !h.none) g.harm = h;
-      else { var nn = []; g.slices.forEach(function(sl){ sl.notes.forEach(function(n){ nn.push(n); }); }); var guess = g.slices.some(function(sl){ return sl.notes.length >= 2; }) || g.slices.length >= 4 ? nameChord(nn) : null; if (guess) g.harm = guess; }
+      else { var nn = []; g.slices.forEach(function(sl){ sl.notes.forEach(function(n){ nn.push(n); }); }); var guess = g.slices.some(function(sl){ return sl.notes.length >= 3; }) || g.slices.filter(function(sl){ return sl.notes.length >= 2; }).length >= 2 ? nameChord(nn) : null; if (guess) g.harm = guess; }
       g.name = g.harm ? g.harm.name : "";
       if (g.harm && !g.harm.guessed && h && ms.harm.indexOf(h) < 0 && t0 > 0) g.carried = true;
       g.more = inside.map(function(x){ return x.name; });
