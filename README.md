@@ -2,13 +2,13 @@
 
 Valve Finder's sister site, for the guitar. Give it a MusicXML, MIDI or Guitar Pro file and it lays the song out bar by bar in playing order: one diagram for each hand position, the notes numbered in the order you play them, the rest of the chord in pale rings, a rhythm line under each diagram, and the singing line with its chord changes on top of every bar.
 
-Live at **https://lordfran28.github.io/fret-finder/** once GitHub Pages is on (Settings → Pages → Deploy from a branch → `main`, `/ (root)`).
+Live at **https://lordfran28.github.io/Fret-Finder/** once GitHub Pages is on (Settings → Pages → Deploy from a branch → `main`, `/ (root)`).
 
 ## Songs
 
 Songs are files in the `songs` folder, the same way as on Valve Finder. Add them from the site on a connected device, or put them in the folder and push. See `songs/README.md`.
 
-To change songs from the site, open the owner page (`#owner`) and connect the device with a GitHub key that has *Contents: Read and write* on this repository. A Valve Finder key won't work here unless fret-finder is added to it.
+To change songs from the site, open the owner page (`#owner`) and connect the device with a GitHub key that has *Contents: Read and write* on this repository. A Valve Finder key won't work here unless Fret-Finder is added to it.
 
 ## How a song is read
 
