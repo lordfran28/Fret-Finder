@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-01T01:30:34Z",
+ "generatedAt": "2026-11-01T01:57:32Z",
  "songs": [
   {
    "id": "perry-como-how-deep-is-the-ocean-guitars-db-major-71bpm-436hz",
@@ -9,6 +9,30 @@
    "kind": "MusicXML",
    "sha1": "0c17d7b3a4e9503fa3d2734439ba52ac3055becb",
    "addedAt": "2026-11-01T01:30:25Z"
+  },
+  {
+   "id": "all-by-myself-remastered-by-naudo-guitars-a-major-60bpm-446hz",
+   "file": "songs/All by Myself (remastered)  by Naudo-guitars-A major-60bpm-446hz.musicxml",
+   "title": "All by Myself (remastered)  by Naudo-guitars-A major-60bpm-446hz",
+   "kind": "MusicXML",
+   "sha1": "5f1c994af7891bddd7af8bb1bfc44d552174af0f",
+   "addedAt": "2026-11-01T01:57:26Z"
+  },
+  {
+   "id": "desafinaudo-by-naudo-rodrigues-guitars-d-major-88bpm-443hz",
+   "file": "songs/DESAFINAUDO   by Naudo Rodrigues-guitars-D major-88bpm-443hz.musicxml",
+   "title": "DESAFINAUDO   by Naudo Rodrigues-guitars-D major-88bpm-443hz",
+   "kind": "MusicXML",
+   "sha1": "ad32e6126596aa4fdeb418c932453e1459f2bdf1",
+   "addedAt": "2026-11-01T01:57:27Z"
+  },
+  {
+   "id": "ecruteak-cianwood-city-pokemon-gold-silver-crystal",
+   "file": "songs/Ecruteak Cianwood City - Pokemon Gold Silver Crystal .musicxml",
+   "title": "Ecruteak Cianwood City - Pokemon Gold Silver Crystal",
+   "kind": "MusicXML",
+   "sha1": "a671099e424a8c221550620b97d7ea24af3b5ff7",
+   "addedAt": "2026-11-01T01:57:30Z"
   }
  ]
 }
