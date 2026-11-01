@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-01T01:57:32Z",
+ "generatedAt": "2026-11-01T01:57:54Z",
  "songs": [
   {
    "id": "perry-como-how-deep-is-the-ocean-guitars-db-major-71bpm-436hz",
@@ -33,6 +33,94 @@
    "kind": "MusicXML",
    "sha1": "a671099e424a8c221550620b97d7ea24af3b5ff7",
    "addedAt": "2026-11-01T01:57:30Z"
+  },
+  {
+   "id": "feelings-morris-albert-1975-by-naudo-guitars-a-minor-75bpm-442hz",
+   "file": "songs/Feelings ( Morris Albert  ) 1975 by Naudo-guitars-A minor-75bpm-442hz.musicxml",
+   "title": "Feelings ( Morris Albert  ) 1975 by Naudo-guitars-A minor-75bpm-442hz",
+   "kind": "MusicXML",
+   "sha1": "fb1f90d06530f7bd0cdd9d832df4e6edf9c076c0",
+   "addedAt": "2026-11-01T01:57:32Z"
+  },
+  {
+   "id": "the-lady-in-red-by-naudo-rodrigues-guitars-d-major-81bpm-443hz",
+   "file": "songs/THE LADY IN RED by Naudo Rodrigues-guitars-D major-81bpm-443hz.musicxml",
+   "title": "THE LADY IN RED by Naudo Rodrigues-guitars-D major-81bpm-443hz",
+   "kind": "MusicXML",
+   "sha1": "cfede1fa06565f2fe24843bc5cf9b16ff2d083e6",
+   "addedAt": "2026-11-01T01:57:32Z"
+  },
+  {
+   "id": "michelle-performed-by-tatyana-ryzhkova-guitars-d-minor-103bpm-440hz",
+   "file": "songs/Michelle performed by Tatyana Ryzhkova-guitars-D minor-103bpm-440hz.musicxml",
+   "title": "Michelle performed by Tatyana Ryzhkova-guitars-D minor-103bpm-440hz",
+   "kind": "MusicXML",
+   "sha1": "34f7d7c4556a7e588fa3263a60d39539aa5fa4ca",
+   "addedAt": "2026-11-01T01:57:35Z"
+  },
+  {
+   "id": "naudo-words-don-t-come-easy-guitars-d-major-127bpm-446hz",
+   "file": "songs/Naudo - Words don't come easy-guitars-D major-127bpm-446hz.musicxml",
+   "title": "Naudo - Words don't come easy-guitars-D major-127bpm-446hz",
+   "kind": "MusicXML",
+   "sha1": "5c859d0432d0e152963ec5550a3d60c6822f5b87",
+   "addedAt": "2026-11-01T01:57:37Z"
+  },
+  {
+   "id": "nothing-gonna-change-my-love-for-you-abim-finger-guitar-tab-guitars-db-major-66bpm-441hz",
+   "file": "songs/Nothing Gonna Change My Love For You - Abim Finger [Guitar TAB]-guitars-Db major-66bpm-441hz.musicxml",
+   "title": "Nothing Gonna Change My Love For You - Abim Finger [Guitar TAB]-guitars-Db major-66bpm-441hz",
+   "kind": "MusicXML",
+   "sha1": "f87c7fc6003ac5fa8cf36a494d97fa278506e3fe",
+   "addedAt": "2026-11-01T01:57:38Z"
+  },
+  {
+   "id": "saigon-by-naudo-rodrigues-guitars-a-major-68bpm-442hz",
+   "file": "songs/SAIGON  by Naudo Rodrigues-guitars-A major-68bpm-442hz.musicxml",
+   "title": "SAIGON  by Naudo Rodrigues-guitars-A major-68bpm-442hz",
+   "kind": "MusicXML",
+   "sha1": "d4c35a71c2103328d32e325f2c2ce2db103791a0",
+   "addedAt": "2026-11-01T01:57:40Z"
+  },
+  {
+   "id": "seria-fantastic-guitars-a-major-79bpm-442hz",
+   "file": "songs/Seria Fantastic-guitars-A major-79bpm-442hz.musicxml",
+   "title": "Seria Fantastic-guitars-A major-79bpm-442hz",
+   "kind": "MusicXML",
+   "sha1": "50df73a7b6b76dfbe79c7995b386fdbef70ab1ee",
+   "addedAt": "2026-11-01T01:57:42Z"
+  },
+  {
+   "id": "ted-greene-baroque-improv-part-1-guitars-d-major-103bpm-443hz",
+   "file": "songs/Ted Greene Baroque Improv - Part 1-guitars-D major-103bpm-443hz.musicxml",
+   "title": "Ted Greene Baroque Improv - Part 1-guitars-D major-103bpm-443hz",
+   "kind": "MusicXML",
+   "sha1": "509285e99ee3bc9a0e4c34006e1ccaafc0610dfb",
+   "addedAt": "2026-11-01T01:57:43Z"
+  },
+  {
+   "id": "we-re-all-alone-by-naudo-rodrigues-guitars-a-major-124bpm-444hz",
+   "file": "songs/WE'RE ALL ALONE  by Naudo Rodrigues.-guitars-A major-124bpm-444hz.musicxml",
+   "title": "WE'RE ALL ALONE  by Naudo Rodrigues.-guitars-A major-124bpm-444hz",
+   "kind": "MusicXML",
+   "sha1": "4f6d1496176efec4834b962a6dc16422b611340f",
+   "addedAt": "2026-11-01T01:57:47Z"
+  },
+  {
+   "id": "yesterday-ted-greene-version-transcription-with-tab-guitars-e-major-70bpm-441hz",
+   "file": "songs/Yesterday - Ted Greene version - Transcription with TAB-guitars-E major-70bpm-441hz.musicxml",
+   "title": "Yesterday - Ted Greene version - Transcription with TAB-guitars-E major-70bpm-441hz",
+   "kind": "MusicXML",
+   "sha1": "585e5ba1a7cfb219bbf976908ca74a94383b7fb9",
+   "addedAt": "2026-11-01T01:57:49Z"
+  },
+  {
+   "id": "you-don-t-mess-around-with-jim-guitars-e-major-164bpm-442hz",
+   "file": "songs/You Don't Mess Around with Jim-guitars-E major-164bpm-442hz.musicxml",
+   "title": "You Don't Mess Around with Jim-guitars-E major-164bpm-442hz",
+   "kind": "MusicXML",
+   "sha1": "3e8b8f24fb68d11e4fed4768d15908a2243c488d",
+   "addedAt": "2026-11-01T01:57:51Z"
   }
  ]
 }
