@@ -18,6 +18,7 @@
     ".step.ff-now{background:var(--accent-soft,rgba(192,57,43,.12))}",
     /* the page's own play buttons light a whole chord: its dots ring with it */
     ".step.on svg circle.dot,.step.on svg circle.root,.step.on svg circle.open,.step.on svg rect.bar,svg circle.rdot.on,.cp-card.on svg circle.d,.cp-card.on svg circle.dr,.cp-card.on svg circle.dl{fill:var(--ff-ring);stroke:var(--ff-edge);stroke-width:1.4px;transform-box:fill-box;transform-origin:center;animation:ff-ring .45s ease-out}",
+    "svg text.ff-tab-on{fill:var(--ff-edge)!important;font-weight:800;paint-order:stroke;stroke:var(--ff-ring);stroke-width:3px;stroke-linejoin:round}",
     "@media (prefers-reduced-motion:reduce){svg .ff-ring,svg .ff-halo,.step.on svg circle,svg circle.rdot.on{animation:none!important}}"
   ].join("\n");
   var st = document.createElement("style");
@@ -25,7 +26,7 @@
   document.head.appendChild(st);
 
   /* ---------- huge fret numbers ---------- */
-  var LABELS = "svg text.fno, svg text.fn, svg text.fret-no, svg text.pos";
+  var LABELS = "svg text.fno, svg text.fn, svg text.fret-no, svg text.pos, .hold svg text";
   function num(v) { return parseFloat(v) || 0; }
   function enlarge(t) {
     if (t.getAttribute("data-ff-big")) return;
@@ -135,6 +136,23 @@
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { setTimeout(fn, 0); });
     else setTimeout(fn, 0);
   }
+
+  /* Tab pages with a highlight that moves along the notes: the fret numbers under it light up. */
+  function litTab(r) {
+    var svg = r.ownerSVGElement; if (!svg) return;
+    (svg.__ffLit || []).forEach(function (t) { t.classList.remove("ff-tab-on"); });
+    svg.__ffLit = [];
+    if (r.getAttribute("visibility") === "hidden") return;
+    var x0 = num(r.getAttribute("x")), w = num(r.getAttribute("width"));
+    Array.prototype.forEach.call(svg.querySelectorAll("text.fr"), function (t) {
+      var x = num(t.getAttribute("x"));
+      if (x > x0 && x < x0 + w) { t.classList.add("ff-tab-on"); svg.__ffLit.push(t); }
+    });
+  }
+  var tabObs = new MutationObserver(function (muts) { muts.forEach(function (m) { litTab(m.target); }); });
+  when(function () {
+    Array.prototype.forEach.call(document.querySelectorAll("svg.tab rect.now"), function (r) { tabObs.observe(r, { attributes: true, attributeFilter: ["x", "visibility"] }); });
+  });
 
   /* Pages whose bars hold chord diagrams, runs and picking patterns (const DATA with tracks of bars). */
   var D = (typeof DATA !== "undefined") ? DATA : null; // eslint-disable-line no-undef
