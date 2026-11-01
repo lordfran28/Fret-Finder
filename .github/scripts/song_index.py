@@ -24,6 +24,9 @@ def first_added(path):
 
 
 def utc(stamp):
+    # a plain day becomes noon of that day, so it reads as the same day in America and in Europe
+    if re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(stamp or "")):
+        return str(stamp) + "T12:00:00Z"
     try:
         d = datetime.datetime.fromisoformat(str(stamp).replace("Z", "+00:00"))
         if d.tzinfo is None:

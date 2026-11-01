@@ -410,7 +410,11 @@ function userErr(msg){ var e = new Error(msg); e.user = true; return e; }
 function parseNums(s){ return String(s||"").split(/[\s,]+/).map(function(n){ return parseInt(n,10); }).filter(function(n){ return !isNaN(n); }); }
 function ordinal(n){ return n===2 ? "2nd" : n===3 ? "3rd" : n + "th"; }
 function accSym(a){ return a===1 ? "♯" : a===-1 ? "♭" : a===2 ? "𝄪" : a===-2 ? "𝄫" : ""; }
-function fmtDate(iso){ var d = new Date(iso); return isNaN(d) ? "" : d.toLocaleDateString(undefined, {year:"numeric", month:"short", day:"numeric"}); }
+function fmtDate(iso){
+  /* a plain day ("2026-11-01") is that day wherever you are, not midnight in London */
+  var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || "")), d = m ? new Date(+m[1], +m[2] - 1, +m[3]) : new Date(iso);
+  return isNaN(d) ? "" : d.toLocaleDateString(undefined, {year:"numeric", month:"short", day:"numeric"});
+}
 function newId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
 function clampTempo(t){ t = parseInt(t, 10); if (isNaN(t)) t = 100; return Math.min(240, Math.max(30, t)); }
 function fitTitle(){ var t = $("title"); t.style.height = "auto"; t.style.height = t.scrollHeight + "px"; }
