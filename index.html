@@ -277,7 +277,7 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
   <section id="view-library" class="view" aria-label="Your songs">
     <div class="libhead">
       <h2>Your songs</h2>
-      <button type="button" id="addtoggle" class="addlink" aria-expanded="false" aria-controls="dropbox">Add a song</button>
+      <button type="button" id="addtoggle" class="addlink" aria-expanded="false" aria-controls="dropbox" hidden>Add a song</button>
     </div>
     <label id="dropbox" class="dropbox" for="file" hidden>
       <span class="drop-title"><span class="for-mouse">Drop songs here</span><span class="for-touch">Choose a song</span></span>
@@ -291,13 +291,11 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
     <ul id="songlist" class="songlist"></ul>
     <p id="nomatch" class="small" hidden>No songs match that search.</p>
     <div id="empty" class="empty" hidden>
-      <h3>Add your first song</h3>
-      <p>Add a MusicXML, MIDI or Guitar Pro file.</p>
-      <a class="btn" href="#example">Open the example song</a>
+      <h3>Nothing here yet</h3>
     </div>
 
     <footer class="foot">
-      <p class="credits">Vermeer, <a href="https://en.wikipedia.org/wiki/The_Guitar_Player_(Vermeer)" target="_blank" rel="noopener">The Guitar Player</a> · Venetian damask, <a href="https://www.metmuseum.org/art/collection/search/216471" target="_blank" rel="noopener">The Met</a> · Guitar recordings, <a href="https://theremin.music.uiowa.edu/MISguitar.html" target="_blank" rel="noopener">University of Iowa</a> · <a href="#example">Example song</a> · For the trumpet, <a href="https://lordfran28.github.io/Valve-Finder/">Valve Finder</a></p>
+      <p class="credits">Vermeer, <a href="https://en.wikipedia.org/wiki/The_Guitar_Player_(Vermeer)" target="_blank" rel="noopener">The Guitar Player</a> · Venetian damask, <a href="https://www.metmuseum.org/art/collection/search/216471" target="_blank" rel="noopener">The Met</a> · Guitar recordings, <a href="https://theremin.music.uiowa.edu/MISguitar.html" target="_blank" rel="noopener">University of Iowa</a> · For the trumpet, <a href="https://lordfran28.github.io/Valve-Finder/">Valve Finder</a></p>
       <p class="credits">Behind the songs: Baburen, ter Brugghen, Hals, Honthorst, Netscher, Watteau, Caravaggio, Leyster, Bronckhorst, the Master of the Annunciation to the Shepherds, Andreotti, Sani.</p>
     </footer>
   </section>
@@ -1935,68 +1933,29 @@ function shaOf(rec){
   }).catch(function(){ return null; });
 }
 function renderLibrary(){
-  var list = [], seen = {}, twins = {}, claimed = {};
-  Object.keys(cache).forEach(function(id){ var r = cache[id]; if (r.dupOf) twins[r.dupOf] = 1; if (r.inArchive && r.file) claimed[r.file] = id; });
-  archive.forEach(function(m){
-    seen[m.id] = 1;
-    if (cache[m.id] || (!twins[m.id] && !(claimed[m.file] && claimed[m.file] !== m.id))) list.push({rec: cache[m.id] || null, meta: cache[m.id] || m});
-  });
-  Object.keys(cache).forEach(function(id){ if (!seen[id]) list.push({rec: cache[id], meta: cache[id]}); });
-  list.sort(function(a, b){ return String(b.meta.addedAt).localeCompare(String(a.meta.addedAt)); });
+  /* The shelf: only the arrangements made in conversation are listed. */
+  var list = archive.filter(function(m){ return m.kind === "arrangement" && m.page; }).map(function(m){ return {meta: m}; });
+  list.sort(function(a, b){ return String(a.meta.title).localeCompare(String(b.meta.title), undefined, {sensitivity: "base"}); });
   var q = $("search").value.trim().toLowerCase();
   $("searchwrap").hidden = list.length < 6;
   var shown = q ? list.filter(function(x){ return String(x.meta.title).toLowerCase().indexOf(q) >= 0; }) : list;
-  var owner = isOwner();
   $("songlist").innerHTML = shown.map(function(x){
-    var st = owner && x.rec && !x.rec.inArchive ? ["warn", "Not on the site yet"] : owner && x.rec && x.rec.dirty ? ["busy", "Saving"] : null;
-    var u = x.meta.units, bits = [];
+    var bits = [];
     var d = fmtDate(x.meta.addedAt); if (d) bits.push("Added " + d);
-    if (u && u.count) bits.push(plural(u.count, String(u.unit).toLowerCase()));
-    if (x.meta.kind === "arrangement") bits.push(x.meta.instrument === "trumpet" ? "Trumpet" : "Guitar");
-    else if (x.meta.kind) bits.push(x.meta.kind);
-    /* an arrangement made in conversation is its own page */
-    var href = x.meta.kind === "arrangement" && x.meta.page ? siteUrl(x.meta.page).replace(/\?v=\d+$/, "") : "#song-" + esc(x.meta.id);
+    bits.push(x.meta.instrument === "trumpet" ? "Trumpet" : "Guitar");
+    var href = siteUrl(x.meta.page).replace(/\?v=\d+$/, "");
     return '<li><a class="song" href="' + esc(href) + '"><span class="song-main"><span class="song-title">' + esc(x.meta.title) +
-      '</span><span class="song-meta">' + esc(bits.join(" · ")) + '</span></span>' + (st ? '<span class="status st-' + st[0] + '">' + st[1] + "</span>" : "") + "</a></li>";
+      '</span><span class="song-meta">' + esc(bits.join(" · ")) + '</span></span></a></li>';
   }).join("");
   $("empty").hidden = list.length > 0;
   $("nomatch").hidden = !(list.length && !shown.length);
 }
 function syncLibrary(){
+  /* Songs transcribed on this device before the shelf are cleared, so only the shelf shows. */
+  Object.keys(cache).forEach(function(id){ delete cache[id]; Store.del(id); });
   return fetchIndex().then(function(ix){
-    if (ix){
-      var gone = goneList(), now = Date.now();
-      archive = (Array.isArray(ix.songs) ? ix.songs : []).filter(function(m){ return m && m.id && m.file && !(gone[m.id] && now - gone[m.id] < 36e5); });
-      var listed = {}, byFile = {}; archive.forEach(function(m){ listed[m.id] = m; byFile[m.file] = m; });
-      Object.keys(cache).forEach(function(id){
-        var r = cache[id];
-        if (!listed[id] && r.inArchive && r.file && byFile[r.file]){
-          var nid = byFile[r.file].id;
-          delete cache[id]; Store.del(id);
-          if (!cache[nid]){ r.id = nid; cache[nid] = r; Store.put(r); }
-          return;
-        }
-        if (listed[id]){ if (!r.dirty && listed[id].title) r.title = listed[id].title; if (!r.file) r.file = listed[id].file; r.inArchive = true; return; }
-        if (r.inArchive && !r.dirty && r.file && now - Date.parse(r.archivedAt || 0) > 15 * 6e4){
-          fetch(siteUrl(r.file), {method: "HEAD", cache: "no-store"}).then(function(res){
-            if (res.status === 404 && cache[id] === r){ delete cache[id]; Store.del(id); if (!$("view-library").hidden) renderLibrary(); }
-          }).catch(function(){});
-        }
-      });
-    }
-    var locals = Object.keys(cache).map(function(k){ return cache[k]; }).filter(function(r){ return !r.inArchive; });
-    return Promise.all(locals.map(shaOf)).then(function(){
-      var bySha = {}, byName = {};
-      archive.forEach(function(m){ if (m.sha1) bySha[m.sha1] = m; byName[titleKey(String(m.file).split("/").pop().replace(/\.[^.]+$/, ""))] = m; });
-      locals.forEach(function(r){
-        var m = (r.sha1 && bySha[r.sha1]) || byName[titleKey(String(r.fileName || "").replace(/\.[^.]+$/, ""))];
-        if (m && !cache[m.id]){
-          r.dupOf = m.id;
-          if (m.title && titleKey(r.title) === titleKey(String(r.fileName || "").replace(/\.[^.]+$/, "")) && r.title !== m.title){ r.title = m.title; Store.put(r); }
-        } else delete r.dupOf;
-      });
-      return uploadPending();
-    });
+    if (ix) archive = (Array.isArray(ix.songs) ? ix.songs : []).filter(function(m){ return m && m.id && m.file; });
+    if (!$("view-library").hidden) renderLibrary();
   });
 }
 function uploadPending(){
@@ -2277,10 +2236,9 @@ $("addtoggle").addEventListener("click", function(){ openDrop($("dropbox").hidde
 (function(){
   var depth = 0;
   function hasFiles(e){ var t = e.dataTransfer && e.dataTransfer.types; return t && Array.prototype.indexOf.call(t, "Files") >= 0; }
-  window.addEventListener("dragenter", function(e){ if ($("view-library").hidden || !hasFiles(e)) return; depth++; openDrop(true); $("dropbox").classList.add("over"); });
-  window.addEventListener("dragleave", function(e){ if ($("view-library").hidden || !hasFiles(e)) return; depth = Math.max(0, depth - 1); if (!depth) $("dropbox").classList.remove("over"); });
+  /* The shelf takes no dropped files; the arrangements are put on it from the conversation. */
   window.addEventListener("dragover", function(e){ if (hasFiles(e)) e.preventDefault(); });
-  window.addEventListener("drop", function(e){ if (!hasFiles(e)) return; e.preventDefault(); depth = 0; if ($("view-library").hidden) return; addFiles(e.dataTransfer.files); });
+  window.addEventListener("drop", function(e){ if (hasFiles(e)) e.preventDefault(); });
 })();
 $("search").addEventListener("input", renderLibrary);
 ["tuning","capo","oct","repeats","comp"].forEach(function(id){ $(id).addEventListener("change", function(){ render(); scheduleSave(); }); });
