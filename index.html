@@ -21,7 +21,7 @@
 :root{
   --bg:#EFE5D5;--surface:#FBF6EE;--well:#F4EADC;--ink:#2B1E18;--muted:#6A5546;--line:#D9C3A7;--dot-line:#A08773;
   --accent:#8A2E1E;--accent-hi:#A8442F;--accent-soft:#F3DDD2;--on-accent:#FFF6EE;
-  --play:#2C6A73;--play-soft:#D8EBEC;--ok:#3D6B34;--ok-soft:#E0ECD8;--warn:#9C3424;--warn-soft:#F6DFD7;
+  --play:#2C6A73;--play-soft:#D8EBEC;--ok:#3D6B34;--ok-soft:#E0ECD8;--warn:#9C3424;--warn-soft:#F6DFD7;--add:#D3241C;--add-soft:#FBE1DC;
   --veil:rgba(239,229,213,.94);
   --emboss:0 1px 0 rgba(255,250,240,.7),0 2px 3px rgba(80,30,15,.22);
   --emboss-lift:0 1px 0 rgba(255,250,240,.8),0 3px 7px rgba(80,30,15,.32);
@@ -34,7 +34,7 @@
   :root{
     --bg:#1B1310;--surface:#251B17;--well:#2F231D;--ink:#F1E3D0;--muted:#BFA78F;--line:#4C3A31;--dot-line:#86705F;
     --accent:#E39A72;--accent-hi:#F2B691;--accent-soft:#3F2A21;--on-accent:#22130C;
-    --play:#8FD0D4;--play-soft:#1D3537;--ok:#8CC58A;--ok-soft:#1C3322;--warn:#EE9A85;--warn-soft:#3B221D;
+    --play:#8FD0D4;--play-soft:#1D3537;--ok:#8CC58A;--ok-soft:#1C3322;--warn:#EE9A85;--warn-soft:#3B221D;--add:#FF7B70;--add-soft:#4A1E1A;
     --veil:rgba(27,19,16,.93);--emboss:0 1px 0 rgba(0,0,0,.6),0 0 6px rgba(227,154,114,.12);--emboss-lift:0 1px 0 rgba(0,0,0,.7),0 0 12px rgba(227,154,114,.3);
     --textile:url("assets/textile-dark.jpg");--textile-alpha:.2;--hero-alpha:.8;--art-alpha:.3;color-scheme:dark;
   }
@@ -223,6 +223,22 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
 .movebox p{margin:0;flex:1 1 100%;color:var(--muted);font-size:1rem}
 .movebox .btn{font-size:1.15rem;min-height:2.2rem}
 .alts{display:flex;gap:10px;align-items:flex-start;margin-top:4px;padding-top:6px;border-top:1px dotted var(--line)}
+/* Another part added to the guitar: its notes are red rings, fitted around what the guitar plays */
+.addparts{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px}
+.addparts .lab{font-style:italic;color:var(--muted)}
+.addparts .check input{accent-color:var(--add)}
+.addparts .key{flex:1 1 100%;color:var(--add)}
+.addbar{margin-top:12px;padding-top:8px;border-top:1px dotted var(--line)}
+.addbar-lab{margin:0;font-style:italic;font-size:1rem;color:var(--add)}
+.box .d.opt .bg{fill:var(--add-soft);stroke:var(--add);stroke-width:2.2}
+.box .d.opt text{fill:var(--add)}
+.box .d.opt.on .bg{fill:var(--add);stroke:var(--add)}
+.box .d.opt.on text{fill:var(--surface)}
+.strip .n.opt circle{fill:var(--add-soft);stroke:var(--add);stroke-width:1.8}
+.strip .n.opt text{fill:var(--add)}
+.strip .n.opt line{stroke:var(--add)}
+.strip .n.opt.on circle{fill:var(--add)}
+.strip .n.opt.on text{fill:var(--surface)}
 .alts svg.box{opacity:.85}
 
 .nowplaying{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;align-items:center;justify-content:center;gap:16px;pointer-events:none;
@@ -324,6 +340,7 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
         <button type="button" id="playall" class="btn primary" data-label="Play all">Play all</button>
         <p class="key">The numbers are the order you play. Pale rings are the rest of the chord. Tap a note to hear it or move it to another string.</p>
       </div>
+      <div id="addparts" class="addparts" hidden></div>
       <details class="settings" id="settings">
         <summary>Settings</summary>
         <div class="controls">
@@ -381,7 +398,7 @@ var MAXF = 19;
 var ORD = ["", "1st", "2nd", "3rd", "4th", "5th", "6th"];
 var reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
-var state = {score:null, roles:[], meas:[], seq:[], bars:[], rec:null, tempNotes:null, sel:null, flat:false};
+var state = {score:null, roles:[], adds:[], meas:[], seq:[], bars:[], rec:null, tempNotes:null, sel:null, flat:false};
 var cache = {}, ctx = null, run = null, saveTimer = null;
 
 /* ---------- Small helpers ---------- */
@@ -866,6 +883,7 @@ function build(){
   state.singSilent = false;
   if (sp < 0) gp.forEach(function(i){ if (sp < 0 && score.parts[i].lyricShare > 0.1){ sp = i; state.singSilent = true; } });
   var shift = score.parts.map(function(p, i){ return roles[i] === "guitar" ? partShift(p, open, why) : (p.transpose ? p.transpose.chrom + 12*p.transpose.oct : 0); });
+  var adds = activeAdds();
   var M = 0; score.parts.forEach(function(p){ M = Math.max(M, p.measures.length); });
   var basePart = score.parts[gp.length ? gp[0] : (sp >= 0 ? sp : 0)];
   var moves = movesStore(), toG = new Map(), meas = [], folded = 0;
@@ -891,6 +909,22 @@ function build(){
       });
     });
     ms.gnotes.sort(function(a, b){ return a.t - b.t || b.m - a.m; });
+    /* parts added to the guitar, at the pitch they sound, an octave over where the guitar can't reach */
+    ms.extra = {};
+    adds.forEach(function(ai){
+      var pm = score.parts[ai].measures[mi]; if (!pm) return;
+      ms.len = Math.max(ms.len, pm.len);
+      ms.extra[ai] = pm.notes.map(function(n, ni){
+        var m = n.m + shift[ai];
+        while (m < lowest) m += 12;
+        while (m > highest) m -= 12;
+        var key = "a" + ai + ":" + mi + ":" + ni;
+        var g = {m: m, t: n.t, durQ: n.durQ, grace: n.grace, vel: n.vel, src: n, key: key, fixed: moves[key] || null, moved: !!moves[key], tied: false, from: null, opt: true, part: ai};
+        if (n.tieFrom && toG.has(n.tieFrom)){ g.tied = true; g.from = toG.get(n.tieFrom); }
+        toG.set(n, g);
+        return g;
+      });
+    });
     if (sp >= 0 && score.parts[sp].measures[mi]){
       var sm = score.parts[sp].measures[mi];
       ms.len = Math.max(ms.len, sm.len);
@@ -922,6 +956,10 @@ function slicesOf(meas){
       var seen = {}; sl.notes = [];
       sl.all.forEach(function(n){ if (seen[n.m]){ n.dup = seen[n.m]; return; } seen[n.m] = n; sl.notes.push(n); });
       sl.notes.sort(function(a, b){ return b.m - a.m; });
+      while (sl.notes.length > 6 && sl.notes.some(function(n){ return n.opt; })){
+        var od = sl.notes.filter(function(n){ return n.opt; }).sort(function(a, b){ return a.durQ - b.durQ; })[0];
+        od.dropped = true; sl.notes.splice(sl.notes.indexOf(od), 1);
+      }
       if (sl.notes.length > 6){
         var keep = [sl.notes[0], sl.notes[sl.notes.length - 1]].concat(sl.notes.slice(1, -1).sort(function(a, b){ return b.durQ - a.durQ; }).slice(0, 4));
         sl.notes.forEach(function(n){ if (keep.indexOf(n) < 0) n.dropped = true; });
@@ -975,9 +1013,17 @@ function finger(meas, O){
   var slices = slicesOf(meas), WMAX = MAXF - 3;
   slices.forEach(function(sl){
     var cands = candidatesFor(sl, O);
+    if (!cands.length && sl.notes.some(function(n){ return n.opt; })){
+      /* an added note won't fit around the guitar's strings: try moving the guitar's notes before leaving it out */
+      var fx = sl.notes.map(function(n){ return n.fixed; });
+      sl.notes.forEach(function(n){ if (!n.opt && !n.moved) n.fixed = null; });
+      cands = candidatesFor(sl, O);
+      if (!cands.length) sl.notes.forEach(function(n, i){ n.fixed = fx[i]; });
+    }
     while (!cands.length && sl.notes.length > 1){
       /* no way to play them all at once: leave out an inner note */
-      var drop = sl.notes.length > 2 ? sl.notes.slice(1, -1).sort(function(a, b){ return a.durQ - b.durQ; })[0] : sl.notes[1];
+      var extra = sl.notes.filter(function(n){ return n.opt; }).sort(function(a, b){ return a.durQ - b.durQ; });
+      var drop = extra.length && extra.length < sl.notes.length ? extra[0] : sl.notes.length > 2 ? sl.notes.slice(1, -1).sort(function(a, b){ return a.durQ - b.durQ; })[0] : sl.notes[1];
       drop.dropped = true; sl.notes.splice(sl.notes.indexOf(drop), 1);
       cands = candidatesFor(sl, O);
     }
@@ -1091,6 +1137,30 @@ function gripsByWindow(h, O){
   return perW;
 }
 
+/* ---------- Another part added to the guitar ----------
+   The guitar keeps its own strings and frets; the added part's notes are fingered around them in the
+   same hand positions where they fit. Notes that can't be played along with the guitar are left out. */
+function activeAdds(){ var out = []; (state.adds || []).forEach(function(on, i){ if (on && state.roles[i] !== "guitar") out.push(i); }); return out; }
+function comboFor(meas, ai){
+  var map = new Map();
+  return meas.map(function(ms){
+    var c = {mi: ms.mi, number: ms.number, len: ms.len, beats: ms.beats, beatType: ms.beatType, harm: ms.harm, sing: [], gnotes: [], ai: ai};
+    ms.gnotes.forEach(function(n){
+      if (!n.s && !n.tied) return;
+      var g = {m: n.m, t: n.t, durQ: n.durQ, grace: n.grace, vel: n.vel, src: n.src, key: n.key, fixed: n.s || n.fixed, moved: n.moved, tied: n.tied, from: n.tied && n.from ? map.get(n.from) || null : null};
+      if (n.tied && !g.from) g.tied = false;
+      map.set(n, g); c.gnotes.push(g);
+    });
+    (ms.extra[ai] || []).forEach(function(n){
+      var g = {}; for (var k in n) g[k] = n[k];
+      g.from = n.tied && n.from ? map.get(n.from) || null : null; if (n.tied && !g.from) g.tied = false;
+      map.set(n, g); c.gnotes.push(g);
+    });
+    c.gnotes.sort(function(a, b){ return a.t - b.t || b.m - a.m; });
+    return c;
+  });
+}
+
 /* ---------- Grouping a bar into diagrams ---------- */
 function harmAt(meas, mi, t){
   for (var i = mi; i >= 0; i--){
@@ -1179,7 +1249,8 @@ function boxSVG(g, O, capo, bi){
   var dots = {}, fretted = [];
   function addDot(n, label, kind){
     var id = n.s + ":" + n.f;
-    var d = dots[id] || (dots[id] = {s: n.s, f: n.f, m: n.m, nums: [], keys: [], sl: [], held: false, moved: false});
+    var d = dots[id] || (dots[id] = {s: n.s, f: n.f, m: n.m, nums: [], keys: [], sl: [], held: false, moved: false, opt: null});
+    d.opt = n.opt ? d.opt !== false : false;
     if (label != null && d.nums.indexOf(label) < 0) d.nums.push(label);
     if (n.key) d.keys.push(n.key);
     if (n.moved) d.moved = true;
@@ -1225,7 +1296,7 @@ function boxSVG(g, O, capo, bi){
   Object.keys(dots).forEach(function(k){
     var d = dots[k], label = g.strum || g.comp ? "" : ranges(d.nums.sort(function(a, b){ return a - b; }));
     var cx = x(d.s), cy = d.f === 0 ? MT - 12 : y(d.f), r = d.f === 0 ? 7.5 : 9.6, wd = Math.max(r*2, label.length*6 + 9);
-    var cls = "d" + (d.f === 0 ? " op" : "") + (d.held ? " held" : "") + (d.moved ? " moved" : "");
+    var cls = "d" + (d.f === 0 ? " op" : "") + (d.held ? " held" : "") + (d.moved ? " moved" : "") + (d.opt ? " opt" : "");
     var two = label && d.nums.length === 2 && label.indexOf("–") < 0 && d.f > 0, shape;
     if (two){
       /* two numbers on one spot: stacked in a tall capsule that stays inside its fret */
@@ -1267,7 +1338,8 @@ function stripSVG(g, ms){
   }
   g.slices.forEach(function(sl, k){
     var cx = X(sl.t), ex = X(Math.min(t1, sl.t + Math.max(0.05, sl.dur || 0)));
-    p.push('<g class="n" data-sl="' + sl.k + '">' + (ex > cx + 8 ? '<line x1="' + (cx + 6).toFixed(1) + '" x2="' + ex.toFixed(1) + '" y1="13" y2="13"/>' : "") +
+    var opt = sl.notes.length && sl.notes.every(function(n){ return n.opt; });
+    p.push('<g class="n' + (opt ? " opt" : "") + '" data-sl="' + sl.k + '">' + (ex > cx + 8 ? '<line x1="' + (cx + 6).toFixed(1) + '" x2="' + ex.toFixed(1) + '" y1="13" y2="13"/>' : "") +
       '<circle cx="' + cx.toFixed(1) + '" cy="13" r="7.4"/>' + (g.strum || g.comp ? "" : '<text x="' + cx.toFixed(1) + '" y="13.5">' + (g.cycle ? k % g.cycle + 1 : k + 1) + "</text>") + "</g>");
   });
   p.push("</svg>");
@@ -1305,6 +1377,24 @@ function unroll(ms){
   }
   return out;
 }
+function figsHTML(groups, ms, b, bi){
+  var widthNeed = 0;
+  var html = groups.map(function(g, gi){
+    var name = (g.name ? esc(g.name) + (g.more && g.more.length ? " <small>then " + esc(g.more.join(", ")) + "</small>" : "") : "") +
+      (g.rep ? " <small>" + (g.rep === 2 ? "twice" : g.rep + " times") + "</small>" : "");
+    var bx = boxSVG(g, b.O, b.capo, bi), st = stripSVG(g, ms), alts = "";
+    widthNeed += Math.max(svgW(bx), svgW(st)) + 20;
+    if (g.alts && g.alts.length){
+      /* the first time a chord comes up, two other grips for it sit just under the main one */
+      alts = '<div class="alts" aria-label="Other ways to play ' + esc(g.name) + '">' + g.alts.map(function(a){
+        var ag = {w: a.w, comp: true, slices: [{t: 0, k: -1, notes: a.notes}]};
+        return shrink(boxSVG(ag, b.O, b.capo, bi), 0.62);
+      }).join("") + "</div>";
+    }
+    return '<figure class="dg" data-g="' + gi + '"><figcaption class="dg-name">' + name + "</figcaption>" + bx + st + alts + "</figure>";
+  }).join("");
+  return {html: html, width: widthNeed};
+}
 function render(){
   stopRun();
   var score = state.score; if (!score) return;
@@ -1312,6 +1402,19 @@ function render(){
   finger(meas, b.O);
   var comp = $("comp").checked, prevW = 5, seen = {};
   meas.forEach(function(ms){ ms.groups = layoutBar(ms, meas, b.O, comp, prevW, seen); ms.groups.forEach(function(g){ if (g.w) prevW = g.w; }); });
+  var addWhy = [];
+  activeAdds().forEach(function(ai){
+    var cm = comboFor(meas, ai), pw = 5, seenC = {}, left = 0;
+    finger(cm, b.O);
+    cm.forEach(function(c){
+      c.groups = layoutBar(c, cm, b.O, false, pw, seenC);
+      c.groups.forEach(function(g){ if (g.w) pw = g.w; });
+      c.slices.forEach(function(sl){ sl.k = "a" + ai + "-" + sl.k; });
+      c.gnotes.forEach(function(n){ if (n.opt && n.dropped) left++; });
+      (meas[c.mi].combo = meas[c.mi].combo || {})[ai] = c;
+    });
+    if (left) addWhy.push(plural(left, "note") + " of the " + score.parts[ai].name + " can't be played along with the guitar part and " + (left === 1 ? "is" : "are") + " left out.");
+  });
   state.meas = meas; state.open = b.open; state.capo = b.capo; state.O = b.O;
   var seq = $("repeats").checked ? unroll(meas) : meas.map(function(m, k){ return {mi: k, pass: 1}; });
   /* trim empty bars at the very end */
@@ -1324,27 +1427,19 @@ function render(){
     if (item.pass > 1) meta.push(ordinal(item.pass) + " time");
     var sing = singHTML(ms, meas, bi); if (sing) anySing = true;
     var hasNotes = ms.slices.length > 0;
-    var widthNeed = 0;
-    var figs = ms.groups.map(function(g, gi){
-      var name = (g.name ? esc(g.name) + (g.more && g.more.length ? " <small>then " + esc(g.more.join(", ")) + "</small>" : "") : "") +
-        (g.rep ? " <small>" + (g.rep === 2 ? "twice" : g.rep + " times") + "</small>" : "");
-      var bx = boxSVG(g, b.O, b.capo, bi), st = stripSVG(g, ms), alts = "";
-      widthNeed += Math.max(svgW(bx), svgW(st)) + 20;
-      if (g.alts && g.alts.length){
-        /* the first time a chord comes up, two other grips for it sit just under the main one */
-        alts = '<div class="alts" aria-label="Other ways to play ' + esc(g.name) + '">' + g.alts.map(function(a){
-          var ag = {w: a.w, comp: true, slices: [{t: 0, k: -1, notes: a.notes}]};
-          return shrink(boxSVG(ag, b.O, b.capo, bi), 0.62);
-        }).join("") + "</div>";
-      }
-      return '<figure class="dg" data-g="' + gi + '"><figcaption class="dg-name">' + name + "</figcaption>" + bx + st + alts + "</figure>";
-    }).join("");
+    var main = figsHTML(ms.groups, ms, b, bi), figs = main.html, widthNeed = main.width, addRows = "";
+    if (ms.combo) Object.keys(ms.combo).forEach(function(ai){
+      var c = ms.combo[ai];
+      if (!c.gnotes.some(function(n){ return n.opt && !n.dropped && !n.tied; })) return;
+      var f = figsHTML(c.groups, c, b, bi); widthNeed = Math.max(widthNeed, f.width);
+      addRows += '<div class="addbar"><p class="addbar-lab">With the ' + esc(score.parts[ai].name) + '</p><div class="dgs">' + f.html + "</div></div>";
+    });
     var wide = widthNeed > 300 || (sing && ms.sing.length > 9);
     html.push('<section class="bar' + (wide ? " wide" : "") + '" data-bi="' + bi + '" aria-label="Bar ' + (bi + 1) + '"><div class="bar-head"><div class="bar-title"><h3>Bar ' + (bi + 1) + "</h3>" +
       (meta.length ? '<span class="bar-meta">' + esc(meta.join(" · ")) + "</span>" : "") + "</div>" +
       '<div class="barplays">' + (hasNotes || ms.sing.length ? '<button type="button" class="btn barplay" data-play="' + bi + '" data-label="Play" aria-label="Play bar ' + (bi + 1) + '">Play</button>' : "") +
       (bi < seq.length - 1 ? '<button type="button" class="btn barplay" data-from="' + bi + '" data-label="Play from here" aria-label="Play from bar ' + (bi + 1) + ' to the end">Play from here</button>' : "") + "</div></div>" +
-      sing + (figs ? '<div class="dgs">' + figs + "</div>" : '<p class="rest">' + (ms.sing.length ? "The guitar rests." : "Rest") + "</p>") +
+      sing + (figs ? '<div class="dgs">' + figs + "</div>" : '<p class="rest">' + (ms.sing.length ? "The guitar rests." : "Rest") + "</p>") + addRows +
       '<div class="movebox" hidden></div></section>');
   });
   $("bars").innerHTML = html.join("");
@@ -1352,7 +1447,7 @@ function render(){
   var gnames = state.roles.map(function(r, i){ return r === "guitar" ? score.parts[i].name : null; }).filter(Boolean);
   $("fmeta").textContent = plural(seq.length, "bar") + (gnames.length ? " · " + gnames.join(", ") : "") + (state.rec && state.rec.kind ? " · " + state.rec.kind : "");
   var dropped = 0; meas.forEach(function(ms){ ms.gnotes.forEach(function(n){ if (n.dropped) dropped++; }); });
-  var notes = b.why.slice();
+  var notes = b.why.concat(addWhy);
   if (dropped) notes.push(plural(dropped, "note") + " that couldn't be played with the others " + (dropped === 1 ? "was" : "were") + " left out.");
   if (b.capo) notes.push("Frets are counted from the capo.");
   $("pitchnote").textContent = notes.join(" ");
@@ -1544,6 +1639,15 @@ function buildEvents(from, to){
         ev.push(x); if (n.src) lastG.set(n.src, x);
       });
     });
+    /* parts added to the guitar, on the strings their red rings show */
+    if (ms.combo) Object.keys(ms.combo).forEach(function(ai){
+      ms.combo[ai].slices.forEach(function(sl){
+        sl.notes.forEach(function(n){
+          if (!n.opt || !n.s) return;
+          ev.push({type: "g", midi: n.m, s: n.s, when: off + sl.t*spq, dur: n.grace ? 0.12 : Math.max(0.08, (n.durQ || sl.dur || 1)*spq), bi: b, k: sl.k, vel: n.vel, soft: false});
+        });
+      });
+    });
     ms.gnotes.forEach(function(n){
       if (!n.tied || !n.src.tieFrom) return;
       var x = lastG.get(n.src.tieFrom); if (!x) return;
@@ -1596,10 +1700,11 @@ window.FretFinder = {
 
 /* ---------- Loading a score into the song view ---------- */
 function countUnits(score){ var M = 0; score.parts.forEach(function(p){ M = Math.max(M, p.measures.length); }); return {count: M, unit: "Bar"}; }
-function readSettings(){ return {roles: state.roles.slice(), tuning: $("tuning").value, capo: parseInt($("capo").value, 10) || 0, oct: $("oct").value, tempo: clampTempo($("tempo").value), repeats: $("repeats").checked, sing: $("singon").checked, comp: $("comp").checked}; }
+function readSettings(){ return {roles: state.roles.slice(), adds: activeAdds(), tuning: $("tuning").value, capo: parseInt($("capo").value, 10) || 0, oct: $("oct").value, tempo: clampTempo($("tempo").value), repeats: $("repeats").checked, sing: $("singon").checked, comp: $("comp").checked}; }
 function applySettings(s){
   if (!s) return;
   if (Array.isArray(s.roles) && s.roles.length === state.score.parts.length) state.roles = s.roles.slice();
+  if (Array.isArray(s.adds)) s.adds.forEach(function(i){ if (i >= 0 && i < state.adds.length) state.adds[i] = true; });
   if (s.tuning && $("tuning").querySelector('option[value="' + s.tuning + '"]')) $("tuning").value = s.tuning;
   if (s.capo != null) $("capo").value = String(s.capo);
   if (s.oct != null) $("oct").value = String(s.oct);
@@ -1607,6 +1712,23 @@ function applySettings(s){
   if (s.repeats != null) $("repeats").checked = !!s.repeats;
   if (s.sing != null) $("singon").checked = !!s.sing;
   if (s.comp != null) $("comp").checked = !!s.comp;
+}
+/* a box for each other part with notes in it: tick it to see its notes on the guitar, in red */
+function renderAdds(){
+  var score = state.score, el = $("addparts");
+  var gp = state.roles.map(function(r, i){ return r === "guitar" ? score.parts[i] : null; }).filter(Boolean);
+  var list = [];
+  score.parts.forEach(function(p, i){
+    if (state.roles[i] === "guitar") return;
+    if (!p.measures.some(function(m){ return m.notes.length; })) return;
+    if (gp.some(function(g){ return sameNotes(g, p); })) return;
+    list.push(i);
+  });
+  if (!list.length){ el.hidden = true; el.innerHTML = ""; return; }
+  el.hidden = false;
+  el.innerHTML = '<span class="lab">Add to the guitar:</span>' + list.map(function(i){
+    return '<label class="check"><input type="checkbox" data-add="' + i + '"' + (state.adds[i] ? " checked" : "") + "><span>" + esc(score.parts[i].name) + "</span></label>";
+  }).join("") + (activeAdds().length ? '<p class="key">Under each bar, red rings show how the added notes fit around what the guitar plays. Play includes them.</p>' : "");
 }
 function renderRoles(){
   var score = state.score;
@@ -1620,6 +1742,7 @@ function loadScore(score, settings){
   stopRun();
   state.score = score; state.flat = (score.fifths || 0) < 0;
   state.roles = defaultRoles(score);
+  state.adds = score.parts.map(function(){ return false; });
   var gp = state.roles.indexOf("guitar"), ft = gp >= 0 ? score.parts[gp].tuning : null;
   state.fileTuning = null;
   var opts = TUNINGS.map(function(t){ return '<option value="' + t[0] + '">' + esc(t[1]) + "</option>"; });
@@ -1632,7 +1755,7 @@ function loadScore(score, settings){
   var tp = null; score.parts.forEach(function(p){ if (tp === null && p.tempo) tp = p.tempo; });
   $("tempo").value = tp ? clampTempo(tp) : 100;
   applySettings(settings);
-  renderRoles();
+  renderRoles(); renderAdds();
   $("rolesfield").hidden = score.parts.length < 2;
   $("error").hidden = true;
   render();
@@ -2148,7 +2271,12 @@ $("roles").addEventListener("change", function(e){
   var v = e.target.value;
   if (v === "sing") state.roles = state.roles.map(function(r, k){ return k !== i && r === "sing" ? "off" : r; });
   state.roles[i] = v;
-  renderRoles(); render(); scheduleSave();
+  renderRoles(); renderAdds(); render(); scheduleSave();
+});
+$("addparts").addEventListener("change", function(e){
+  var i = parseInt(e.target.getAttribute("data-add"), 10); if (isNaN(i)) return;
+  state.adds[i] = e.target.checked;
+  renderAdds(); render(); scheduleSave();
 });
 $("tempo").addEventListener("change", function(){ $("tempo").value = clampTempo($("tempo").value); scheduleSave(); });
 $("title").addEventListener("change", function(){
