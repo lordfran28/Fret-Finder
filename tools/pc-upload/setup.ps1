@@ -10,9 +10,11 @@ $Keys = "https://github.com/settings/personal-access-tokens"
 $NewKey = "https://github.com/settings/personal-access-tokens/new?name=Fret%20Finder%20uploads%20from%20PC&description=Adds%20songs%20from%20the%20PC%20to%20Fret%20Finder&target_name=lordfran28&expires_in=366&contents=write"
 
 function Test-Key([string]$plain) {
-  # 0 = it works, 401 = GitHub doesn't know the key, 403/404 = it can't see Fret-Finder, -1 = no internet
+  # 0 = it can add songs, 401 = GitHub doesn't know the key, 403/404 = it can't add to Fret-Finder, -1 = no internet.
+  # Reading isn't enough to know (anyone can read the site), so it writes a small loose object that never shows anywhere.
   try {
-    Invoke-WebRequest -Uri ($Api + "/contents/songs") -UseBasicParsing -UserAgent "FretFinderUpload" -Headers @{ Authorization = "Bearer $plain"; Accept = "application/vnd.github+json" } | Out-Null
+    $body = [Text.Encoding]::UTF8.GetBytes('{"content":"Fret Finder upload key check","encoding":"utf-8"}')
+    Invoke-WebRequest -Uri ($Api + "/git/blobs") -Method POST -Body $body -ContentType "application/json" -UseBasicParsing -UserAgent "FretFinderUpload" -Headers @{ Authorization = "Bearer $plain"; Accept = "application/vnd.github+json" } | Out-Null
     return 0
   } catch {
     if ($_.Exception.Response) { return [int]$_.Exception.Response.StatusCode }
@@ -36,33 +38,10 @@ Write-Host ""
 $plain = $null
 if ($env:FF_KEY) { $plain = $env:FF_KEY.Trim() }
 
-# The Valve Finder key on this computer can do the job too, once Fret-Finder is added to it.
+# The Valve Finder key on this computer does the job too, if it was made for both sites.
 $vf = $null
 if (-not $plain -and (Test-Path -LiteralPath $VfKey)) { $vf = Read-VfKey }
-if ($vf) {
-  $code = Test-Key $vf
-  if ($code -eq 0) { $plain = $vf; Write-Host "  Using the same GitHub key as Valve Finder." -ForegroundColor Green }
-  elseif ($code -eq 403 -or $code -eq 404) {
-    Write-Host "  This computer already has the GitHub key Valve Finder uses. It just needs Fret-Finder added to it:"
-    Write-Host ""
-    Write-Host "  1. A GitHub page is opening with your keys. Click 'Valve Finder uploads from PC'."
-    Write-Host "  2. Under 'Repository access', add Fret-Finder next to Valve-Finder."
-    Write-Host "  3. Press 'Update' at the bottom. The key itself stays the same."
-    Write-Host "  4. Come back here and press Enter."
-    Write-Host ""
-    Start-Process $Keys
-    for ($try = 1; $try -le 3 -and -not $plain; $try++) {
-      $typed = Read-Host "  Press Enter when it's done (or paste a different key)" -AsSecureString
-      $t = [Runtime.InteropServices.Marshal]::PtrToStringBSTR([Runtime.InteropServices.Marshal]::SecureStringToBSTR($typed)).Trim()
-      $candidate = if ($t) { $t } else { $vf }
-      $code = Test-Key $candidate
-      if ($code -eq 0) { $plain = $candidate }
-      elseif ($code -eq 401) { Write-Host "  GitHub didn't accept that key. Copy it again (the whole thing, starting github_pat_)." -ForegroundColor Red }
-      elseif ($code -eq -1) { Write-Host "  Couldn't reach GitHub. Check the internet connection and try again." -ForegroundColor Red }
-      else { Write-Host "  The key still can't see Fret-Finder. Check that it's ticked under Repository access and press 'Update'." -ForegroundColor Red }
-    }
-  }
-}
+if ($vf -and (Test-Key $vf) -eq 0) { $plain = $vf; Write-Host "  Using the same GitHub key as Valve Finder." -ForegroundColor Green }
 
 # No usable key yet: make one for Fret Finder.
 if (-not $plain -and -not $env:FF_KEY) {
