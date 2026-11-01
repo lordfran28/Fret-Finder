@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Writes songs/index.json: the list of songs the site shows.
 
-Every MusicXML, MIDI or Guitar Pro file anywhere under songs/ is a song. A file may have a
-companion "<file>.ff.json", written by the site, holding its title, settings and playing notes.
+A folder under songs/ with a song.json in it is an arrangement made in conversation: its page is
+the folder's index.html. Any MusicXML, MIDI or Guitar Pro file elsewhere under songs/ is listed too.
+A file may have a companion "<file>.ff.json", written by the site, holding its title and settings.
 """
 import datetime, hashlib, json, os, re, subprocess, unicodedata
 
@@ -46,6 +47,28 @@ def main():
     songs, used = [], set()
     for folder, dirs, files in os.walk(ROOT):
         dirs[:] = sorted(d for d in dirs if not d.startswith("."))
+        if folder != ROOT and "song.json" in files and "index.html" in files:
+            try:
+                with open(os.path.join(folder, "song.json"), encoding="utf-8") as f:
+                    meta = json.load(f) or {}
+            except (OSError, ValueError):
+                meta = {}
+            rel = folder.replace(os.sep, "/")
+            sid = slug(rel[len(ROOT) + 1:])
+            while sid in used:
+                sid += "-2"
+            used.add(sid)
+            songs.append({
+                "id": sid,
+                "file": rel + "/",
+                "page": rel + "/",
+                "title": str(meta.get("title") or os.path.basename(folder)),
+                "kind": "arrangement",
+                "instrument": str(meta.get("instrument") or "guitar"),
+                "addedAt": utc(meta.get("addedAt") or first_added(os.path.join(folder, "song.json"))),
+            })
+            dirs[:] = []
+            continue
         for name in sorted(files):
             stem, ext = os.path.splitext(name)
             if ext.lower() not in KINDS or name.startswith("."):

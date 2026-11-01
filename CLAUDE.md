@@ -4,6 +4,15 @@ Draft 2, 31 October 2026. The Orthodox and Unorthodox choice comes from the owne
 
 These are the standing instructions for anyone, person or Claude, changing this site. Read them before touching `index.html`.
 
+## Since 31 October 2026: the shelf
+
+The owner decided the automatic transcription can't produce diagrams a guitarist can play from, so the site's main job is now a **shelf for the arrangements made in conversation with Claude**. The transcription engine below stays in the code but is not the focus.
+
+- Each arrangement is a folder `songs/<slug>/` holding the arrangement page (`index.html`), the audio it uses, and `song.json` (title, instrument, date, source artifact).
+- Put one there with `python3 tools/import_arrangement.py PAGE.html SLUG "Title" --file NAME=PATH ... [--drop-alt]`. It adds Fret Finder's look (`assets/shelf.css`, which only sets the page's colour and type variables) and a link back to the songs.
+- The site is public. Never put a record's own audio (a vocal mix, a stem) or copyrighted lyrics on it; `--drop-alt` removes a page's second audio track. Pages for songs still under copyright need their lyrics taken out, or a private way to serve them, before they go up.
+- `.github/scripts/song_index.py` lists every such folder in `songs/index.json`; the library links straight to the page.
+
 ## What the site is for
 
 The owner sings and plays guitar at the same time. He feeds Fret Finder a song file and wants back a page he can play from: every bar in playing order, one diagram per hand position, notes numbered in the order they're played, the singing line with its chord changes over the words, and sound to check it by ear.
