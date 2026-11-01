@@ -49,7 +49,9 @@ These come from his own corrections over many arrangements. They outrank anythin
 **Layout**
 - The full arrangement goes at the top, bar 1, bar 2 and on, in playing order, with no repeats or jumps left for the player to follow. Explanations and alternatives go at the bottom.
 - The singing goes on top of each bar. Every chord change sits against the word it falls on.
-- Runs, scales and octaves are shown as numbered dots in chord diagrams, not as tab.
+- Runs, scales and octaves are shown as numbered dots in chord diagrams, not as tab. Nothing else gets numbers: other dots are plain and light up in order as they're played.
+- No rhythm line under the diagrams.
+- The fret number beside a diagram is large; it matters.
 - For each chord, show the main grip with a few other ways to play it right underneath (triads, inversions, wider stretches). Don't hide them behind a click.
 - Describe positions plainly ("barre at the 5th fret, root on the 6th string"). Don't use CAGED names such as "E shape".
 
