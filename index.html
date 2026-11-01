@@ -194,7 +194,7 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
 .box .str{stroke:var(--dot-line);stroke-width:1}
 .box .fr{stroke:var(--line);stroke-width:1.3}
 .box .nut{stroke:var(--ink);stroke-width:4}
-.box .pos{fill:var(--muted);font-size:12.5px;font-style:italic}
+.box .pos{fill:var(--ink);font-size:19px;font-weight:600;font-variant-numeric:lining-nums}
 .box .mk{fill:var(--line)}
 .box .ct{fill:none;stroke:var(--dot-line);stroke-width:1.3;opacity:.7}
 .box .x{fill:var(--muted);font-size:12px;text-anchor:middle}
@@ -338,7 +338,7 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
     <div class="songtools">
       <div class="toolrow">
         <button type="button" id="playall" class="btn primary" data-label="Play all">Play all</button>
-        <p class="key">The numbers are the order you play. Pale rings are the rest of the chord. Tap a note to hear it or move it to another string.</p>
+        <p class="key">The dots light up in the order you play them. Runs and scales are numbered. Pale rings are the rest of the chord. The number on the left is the fret. Tap a note to hear it or move it to another string.</p>
       </div>
       <div id="addparts" class="addparts" hidden></div>
       <details class="settings" id="settings">
@@ -1222,8 +1222,24 @@ function layoutBar(ms, meas, O, comp, prevW, seen){
       g.more = inside.map(function(x){ return x.name; });
     }
     g.strum = !g.comp && g.slices.length > 0 && g.slices.every(function(sl){ return sl.notes.length >= 3 && sameShape(sl, g.slices[0]); });
+    g.run = !g.comp && isRun(g.slices);
   });
   return out;
+}
+/* A run: single notes (or octaves) that mostly move by step. Only runs get numbers; everything else
+   is plain dots that light up as they're played. */
+function isRun(slices){
+  if (slices.length < 3) return false;
+  var tops = [];
+  for (var i = 0; i < slices.length; i++){
+    var ns = slices[i].notes;
+    if (ns.length === 1) tops.push(ns[0].m);
+    else if (ns.length === 2 && Math.abs(ns[0].m - ns[1].m) === 12) tops.push(Math.max(ns[0].m, ns[1].m));
+    else return false;
+  }
+  var steps = 0;
+  for (i = 1; i < tops.length; i++){ var d = Math.abs(tops[i] - tops[i - 1]); if (d >= 1 && d <= 2) steps++; }
+  return steps/(tops.length - 1) >= 0.6;
 }
 function shapeKey(sl){ return sl.notes.map(function(n){ return n.s + ":" + n.f; }).join(","); }
 function cycleOf(slices){
@@ -1244,7 +1260,7 @@ function ranges(list){
 }
 
 /* ---------- Drawing ---------- */
-var SX = 20, ML = 32, MT = 24, FY = 27;
+var SX = 20, ML = 36, MT = 24, FY = 27;
 function boxSVG(g, O, capo, bi){
   var dots = {}, fretted = [];
   function addDot(n, label, kind){
@@ -1271,7 +1287,7 @@ function boxSVG(g, O, capo, bi){
   for (var i = 0; i <= nf; i++) p.push('<line class="fr" x1="' + ML + '" x2="' + (ML + 5*SX) + '" y1="' + (MT + i*FY) + '" y2="' + (MT + i*FY) + '"/>');
   for (var s = 1; s <= 6; s++) p.push('<line class="str" x1="' + x(s) + '" x2="' + x(s) + '" y1="' + MT + '" y2="' + (MT + nf*FY) + '"/>');
   if (base === 1) p.push('<line class="nut" x1="' + (ML - 1) + '" x2="' + (ML + 5*SX + 1) + '" y1="' + (MT - 1) + '" y2="' + (MT - 1) + '"/>');
-  else p.push('<text class="pos" x="' + (ML - 13) + '" y="' + (y(base) + 4) + '" text-anchor="end">' + base + '</text>');
+  else p.push('<text class="pos" x="' + (ML - 12) + '" y="' + (y(base) + 6.5) + '" text-anchor="end">' + base + '</text>');
   /* the rest of the chord, faintly */
   if (g.harm && g.harm.pcs && !g.strum && !g.comp){
     for (s = 1; s <= 6; s++) for (f = Math.max(1, base); f < base + nf; f++){
@@ -1294,7 +1310,7 @@ function boxSVG(g, O, capo, bi){
     }
   }
   Object.keys(dots).forEach(function(k){
-    var d = dots[k], label = g.strum || g.comp ? "" : ranges(d.nums.sort(function(a, b){ return a - b; }));
+    var d = dots[k], label = g.run ? ranges(d.nums.sort(function(a, b){ return a - b; })) : "";
     var cx = x(d.s), cy = d.f === 0 ? MT - 12 : y(d.f), r = d.f === 0 ? 7.5 : 9.6, wd = Math.max(r*2, label.length*6 + 9);
     var cls = "d" + (d.f === 0 ? " op" : "") + (d.held ? " held" : "") + (d.moved ? " moved" : "") + (d.opt ? " opt" : "");
     var two = label && d.nums.length === 2 && label.indexOf("–") < 0 && d.f > 0, shape;
@@ -1382,8 +1398,8 @@ function figsHTML(groups, ms, b, bi){
   var html = groups.map(function(g, gi){
     var name = (g.name ? esc(g.name) + (g.more && g.more.length ? " <small>then " + esc(g.more.join(", ")) + "</small>" : "") : "") +
       (g.rep ? " <small>" + (g.rep === 2 ? "twice" : g.rep + " times") + "</small>" : "");
-    var bx = boxSVG(g, b.O, b.capo, bi), st = stripSVG(g, ms), alts = "";
-    widthNeed += Math.max(svgW(bx), svgW(st)) + 20;
+    var bx = boxSVG(g, b.O, b.capo, bi), alts = "";
+    widthNeed += svgW(bx) + 20;
     if (g.alts && g.alts.length){
       /* the first time a chord comes up, two other grips for it sit just under the main one */
       alts = '<div class="alts" aria-label="Other ways to play ' + esc(g.name) + '">' + g.alts.map(function(a){
@@ -1391,7 +1407,7 @@ function figsHTML(groups, ms, b, bi){
         return shrink(boxSVG(ag, b.O, b.capo, bi), 0.62);
       }).join("") + "</div>";
     }
-    return '<figure class="dg" data-g="' + gi + '"><figcaption class="dg-name">' + name + "</figcaption>" + bx + st + alts + "</figure>";
+    return '<figure class="dg" data-g="' + gi + '"><figcaption class="dg-name">' + name + "</figcaption>" + bx + alts + "</figure>";
   }).join("");
   return {html: html, width: widthNeed};
 }
