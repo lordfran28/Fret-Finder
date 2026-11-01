@@ -18,6 +18,8 @@
   --font-display:"IM Fell French Canon",Garamond,"Times New Roman",serif!important;
   --font-body:"EB Garamond",Garamond,Georgia,serif!important;
   --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace!important;
+  --paper:#FBF6EE!important;--rule:#D9C3A7!important;--rule-strong:#B39A7E!important;
+  --voice:#2C6A73!important;--voice-soft:#DCEAEA!important;--bass:#8A2E1E!important;--bass-soft:#F3DDD2!important;--now:#F1DFB8!important;
   --ff-textile:url("textile-light.jpg");--ff-textile-alpha:.11;
   color-scheme:light;
 }
@@ -27,6 +29,8 @@
     --accent:#E39A72!important;--accent-ink:#22130C!important;--accent-soft:#3F2A21!important;--pass:#8FD0D4!important;--land:#8CC58A!important;
     --brass:#E2BD6B!important;--brass-soft:#2A2316!important;
     --roll:#2F231D!important;--tone:#86705F!important;--hit:#4A3226!important;--runbg:#2A1E18!important;
+    --paper:#251B17!important;--rule:#4C3A31!important;--rule-strong:#6E5848!important;
+    --voice:#8FD0D4!important;--voice-soft:#1E3133!important;--bass:#E39A72!important;--bass-soft:#3F2A21!important;--now:#4A3A1C!important;
     --ff-textile:url("textile-dark.jpg");--ff-textile-alpha:.2;
     color-scheme:dark;
   }

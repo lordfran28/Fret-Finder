@@ -12,6 +12,9 @@ The owner decided the automatic transcription can't produce diagrams a guitarist
 - Put one there with `python3 tools/import_arrangement.py PAGE.html SLUG "Title" --file NAME=PATH ... [--drop-alt]`. It adds Fret Finder's look (`assets/shelf.css`, which only sets the page's colour and type variables) and a link back to the songs.
 - The site is public. Never put a record's own audio (a vocal mix, a stem) or copyrighted lyrics on it; `--drop-alt` removes a page's second audio track. Pages for songs still under copyright need their lyrics taken out, or a private way to serve them, before they go up.
 - `.github/scripts/song_index.py` lists every such folder in `songs/index.json`; the library links straight to the page.
+- The library lists only these arrangements, A to Z, and has no way to add a song. Songs transcribed on a device before the shelf are cleared from it when the library opens.
+- Titles of classical pieces start with the composer: "Bach – Prelude and Fugue, BWV 867".
+- Before a page goes up, take out anything copyrighted: a record's vocal or stem (also as a track choice in the page's data), the sung melody of a song under copyright (including the compendium's "you sing" notes), and the owner's own recordings of other people's records. Earlier-version iframes go too unless each one is checked.
 
 ## What the site is for
 

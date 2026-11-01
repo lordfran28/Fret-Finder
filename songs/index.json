@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-01T02:36:59Z",
+ "generatedAt": "2026-11-01T04:03:11Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -10,6 +10,33 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-10-28T12:00:00Z"
+  },
+  {
+   "id": "seria-fantastico",
+   "file": "songs/seria-fantastico/",
+   "page": "songs/seria-fantastico/",
+   "title": "Sería fantástico",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-01T04:03:10Z"
+  },
+  {
+   "id": "ya-vas-lyubil",
+   "file": "songs/ya-vas-lyubil/",
+   "page": "songs/ya-vas-lyubil/",
+   "title": "Я вас любил",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-01T04:03:10Z"
+  },
+  {
+   "id": "bach-prelude-and-fugue-bwv-867",
+   "file": "songs/bach-prelude-and-fugue-bwv-867/",
+   "page": "songs/bach-prelude-and-fugue-bwv-867/",
+   "title": "Bach – Prelude and Fugue, BWV 867",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-01T04:03:11Z"
   }
  ]
 }
