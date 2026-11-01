@@ -88,6 +88,7 @@ These come from his own corrections over many arrangements. They outrank anythin
 - Diagrams with numbered dots and a rhythm line.
 - Moving a note to another string.
 - Chord grips for symbol-only bars.
+- Other parts added to the guitar: tick a part (flute, piano, voice) and each bar gets a second row where its notes are red rings fitted around what the guitar plays, moving the guitar only where that's the only way to fit them. Play includes them.
 - Playback from real guitar recordings.
 
 **Known gaps**
