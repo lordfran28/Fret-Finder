@@ -230,14 +230,16 @@
       return { dots: dots, steps: steps.filter(function (x) { return !x.classList.contains("is-run"); }) };
     }
     TRACKS.forEach(function (T) {
-      var K = T.key || "full", ev = [], bars = T.bars || [], last = 0.6;
+      var K = T.key || "full", ev = [], bars = T.bars || [], last = 0.6, sw = +T.swing || 0;
+      // swung tracks: the off-beat eighth falls later in the beat (sw of the way through), as it does in the audio
+      var sx = function (x) { if (!(sw > 0.5 && sw < 1)) return x; var b = Math.floor(x + 1e-9), f = x - b; return f <= 0.5 ? b + f * 2 * sw : b + sw + (f - 0.5) * 2 * (1 - sw); };
       bars.forEach(function (b, i) {
         var total = walk(b.items || [], function () {});
         if (!total) return;
         var next = bars[i + 1], spb = next && next.start > b.start ? (next.start - b.start) / total : last;
         last = spb;
         walk(b.items || [], function (at, col, strings, len) {
-          ev.push({ t: b.start + at * spb, e: b.start + (at + Math.max(len, 0.25)) * spb, mark: "fs-" + K + "-" + i + "-" + col, s: strings });
+          ev.push({ t: b.start + sx(at) * spb, e: b.start + sx(at + Math.max(len, 0.25)) * spb, mark: "fs-" + K + "-" + i + "-" + col, s: strings });
         });
       });
       follow(document.getElementById("ta-" + K), ev, targets);
