@@ -244,6 +244,32 @@
     });
   });
 
+  /* Pages with a play-through of bars split into chords (.ptb > .ptb-seg): when the page marks a bar as
+     playing, each chord's dots ring on its beat. */
+  when(function () {
+    var bars = document.querySelectorAll("article.ptb");
+    if (!bars.length) return;
+    var J = null; try { J = JSON.parse((document.getElementById("data") || {}).textContent || "null"); } catch (e) { J = null; }
+    var bpm = (J && !Array.isArray(J) && J.bpm) || 60, audio = document.getElementById("pt-audio") || document.querySelector("audio");
+    var timers = [], lit = [];
+    function off() { lit.forEach(function (d) { d.classList.remove("ff-on", "ff-ring"); }); lit = []; }
+    function clear() { timers.forEach(clearTimeout); timers = []; off(); }
+    function start(el) {
+      clear();
+      if (!audio || audio.paused) return;
+      var spb = 60 / bpm / (audio.playbackRate || 1), at = 0;
+      Array.prototype.forEach.call(el.querySelectorAll(".ptb-seg"), function (seg) {
+        var beats = parseFloat(seg.style.flex) || 1, t = at; at += beats;
+        timers.push(setTimeout(function () { off(); Array.prototype.forEach.call(seg.querySelectorAll("svg circle"), function (c) { ring(c); lit.push(c); }); }, t * spb * 1000));
+      });
+    }
+    var obs = new MutationObserver(function (muts) {
+      muts.forEach(function (m) { var el = m.target; if (el.classList.contains("now") && !/\bnow\b/.test(m.oldValue || "")) start(el); });
+    });
+    Array.prototype.forEach.call(bars, function (b) { obs.observe(b, { attributes: true, attributeFilter: ["class"], attributeOldValue: true }); });
+    if (audio) { audio.addEventListener("pause", clear); audio.addEventListener("ended", clear); }
+  });
+
   /* Pages with one diagram per beat and numbered notes (a JSON list of pieces, e.g. the Bach Prelude and Fugue). */
   var dataEl = document.getElementById("data"), PIECES = null;
   if (dataEl) { try { PIECES = JSON.parse(dataEl.textContent); } catch (e) { PIECES = null; } }
