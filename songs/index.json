@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-01T08:59:39Z",
+ "generatedAt": "2026-11-01T20:37:56Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -136,6 +136,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-01T12:00:00Z"
+  },
+  {
+   "id": "you-dont-mess-around-with-jim",
+   "file": "songs/you-dont-mess-around-with-jim/",
+   "page": "songs/you-dont-mess-around-with-jim/",
+   "title": "You Don't Mess Around with Jim",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-01T20:37:56Z"
   }
  ]
 }
