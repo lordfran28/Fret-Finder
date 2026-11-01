@@ -9,7 +9,7 @@ These are the standing instructions for anyone, person or Claude, changing this 
 The owner decided the automatic transcription can't produce diagrams a guitarist can play from, so the site's main job is now a **shelf for the arrangements made in conversation with Claude**. The transcription engine below stays in the code but is not the focus.
 
 - Each arrangement is a folder `songs/<slug>/` holding the arrangement page (`index.html`), the audio it uses, and `song.json` (title, instrument, date, source artifact).
-- Put one there with `python3 tools/import_arrangement.py PAGE.html SLUG "Title" --file NAME=PATH ... [--drop-alt]`. It adds Fret Finder's look (`assets/shelf.css`, which only sets the page's colour and type variables) and a link back to the songs.
+- Put one there with `python3 tools/import_arrangement.py PAGE.html SLUG "Title" --file NAME=PATH ... [--drop-alt]`. It adds Fret Finder's look (`assets/shelf.css`, which only sets the page's colour and type variables), a link back to the songs, and `assets/ring.js`, which lights each diagram dot gold as its note sounds in the track and makes the fret number beside every diagram huge.
 - The site is public. Never put a record's own audio (a vocal mix, a stem) or copyrighted lyrics on it; `--drop-alt` removes a page's second audio track. Pages for songs still under copyright need their lyrics taken out, or a private way to serve them, before they go up.
 - `.github/scripts/song_index.py` lists every such folder in `songs/index.json`; the library links straight to the page.
 - The library lists only these arrangements, A to Z, and has no way to add a song. Songs transcribed on a device before the shelf are cleared from it when the library opens.

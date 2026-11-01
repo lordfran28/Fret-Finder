@@ -53,6 +53,10 @@ def main():
         html = html[:m.end()] + bar + html[m.end():]
     else:
         html = bar + html
+    # The dots light up as their notes sound, and the fret number beside each diagram is huge.
+    ring = '<script src="../../assets/ring.js" defer></script>'
+    html = html.replace(ring, "")
+    html = html.replace("</body>", ring + "</body>", 1) if "</body>" in html else html + ring
     with open(os.path.join(out, "index.html"), "w", encoding="utf-8") as f:
         f.write(html)
 
