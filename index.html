@@ -194,7 +194,7 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
 .box .str{stroke:var(--dot-line);stroke-width:1}
 .box .fr{stroke:var(--line);stroke-width:1.3}
 .box .nut{stroke:var(--ink);stroke-width:4}
-.box .pos{fill:var(--ink);font-size:19px;font-weight:600;font-variant-numeric:lining-nums}
+.box .pos{fill:var(--accent);font-family:var(--display);font-size:46px;font-weight:700;font-variant-numeric:lining-nums;letter-spacing:-.02em}
 .box .mk{fill:var(--line)}
 .box .ct{fill:none;stroke:var(--dot-line);stroke-width:1.3;opacity:.7}
 .box .x{fill:var(--muted);font-size:12px;text-anchor:middle}
@@ -1258,7 +1258,7 @@ function ranges(list){
 }
 
 /* ---------- Drawing ---------- */
-var SX = 20, ML = 36, MT = 24, FY = 27;
+var SX = 20, ML = 66, MT = 24, FY = 27;   /* a wide left margin: the fret number there is big on purpose */
 function boxSVG(g, O, capo, bi){
   var dots = {}, fretted = [];
   function addDot(n, label, kind){
@@ -1285,7 +1285,7 @@ function boxSVG(g, O, capo, bi){
   for (var i = 0; i <= nf; i++) p.push('<line class="fr" x1="' + ML + '" x2="' + (ML + 5*SX) + '" y1="' + (MT + i*FY) + '" y2="' + (MT + i*FY) + '"/>');
   for (var s = 1; s <= 6; s++) p.push('<line class="str" x1="' + x(s) + '" x2="' + x(s) + '" y1="' + MT + '" y2="' + (MT + nf*FY) + '"/>');
   if (base === 1) p.push('<line class="nut" x1="' + (ML - 1) + '" x2="' + (ML + 5*SX + 1) + '" y1="' + (MT - 1) + '" y2="' + (MT - 1) + '"/>');
-  else p.push('<text class="pos" x="' + (ML - 12) + '" y="' + (y(base) + 6.5) + '" text-anchor="end">' + base + '</text>');
+  else p.push('<text class="pos" x="' + (ML - 8) + '" y="' + (y(base) + 16) + '" text-anchor="end">' + base + '</text>');
   /* the rest of the chord, faintly */
   if (g.harm && g.harm.pcs && !g.strum && !g.comp){
     for (s = 1; s <= 6; s++) for (f = Math.max(1, base); f < base + nf; f++){
