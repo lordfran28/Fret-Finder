@@ -1,0 +1,46 @@
+/* Fret Finder's look for the arrangement pages we make in conversation.
+   Every colour and typeface on those pages goes through a small set of variables, so this file only
+   has to set them (with !important, so it wins over the page's own values), plus the textile behind
+   the page and the bar at the top. */
+@font-face{font-family:"EB Garamond";font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/eb-garamond-latin-wght-normal.woff2) format("woff2")}
+@font-face{font-family:"EB Garamond";font-style:italic;font-weight:400 800;font-display:swap;src:url(fonts/eb-garamond-latin-wght-italic.woff2) format("woff2")}
+@font-face{font-family:"IM Fell French Canon";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/im-fell-french-canon-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"IM Fell French Canon";font-style:italic;font-weight:400;font-display:swap;src:url(fonts/im-fell-french-canon-latin-400-italic.woff2) format("woff2")}
+
+:root,#piano,.cp{
+  --bg:#EFE5D5!important;--surface:#FBF6EE!important;--sunk:#F4EADC!important;--ink:#2B1E18!important;--muted:#6A5546!important;--faint:#8E7766!important;--line:#D9C3A7!important;
+  --accent:#8A2E1E!important;--accent-ink:#FFF6EE!important;--accent-soft:#F3DDD2!important;--pass:#2C6A73!important;--land:#3D6B34!important;
+  --brass:#9A6A12!important;--brass-soft:#F4EAD4!important;
+  --roll:#E8DCCB!important;--tone:#8E7766!important;--hit:#F3DDD2!important;--runbg:#F7ECE3!important;
+  --display:"IM Fell French Canon",Garamond,"Times New Roman",serif!important;
+  --body:"EB Garamond",Garamond,Georgia,serif!important;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace!important;
+  --font-display:"IM Fell French Canon",Garamond,"Times New Roman",serif!important;
+  --font-body:"EB Garamond",Garamond,Georgia,serif!important;
+  --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace!important;
+  --ff-textile:url("textile-light.jpg");--ff-textile-alpha:.11;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root,#piano,.cp{
+    --bg:#1B1310!important;--surface:#251B17!important;--sunk:#2F231D!important;--ink:#F1E3D0!important;--muted:#BFA78F!important;--faint:#8F7966!important;--line:#4C3A31!important;
+    --accent:#E39A72!important;--accent-ink:#22130C!important;--accent-soft:#3F2A21!important;--pass:#8FD0D4!important;--land:#8CC58A!important;
+    --brass:#E2BD6B!important;--brass-soft:#2A2316!important;
+    --roll:#2F231D!important;--tone:#86705F!important;--hit:#4A3226!important;--runbg:#2A1E18!important;
+    --ff-textile:url("textile-dark.jpg");--ff-textile-alpha:.2;
+    color-scheme:dark;
+  }
+}
+html{background:var(--bg)!important}
+body{background:transparent!important;font-family:var(--body)!important;font-size:17px!important}
+html::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:var(--ff-textile) center/cover no-repeat;opacity:var(--ff-textile-alpha)}
+/* Garamond runs small; the page's small labels come up a little */
+h1,h2,h3,.pt{font-weight:400!important;letter-spacing:.005em}
+svg text{font-family:var(--body)}
+
+/* The bar at the top: back to the songs */
+.ff-shelf{max-width:920px;margin:0 auto;padding:16px 0 4px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.ff-shelf a{font:400 1.3rem/1.1 var(--display);color:var(--accent);text-decoration:none;text-shadow:0 1px 0 rgba(255,250,240,.7),0 2px 3px rgba(80,30,15,.18);opacity:.82;transition:opacity .3s ease}
+.ff-shelf a:hover{opacity:1}
+.ff-shelf .ff-mark{font:italic 400 1.05rem var(--display);color:var(--muted)}
+@media (prefers-color-scheme: dark){.ff-shelf a{text-shadow:0 1px 0 rgba(0,0,0,.6)}}

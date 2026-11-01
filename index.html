@@ -1952,8 +1952,11 @@ function renderLibrary(){
     var u = x.meta.units, bits = [];
     var d = fmtDate(x.meta.addedAt); if (d) bits.push("Added " + d);
     if (u && u.count) bits.push(plural(u.count, String(u.unit).toLowerCase()));
-    if (x.meta.kind) bits.push(x.meta.kind);
-    return '<li><a class="song" href="#song-' + esc(x.meta.id) + '"><span class="song-main"><span class="song-title">' + esc(x.meta.title) +
+    if (x.meta.kind === "arrangement") bits.push(x.meta.instrument === "trumpet" ? "Trumpet" : "Guitar");
+    else if (x.meta.kind) bits.push(x.meta.kind);
+    /* an arrangement made in conversation is its own page */
+    var href = x.meta.kind === "arrangement" && x.meta.page ? siteUrl(x.meta.page).replace(/\?v=\d+$/, "") : "#song-" + esc(x.meta.id);
+    return '<li><a class="song" href="' + esc(href) + '"><span class="song-main"><span class="song-title">' + esc(x.meta.title) +
       '</span><span class="song-meta">' + esc(bits.join(" · ")) + '</span></span>' + (st ? '<span class="status st-' + st[0] + '">' + st[1] + "</span>" : "") + "</a></li>";
   }).join("");
   $("empty").hidden = list.length > 0;
