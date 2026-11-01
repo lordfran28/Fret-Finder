@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-01T07:57:36Z",
+ "generatedAt": "2026-11-01T08:59:39Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -93,10 +93,28 @@
    "addedAt": "2026-11-01T12:00:00Z"
   },
   {
+   "id": "misty",
+   "file": "songs/misty/",
+   "page": "songs/misty/",
+   "title": "Misty",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-01T12:00:00Z"
+  },
+  {
    "id": "mozart-deh-vieni-alla-finestra",
    "file": "songs/mozart-deh-vieni-alla-finestra/",
    "page": "songs/mozart-deh-vieni-alla-finestra/",
    "title": "Mozart – Deh vieni alla finestra (Don Giovanni)",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-01T12:00:00Z"
+  },
+  {
+   "id": "my-one-and-only-love",
+   "file": "songs/my-one-and-only-love/",
+   "page": "songs/my-one-and-only-love/",
+   "title": "My One and Only Love",
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-01T12:00:00Z"
