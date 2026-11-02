@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-02T07:37:43Z",
+ "generatedAt": "2026-11-02T08:17:08Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -370,6 +370,24 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-02T07:37:11Z"
+  },
+  {
+   "id": "for-all-we-know",
+   "file": "songs/for-all-we-know/",
+   "page": "songs/for-all-we-know/",
+   "title": "For All We Know",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-02T08:11:26Z"
+  },
+  {
+   "id": "what-a-difference-a-day-made",
+   "file": "songs/what-a-difference-a-day-made/",
+   "page": "songs/what-a-difference-a-day-made/",
+   "title": "What a Diff’rence a Day Made",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-02T08:16:51Z"
   }
  ]
 }
