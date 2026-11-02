@@ -20,6 +20,9 @@ TEMPLATES = [
     # main / alt pair
     ('<button type="button" data-src="alt" aria-pressed="false">',
      '<button type="button" data-src="alt"${/\\.locked$/.test(T.audio_alt) ? \' data-locked\' : \'\'} aria-pressed="false">'),
+    # audio list of [file, label] as a[0], a[1]
+    ('data-src="${esc(a[0])}" aria-pressed="${i===0}">',
+     'data-src="${esc(a[0])}"${/\\.locked$/.test(a[0]) ? \' data-locked\' : \'\'} aria-pressed="${i===0}">'),
     # audio list: ([src, lab], i)
     ('data-src="${src}" aria-pressed="${i === 0}">',
      'data-src="${src}"${/\\.locked$/.test(src) ? \' data-locked\' : \'\'} aria-pressed="${i === 0}">'),
