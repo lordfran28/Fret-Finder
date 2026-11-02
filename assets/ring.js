@@ -262,7 +262,9 @@
       var spb = 60 / bpm / (audio.playbackRate || 1), at = 0;
       Array.prototype.forEach.call(el.querySelectorAll(".ptb-seg"), function (seg) {
         var beats = parseFloat(seg.style.flex) || 1, t = at; at += beats;
-        timers.push(setTimeout(function () { off(); Array.prototype.forEach.call(seg.querySelectorAll("svg circle"), function (c) { ring(c); lit.push(c); }); }, t * spb * 1000));
+        // a grip named again ("back to X") lights the diagram it was first drawn in
+        var src = seg.querySelector("svg") ? seg : (document.getElementById(seg.getAttribute("data-same") || "") || seg);
+        timers.push(setTimeout(function () { off(); Array.prototype.forEach.call(src.querySelectorAll("svg circle"), function (c) { ring(c); lit.push(c); }); }, t * spb * 1000));
       });
     }
     var obs = new MutationObserver(function (muts) {
