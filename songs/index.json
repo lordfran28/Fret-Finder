@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-01T20:37:56Z",
+ "generatedAt": "2026-11-02T01:21:22Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -145,6 +145,24 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-01T20:37:56Z"
+  },
+  {
+   "id": "faure-apres-un-reve",
+   "file": "songs/faure-apres-un-reve/",
+   "page": "songs/faure-apres-un-reve/",
+   "title": "Fauré – Après un rêve",
+   "kind": "arrangement",
+   "instrument": "trumpet",
+   "addedAt": "2026-11-02T01:21:21Z"
+  },
+  {
+   "id": "handel-lascia-chio-pianga",
+   "file": "songs/handel-lascia-chio-pianga/",
+   "page": "songs/handel-lascia-chio-pianga/",
+   "title": "Handel – Lascia ch’io pianga",
+   "kind": "arrangement",
+   "instrument": "trumpet",
+   "addedAt": "2026-11-02T01:21:21Z"
   }
  ]
 }
