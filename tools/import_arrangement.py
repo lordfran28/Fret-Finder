@@ -2,15 +2,22 @@
 """Put an arrangement page made in conversation onto the Fret Finder shelf.
 
     python3 tools/import_arrangement.py PAGE.html SLUG "Title" [--file NAME=PATH ...] [--drop-alt]
-        [--instrument guitar] [--source URL] [--added ISO-DATE]
+        [--locked NAME.mp3.locked=PATH ...] [--instrument guitar] [--source URL] [--added ISO-DATE]
 
 Writes songs/SLUG/index.html (the page with Fret Finder's look and a way back to the songs),
 copies the media files it uses next to it, and writes songs/SLUG/song.json for the song list.
 
 --drop-alt removes the page's second audio track (audio_alt), for example a mix with a record's
 own vocal, which mustn't go on a public site.
+
+--locked puts a track with a record's own singer on the page locked (see assets/voice.js): PATH is the
+mp3, NAME is what the page's data calls it and must end in ".mp3.locked". It plays only on devices
+where the owner entered the singer key; everywhere else its button is hidden.
 """
 import argparse, datetime, json, os, re, shutil, sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import shelf_voice
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, ".."))
@@ -23,6 +30,7 @@ def main():
     ap.add_argument("title")
     ap.add_argument("--file", action="append", default=[], help="NAME=PATH of a file the page uses")
     ap.add_argument("--drop-alt", action="store_true")
+    ap.add_argument("--locked", action="append", default=[], help="NAME.mp3.locked=PATH of a singer's track")
     ap.add_argument("--instrument", default="guitar")
     ap.add_argument("--source", default="")
     ap.add_argument("--added", default="")
@@ -56,6 +64,8 @@ def main():
     # The dots light up as their notes sound, and the fret number beside each diagram is huge.
     ring = '<script src="../../assets/ring.js" defer></script>'
     html = html.replace(ring, "")
+    # The singer's track, locked: playable only on the owner's devices.
+    html = shelf_voice.mark_locked(shelf_voice.add_voice_script(html))
     html = html.replace("</body>", ring + "</body>", 1) if "</body>" in html else html + ring
     with open(os.path.join(out, "index.html"), "w", encoding="utf-8") as f:
         f.write(html)
@@ -69,6 +79,15 @@ def main():
             print("Skipped %s: the page no longer uses it." % name)
             continue
         shutil.copyfile(path, os.path.join(out, name))
+        used.append(name)
+
+    for spec in a.locked:
+        name, _, path = spec.partition("=")
+        if not name.endswith(".mp3.locked") or not path or "/" in name:
+            sys.exit("Bad --locked %r" % spec)
+        if name not in html:
+            sys.exit("The page doesn't use %s; add it to the page's track list first." % name)
+        shelf_voice.lock(path, os.path.join(out, name))
         used.append(name)
 
     meta_path = os.path.join(out, "song.json")

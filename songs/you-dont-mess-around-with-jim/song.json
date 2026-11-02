@@ -5,7 +5,9 @@
  "files": [
   "index.html",
   "jim-guitar.mp3",
-  "jim-groove-guitar.mp3"
+  "jim-groove-guitar.mp3",
+  "jim-voice.mp3.locked",
+  "jim-groove-voice.mp3.locked"
  ],
  "source": "https://claude.ai/artifact/64rNZEHDwajoH9L7h8ZSu1",
  "addedAt": "2026-11-01T20:37:56Z"
