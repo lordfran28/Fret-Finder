@@ -133,6 +133,12 @@ svg .rdot.on { fill: var(--ink); }
 .step { width: 104px; display: grid; justify-items: center; align-content: start; gap: 1px; background: var(--sunk); border: 1px solid var(--line); border-radius: 9px; padding: 4px 3px 6px; text-align: center; }
 .step .tag { font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--faint); min-height: 14px; }
 .step.is-run { border-color: var(--accent); }
+.step.is-name { justify-content: center; align-content: center; min-height: 64px; }
+.step.is-name .sn { font-size: 26px; line-height: 1.1; }
+.step.is-name .tag { min-height: 0; }
+.path[hidden] { display: none; }
+.tabwrap[hidden] { display: none; }
+.step.is-name.was-run .sn { font-size: 17px; }
 .step.is-run .tag { color: var(--accent-ink); background: var(--accent); border-radius: 4px; padding: 0 6px; }
 .step.is-pass .tag { color: var(--pass); }
 .step.is-peak { border-color: var(--accent); border-width: 2px; }
@@ -913,7 +919,7 @@ const SRC = {"record": {"name": "Rod Stewart & Diana Ross, I’ve Got a Crush on
     document.getElementById('play-body').innerHTML = DATA.play.map(p => `<div class="part"><div class="part-head"><h3>${esc(p.part)}</h3>${p.note ? `<span class="pn">${esc(p.note)}</span>` : ''}</div><div class="pt">${p.bars.map((b, i) => {
       const prev = i > 0 ? p.bars[i - 1].use : null;
       const names = b.c.split(/\s{2,}/).map(asc);
-      const dg = miniDiagrams(names.map((n, j) => ({ name: n, f: (b.fs && b.fs[j]) || (names.length === 1 && b.f) || gripIn(n, b.use) })));
+      const dg = (p._seen = p._seen || {})[b.c] ? '' : (p._seen[b.c] = 1) && miniDiagrams(names.map((n, j) => ({ name: n, f: (b.fs && b.fs[j]) || (names.length === 1 && b.f) || gripIn(n, b.use) })));
       return `<div class="prow"><span class="pb">${b.n || (i + 1)}</span><div class="pc"><div class="pl"><b>${names.map(n => esc(disp(n))).join(' · ')}</b>${b.f ? `<span class="src">${fretStr(b.f)}</span>` : ''}${b.w ? `<span class="pw">${esc(b.w)}</span>` : ''}</div>${b.use && b.use !== prev ? useLink(b.use) : (b.use ? '<span class="pw">same move continues</span>' : '')}${dg}</div></div>`;
     }).join('')}</div></div>`).join('');
   } else if (DATA.play_use) {
@@ -1166,6 +1172,50 @@ const SRC = {"record": {"name": "Rod Stewart & Diana Ross, I’ve Got a Crush on
   document.addEventListener('input', e => { if (e.target.matches && e.target.matches('input.cue')) { const k = e.target.dataset.cue, v = e.target.value; store.set('cue-' + k, v); document.querySelectorAll('input.cue').forEach(x => { if (x !== e.target && x.dataset.cue === k) x.value = v; }); } });
   window.__pauseFull = () => audios.forEach(a => { if (!a.paused) a.pause(); });
   setFollow(follow, false);
+
+  /* ---------- one diagram per change ----------
+     A diagram means a change. A grip or run that simply goes on is drawn once: the bars after it show none,
+     and its dots keep lighting in the one diagram. A grip that comes back later in the same part is named
+     in large letters instead of drawn again. Each part of the song opens with its own diagrams. */
+  function oneDiagramPerChange(root) {
+    if (!root) return;
+    const keyOf = st => (st.classList.contains('is-run') ? 'r|' : 'c|') + ((st.querySelector('.sn') || {}).textContent || '') + '|' + ((st.querySelector('.sub') || st.querySelector('.seq') || {}).textContent || '');
+    const addMarks = (to, from) => { if (from.dataset.mark) to.dataset.mark = ((to.dataset.mark || '') + ' ' + from.dataset.mark).trim(); };
+    root.querySelectorAll('.part').forEach(part => {
+      let last = null, lastKey = '', lastTab = null;
+      const seen = {};
+      part.querySelectorAll('.fbar').forEach(bar => {
+        const path = bar.querySelector('.path'); if (!path) return;
+        const label = ((bar.querySelector('.seek') || {}).textContent || '').trim();
+        [...path.querySelectorAll('.step')].forEach(st => {
+          const key = keyOf(st);
+          if (last && key === lastKey) {
+            addMarks(last, st);
+            const a = [...last.querySelectorAll('circle.rdot')], b = [...st.querySelectorAll('circle.rdot')];
+            if (a.length === b.length) a.forEach((c, i) => addMarks(c, b[i]));
+            st.remove(); return;
+          }
+          if (seen[key]) {
+            const run = st.classList.contains('is-run');
+            const nm = ((st.querySelector('.sn') || {}).textContent || '').replace(/^over /, '');
+            st.classList.remove('is-run'); st.classList.add('is-name');
+            if (run) st.classList.add('was-run');
+            st.innerHTML = run ? `<span class="tag">same as</span><span class="sn">bar ${seen[key]}</span>` : `<span class="tag">back to</span><span class="sn">${nm}</span>`;
+          } else seen[key] = label || true;
+          last = st; lastKey = key;
+        });
+        /* tidy the arrows left between the diagrams */
+        [...path.children].forEach(el => { if (el.classList.contains('arrow') && (!el.previousElementSibling || !el.nextElementSibling || el.previousElementSibling.classList.contains('arrow'))) el.remove(); });
+        [...path.children].forEach(el => { if (el.classList.contains('arrow') && !el.nextElementSibling) el.remove(); });
+        if (!path.querySelector('.step')) path.hidden = true;
+        /* the same picking as the bar before: its tab is not printed again */
+        const tab = bar.querySelector('.tabwrap'), txt = tab ? tab.textContent : '';
+        if (tab && txt === lastTab) tab.hidden = true;
+        lastTab = txt;
+      });
+    });
+  }
+  document.querySelectorAll('[id^="tb-"]').forEach(oneDiagramPerChange);
 
   /* ---------- jumps & speed ---------- */
   const jumps = TRACKS.map(T => [T.key, T.jump || T.title]).concat(DATA.trumpet ? [['trumpet', 'Trumpet']] : []).concat([['chords', 'Chords'], ['moves', 'Moves'], ['play', 'Play-through'], ['map', 'Song map']].concat(DATA.spoken ? [['spoken', 'Spoken part']] : []).concat([['ends', 'Intros & endings'], ['practice', 'Practice'], ['about', 'About']]).concat(DATA.extra_jumps || []));
