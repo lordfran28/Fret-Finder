@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-02T03:50:01Z",
+ "generatedAt": "2026-11-02T07:23:23Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -145,6 +145,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-01T20:37:56Z"
+  },
+  {
+   "id": "barquito-de-papel",
+   "file": "songs/barquito-de-papel/",
+   "page": "songs/barquito-de-papel/",
+   "title": "Barquito de papel",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-02T07:22:39Z"
   }
  ]
 }
