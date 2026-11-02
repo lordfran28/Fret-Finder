@@ -274,6 +274,34 @@
     if (audio) { audio.addEventListener("pause", clear); audio.addEventListener("ended", clear); }
   });
 
+  /* Song-map pages (bars .bar[data-dur] of chords .ch[data-beats]): when the page marks a bar as playing,
+     each chord's dots ring on its beat; a chord named again ("back to X") lights the diagram it was drawn in. */
+  when(function () {
+    var bars = document.querySelectorAll(".bar[data-dur]");
+    if (!bars.length) return;
+    var audio = document.getElementById("audio") || document.querySelector("audio");
+    var timers = [], lit = [];
+    function off() { lit.forEach(function (d) { d.classList.remove("ff-on", "ff-ring"); }); lit = []; }
+    function clear() { timers.forEach(clearTimeout); timers = []; off(); }
+    function start(el) {
+      clear();
+      if (!audio || audio.paused) return;
+      var chs = el.querySelectorAll(".ch[data-beats]"), tot = 0, at = 0;
+      Array.prototype.forEach.call(chs, function (c) { tot += parseFloat(c.getAttribute("data-beats")) || 0; });
+      var spb = (parseFloat(el.getAttribute("data-dur")) || 2) / (tot || 1) / (audio.playbackRate || 1);
+      Array.prototype.forEach.call(chs, function (c) {
+        var t = at; at += parseFloat(c.getAttribute("data-beats")) || 0;
+        var src = c.querySelector("svg") ? c : (document.getElementById(c.getAttribute("data-same") || "") || c);
+        timers.push(setTimeout(function () { off(); Array.prototype.forEach.call(src.querySelectorAll("svg circle"), function (d) { ring(d); lit.push(d); }); }, t * spb * 1000));
+      });
+    }
+    var obs = new MutationObserver(function (muts) {
+      muts.forEach(function (m) { var el = m.target; if (el.classList.contains("now") && !/\bnow\b/.test(m.oldValue || "")) start(el); });
+    });
+    Array.prototype.forEach.call(bars, function (b) { obs.observe(b, { attributes: true, attributeFilter: ["class"], attributeOldValue: true }); });
+    if (audio) { audio.addEventListener("pause", clear); audio.addEventListener("ended", clear); }
+  });
+
   /* Pages with one diagram per beat and numbered notes (a JSON list of pieces, e.g. the Bach Prelude and Fugue). */
   var dataEl = document.getElementById("data"), PIECES = null;
   if (dataEl) { try { PIECES = JSON.parse(dataEl.textContent); } catch (e) { PIECES = null; } }
