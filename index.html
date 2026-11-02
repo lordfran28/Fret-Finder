@@ -134,6 +134,7 @@ button.addlink{border:0;background-color:transparent;margin:0}
 .empty p{margin:0;color:var(--muted);max-width:60ch}
 .panel-body{display:flex;flex-direction:column;gap:12px;margin-top:12px}
 .pairbox{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.voicebox{margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
 .qr{width:13.5rem;max-width:100%;background:#fff;padding:10px;border:1px solid var(--line);border-radius:3px}
 .qr svg{display:block;width:100%;height:auto}
 .field{display:flex;flex-direction:column;gap:4px;min-width:0}
@@ -318,6 +319,15 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
       <div id="qr" class="qr" role="img" aria-label="QR code that makes another device an owner"></div>
       <p class="small">Scan with your phone's camera. Whoever scans it can change your songs, so only show it to your own phone.</p>
     </div>
+    <div id="voicebox" class="panel-body voicebox">
+      <h3>Singers</h3>
+      <p id="voicestate" class="small"></p>
+      <div id="voiceform" class="panel-body">
+        <div class="field"><label for="voicekeyin">Singer key</label><input id="voicekeyin" type="password" autocomplete="off" spellcheck="false"></div>
+        <div class="btnrow"><button type="button" id="voicesave" class="btn">Save</button></div>
+      </div>
+      <div id="voicedone" class="btnrow" hidden><button type="button" id="voiceoff" class="btn link">Remove it from this device</button></div>
+    </div>
     <p id="ghmsg" class="msg" role="status" hidden></p>
   </section>
 
@@ -375,6 +385,7 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
 <div class="silk-band" aria-hidden="true"></div>
 <div id="nowplaying" class="nowplaying" aria-hidden="true"><span id="nowpos" class="nowpos"></span><button type="button" id="stopbtn" class="btn primary">Stop</button></div>
 
+<script src="assets/voice.js"></script>
 <script>
 (function(){
 "use strict";
@@ -2144,6 +2155,15 @@ function renderOwner(){
   $("ownerform").hidden = o;
   $("ownerconnected").hidden = !o;
   $("ownerstate").textContent = o ? "This device can add, rename and delete songs, and save settings and moved notes." : "Anyone can open and play your songs. To change them from this device, connect it with a key.";
+  renderVoice();
+}
+function voiceKey(){ try { return localStorage.getItem("ff.voicekey") || ""; } catch(e){ return ""; } }
+function storeVoiceKey(k){ try { if (k) localStorage.setItem("ff.voicekey", k); else localStorage.removeItem("ff.voicekey"); } catch(e){} }
+function renderVoice(){
+  var v = !!voiceKey();
+  $("voiceform").hidden = v;
+  $("voicedone").hidden = !v;
+  $("voicestate").textContent = v ? "The songs' tracks with the singer play on this device." : "With the singer key, the songs' tracks with the singer play on this device. Nobody else can play them.";
 }
 function b64url(str){ return btoa(unescape(encodeURIComponent(str))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }
 function unb64url(s){ s = s.replace(/-/g, "+").replace(/_/g, "/"); while (s.length % 4) s += "="; return decodeURIComponent(escape(atob(s))); }
@@ -2152,7 +2172,8 @@ function showPair(){
   var t = Owner.token(); if (!t) return;
   var box = $("pairbox");
   if (!box.hidden){ box.hidden = true; $("qr").innerHTML = ""; return; }
-  var link = location.origin + location.pathname + "#connect=" + b64url(JSON.stringify({t: t}));
+  var pay = {t: t}; if (voiceKey()) pay.v = voiceKey();
+  var link = location.origin + location.pathname + "#connect=" + b64url(JSON.stringify(pay));
   loadScript("assets/vendor/qrcode.js").then(function(){
     var q = window.qrcode(0, "M"); q.addData(link); q.make();
     $("qr").innerHTML = q.createSvgTag(4, 0);
@@ -2160,7 +2181,7 @@ function showPair(){
   }).catch(function(){ ghMsg("The QR code couldn't be made. Reload the page and try again.", true); });
 }
 function takeConnectLink(h){
-  try { var o = JSON.parse(unb64url(h.slice("connect=".length))); if (o && o.t){ Owner.store(o.t); return true; } } catch(e){}
+  try { var o = JSON.parse(unb64url(h.slice("connect=".length))); if (o && o.t){ Owner.store(o.t); if (o.v) storeVoiceKey(o.v); return true; } } catch(e){}
   return false;
 }
 
@@ -2326,6 +2347,21 @@ $("ghconnect").addEventListener("click", function(){
     .then(function(){ btn.disabled = false; });
 });
 $("ghpair").addEventListener("click", showPair);
+$("voicesave").addEventListener("click", function(){
+  var k = $("voicekeyin").value.replace(/\s+/g, "");
+  if (!k){ ghMsg("Paste the singer key first.", true); return; }
+  var btn = $("voicesave"); btn.disabled = true; ghMsg("Checking…");
+  (window.ffVoice ? window.ffVoice.test(k) : Promise.resolve(false)).then(function(ok){
+    if (!ok){ ghMsg("That key doesn't open the singers' tracks. Check it and try again.", true); return; }
+    storeVoiceKey(k); $("voicekeyin").value = "";
+    ghMsg("Saved. The singers' tracks play on this device now.");
+    renderVoice();
+  }).then(function(){ btn.disabled = false; });
+});
+$("voiceoff").addEventListener("click", function(){
+  storeVoiceKey(null); renderVoice();
+  ghMsg("The singers' tracks are off on this device.");
+});
 $("ghoff").addEventListener("click", function(){
   Owner.store(null); $("pairbox").hidden = true; $("qr").innerHTML = "";
   ghMsg("This device is no longer an owner. Your songs are untouched.");
