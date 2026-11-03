@@ -640,7 +640,7 @@ const barEls = [];
 const MB = $('map-body');
 let hgN = 0;
 D.sections.forEach(sec => {
-  const seenG = new Map();
+  let prevKey = null, prevId = '';
   const part = document.createElement('div'); part.className = 'part'; part.id = 'p-' + sec.id;
   part.innerHTML = `<div class="part-h"><h3>${esc(sec.name)}</h3><span class="r">${esc(sec.range)}</span>${sec.rec != null ? `<span class="rec">on the record ${mmss(sec.rec)}</span>` : ''}</div><p class="pn">${esc(sec.note)}</p>`;
   const g = document.createElement('div'); g.className = 'bars';
@@ -653,9 +653,10 @@ D.sections.forEach(sec => {
       const pos = sg.harm ? 'harm.' : (sg.f ? (sg.pos ? 'fr ' + sg.pos : 'open') : '');
       const key = sg.f ? sg.c + '|' + sg.f.join(',') + (sg.harm ? 'h' : '') : null;
       c.dataset.beats = sg.beats;
-      if (key && seenG.has(key)) { c.classList.add('is-name'); c.dataset.same = seenG.get(key); c.innerHTML = `<span class="cn back">back to ${esc(sg.c)}</span>`; }
+      if (key && key === prevKey) { c.classList.add('held'); c.dataset.same = prevId; }
       else {
-        if (key) { c.id = 'hg-' + (++hgN); seenG.set(key, c.id); }
+        if (key) { c.id = 'hg-' + (++hgN); prevId = c.id; }
+        prevKey = key;
         c.innerHTML = `<span class="cn">${esc(sg.c)}</span><span class="ln">${esc(pos)}</span>`;
         c.appendChild(sg.f ? diagram(sg.f, null, !!sg.harm, true) : twoVoice(sg.top, sg.bass));
       }

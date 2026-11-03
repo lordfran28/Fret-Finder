@@ -537,12 +537,12 @@ if (C.fills && C.fills.length){ const s = section('cp-fills', 'Fills for the gap
 
   // ---- bars in playing order
   const parts = D.secs.map(([key, name, note]) => ({ key, name, note, bars: D.bars.filter(b => b.sec === key) }));
-  // a diagram means a change: a grip already drawn in this part is named, not drawn again
-  document.getElementById('pt-body').innerHTML = parts.map(p => { const seen = new Map(); return `<div class="pt-part${p.key === 'inst' ? ' solo' : ''}"><div class="pt-part-h"><h3>${esc(p.name)}</h3><span>${esc(p.note)} Bars ${p.bars[0].n}–${p.bars[p.bars.length - 1].n}.</span></div><div class="pt-bars">${p.bars.map(b => {
+  // a diagram means a change: a grip that keeps ringing is drawn once; a grip that comes back after another is drawn again in full
+  document.getElementById('pt-body').innerHTML = parts.map(p => { let prevK = '', prevId = ''; return `<div class="pt-part${p.key === 'inst' ? ' solo' : ''}"><div class="pt-part-h"><h3>${esc(p.name)}</h3><span>${esc(p.note)} Bars ${p.bars[0].n}–${p.bars[p.bars.length - 1].n}.</span></div><div class="pt-bars">${p.bars.map(b => {
     const segs = b.segs.map((sg, si) => {
       const k = sg.c + '|' + sg.f.join(','), bt = b.segs.length > 1 ? `<span class="bt">beat ${sg.at}</span>` : '';
-      if (seen.has(k)) return `<div class="ptb-seg is-name" data-same="${seen.get(k)}" style="flex:${sg.beats} 1 0">${bt}<a class="cn back" href="#${seen.get(k)}">back to ${esc(sg.c)}</a></div>`;
-      const id = `pts-${b.n}-${si}`; seen.set(k, id);
+      if (k === prevK) return `<div class="ptb-seg held" data-same="${prevId}" style="flex:${sg.beats} 1 0">${bt}</div>`;
+      const id = `pts-${b.n}-${si}`; prevK = k; prevId = id;
       return `<div class="ptb-seg" id="${id}" style="flex:${sg.beats} 1 0"><a class="cn" href="#ch-${sg.id}">${esc(sg.c)}</a>${bt}${diagram(sg)}<span class="gf">${esc(code(sg.f))}</span></div>`;
     }).join('');
     const tp = b.tp.length ? `<div class="ptb-tp"><span class="lbl">Trumpet</span><div class="chips">${b.tp.map(chip).join('')}</div></div>` : '';
