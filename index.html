@@ -15,7 +15,7 @@
 @font-face{font-family:"EB Garamond";font-style:italic;font-weight:400 800;font-display:swap;src:url("assets/fonts/eb-garamond-latin-wght-italic.woff2") format("woff2")}
 @font-face{font-family:"IM Fell French Canon";font-style:normal;font-weight:400;font-display:swap;src:url("assets/fonts/im-fell-french-canon-latin-400-normal.woff2") format("woff2")}
 @font-face{font-family:"IM Fell French Canon";font-style:italic;font-weight:400;font-display:swap;src:url("assets/fonts/im-fell-french-canon-latin-400-italic.woff2") format("woff2")}
-/* Valve Finder's sister. One music-stand column; a framed hero sets Vermeer's Guitar Player into a
+/* Valve Finder's sister. One music-stand column; a framed hero sets Watteau's Mezzetin, playing his guitar, into a
    17th-century Venetian damask; songs sit on parchment cards; one Baroque lute or guitar player,
    drawn faintly, stands behind each song and changes every time a song is opened. */
 :root{
@@ -66,8 +66,8 @@ a{color:var(--accent)}
 .hero::after{content:"";position:absolute;inset:5px;border:1px solid var(--line);pointer-events:none;z-index:4}
 .hero-silk{position:absolute;inset:0;background:var(--textile) 0% 30%/max(150%,40rem) auto no-repeat;opacity:var(--hero-alpha)}
 .hero-fig{position:absolute;right:-18%;top:-6%;height:86%;width:auto;max-width:none;
-  -webkit-mask-image:radial-gradient(ellipse 52% 58% at 46% 50%,#000 50%,transparent 100%);
-  mask-image:radial-gradient(ellipse 52% 58% at 46% 50%,#000 50%,transparent 100%)}
+  -webkit-mask-image:radial-gradient(ellipse 48% 60% at 50% 46%,#000 50%,transparent 100%);
+  mask-image:radial-gradient(ellipse 48% 60% at 50% 46%,#000 50%,transparent 100%)}
 .hero-veil{position:absolute;inset:0;background:linear-gradient(to top,var(--veil) 0%,var(--veil) 30%,transparent 52%)}
 .hero-title{position:absolute;left:1.35rem;right:1.35rem;bottom:1.3rem;display:flex;flex-direction:column;gap:6px;color:var(--ink);text-decoration:none;z-index:3}
 @media (min-width:600px){
@@ -266,7 +266,7 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
 <div class="wrap">
   <header class="hero">
     <div class="hero-silk" aria-hidden="true"></div>
-    <img class="hero-fig" src="assets/guitar-player-vermeer.jpg" width="1000" height="1014" alt="A young woman playing a Baroque guitar, from Vermeer's The Guitar Player">
+    <img class="hero-fig" src="assets/mezzetin-watteau.jpg" width="970" height="1250" alt="Mezzetin playing a guitar in a garden, from Watteau's painting">
     <div class="hero-veil" aria-hidden="true"></div>
     <a class="hero-title" href="#">
       <span class="eyebrow">For the guitar</span>
@@ -295,8 +295,8 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
     </div>
 
     <footer class="foot">
-      <p class="credits">Vermeer, <a href="https://en.wikipedia.org/wiki/The_Guitar_Player_(Vermeer)" target="_blank" rel="noopener">The Guitar Player</a> · Venetian damask, <a href="https://www.metmuseum.org/art/collection/search/216471" target="_blank" rel="noopener">The Met</a> · Guitar recordings, <a href="https://theremin.music.uiowa.edu/MISguitar.html" target="_blank" rel="noopener">University of Iowa</a> · For the trumpet, <a href="https://lordfran28.github.io/Valve-Finder/">Valve Finder</a></p>
-      <p class="credits">Behind the songs: Baburen, ter Brugghen, Hals, Honthorst, Netscher, Watteau, Caravaggio, Leyster, Bronckhorst, the Master of the Annunciation to the Shepherds, Andreotti, Sani.</p>
+      <p class="credits">Watteau, <a href="https://www.metmuseum.org/art/collection/search/437926" target="_blank" rel="noopener">Mezzetin</a> · Venetian damask, <a href="https://www.metmuseum.org/art/collection/search/216471" target="_blank" rel="noopener">The Met</a> · Guitar recordings, <a href="https://theremin.music.uiowa.edu/MISguitar.html" target="_blank" rel="noopener">University of Iowa</a> · For the trumpet, <a href="https://lordfran28.github.io/Valve-Finder/">Valve Finder</a></p>
+      <p class="credits">Behind the songs: Baburen, ter Brugghen, Hals, Honthorst, Netscher, Caravaggio, Leyster, Bronckhorst, the Master of the Annunciation to the Shepherds, Andreotti, Sani.</p>
     </footer>
   </section>
 
@@ -2109,7 +2109,6 @@ var Art = (function(){
     ["hals", "Frans Hals, The Lute Player", 795, 900],
     ["honthorst", "Gerard van Honthorst, The Lute Player", 704, 900],
     ["netscher", "Caspar Netscher, Young Woman Playing a Guitar", 707, 900],
-    ["watteau", "Antoine Watteau, Mezzetin", 658, 900],
     ["caravaggio", "Caravaggio, The Lute Player", 715, 900],
     ["leyster", "Judith Leyster, The Lute Player", 665, 900],
     ["red-carpet", "A lute player on a red carpet, painted in Rome", 711, 900],

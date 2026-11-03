@@ -22,7 +22,7 @@ Under Settings each part of the file can be the guitar, the singing line, or off
 
 ## Credits
 
-- Johannes Vermeer, *The Guitar Player* (c. 1672), Kenwood House. Public domain.
+- Antoine Watteau, *Mezzetin* (c. 1718–20), The Metropolitan Museum of Art, 34.138. Public domain (Met Open Access). Cut around the player for the title: `assets/mezzetin-watteau.jpg`.
 - Venetian or Genoese silk damask, 17th century, The Metropolitan Museum of Art (216471), open access, recoloured.
 - Behind the songs, drawn faintly from public-domain paintings: Dirck van Baburen, Hendrick ter Brugghen, Frans Hals, Gerard van Honthorst, Caspar Netscher, Antoine Watteau, Caravaggio, Judith Leyster, Jan van Bronckhorst, the Master of the Annunciation to the Shepherds, Federico Andreotti, Alessandro Sani, and three 19th-century lute players by unknown painters.
 - Guitar recordings: University of Iowa Electronic Music Studios, Musical Instrument Samples (guitar, mf), cut into one file per string and fret.
