@@ -275,9 +275,8 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
     </a>
   </header>
 
-  <section id="view-library" class="view" aria-label="Your songs">
-    <div class="libhead">
-      <h2>Your songs</h2>
+  <section id="view-library" class="view" aria-label="Songs">
+    <div class="libhead" hidden>
       <button type="button" id="addtoggle" class="addlink" aria-expanded="false" aria-controls="dropbox" hidden>Add a song</button>
     </div>
     <label id="dropbox" class="dropbox" for="file" hidden>
@@ -288,7 +287,7 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
     <input id="file" type="file" class="vh" multiple>
     <p class="syncline"><span id="syncdot" class="dot" aria-hidden="true" hidden></span><span id="synctext" hidden></span></p>
     <p id="libmsg" class="error" role="alert" hidden></p>
-    <div id="searchwrap" class="field" hidden><label for="search" class="vh">Search your songs</label><input id="search" type="search" placeholder="Search your songs" autocomplete="off"></div>
+    <div id="searchwrap" class="field" hidden><label for="search" class="vh">Search the songs</label><input id="search" type="search" placeholder="Search" autocomplete="off"></div>
     <ul id="songlist" class="songlist"></ul>
     <p id="nomatch" class="small" hidden>No songs match that search.</p>
     <div id="empty" class="empty" hidden>
@@ -302,7 +301,7 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
   </section>
 
   <section id="view-owner" class="view" aria-label="Owner" hidden>
-    <div class="songbar"><a href="#" class="back">← Your songs</a></div>
+    <div class="songbar"><a href="#" class="back">← Songs</a></div>
     <h2>Owner</h2>
     <p id="ownerstate" class="small"></p>
     <div id="ownerform" class="panel-body">
@@ -333,7 +332,7 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
 
   <section id="view-song" class="view" aria-label="Song" hidden>
     <div class="songbar">
-      <a href="#" class="back">← Your songs</a>
+      <a href="#" class="back">← Songs</a>
       <span id="savestate" class="status st-plain" hidden></span>
     </div>
     <div class="songhead">
