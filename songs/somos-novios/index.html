@@ -1175,18 +1175,15 @@ const SRC = {"record": {"name": "Luis Miguel, Somos Novios (your recordings: the
 
   /* ---------- one diagram per change ----------
      A diagram means a change. A grip or run that simply goes on is drawn once: the bars after it show none,
-     and its dots keep lighting in the one diagram. A grip that comes back later in the same part is named
-     in large letters instead of drawn again. Each part of the song opens with its own diagrams. */
+     and its dots keep lighting in the one diagram. A grip that comes back later is drawn again in full. Each part of the song opens with its own diagrams. */
   function oneDiagramPerChange(root) {
     if (!root) return;
     const keyOf = st => (st.classList.contains('is-run') ? 'r|' : 'c|') + ((st.querySelector('.sn') || {}).textContent || '') + '|' + ((st.querySelector('.sub') || st.querySelector('.seq') || {}).textContent || '');
     const addMarks = (to, from) => { if (from.dataset.mark) to.dataset.mark = ((to.dataset.mark || '') + ' ' + from.dataset.mark).trim(); };
     root.querySelectorAll('.part').forEach(part => {
       let last = null, lastKey = '', lastTab = null;
-      const seen = {};
       part.querySelectorAll('.fbar').forEach(bar => {
         const path = bar.querySelector('.path'); if (!path) return;
-        const label = ((bar.querySelector('.seek') || {}).textContent || '').trim();
         [...path.querySelectorAll('.step')].forEach(st => {
           const key = keyOf(st);
           if (last && key === lastKey) {
@@ -1195,13 +1192,6 @@ const SRC = {"record": {"name": "Luis Miguel, Somos Novios (your recordings: the
             if (a.length === b.length) a.forEach((c, i) => addMarks(c, b[i]));
             st.remove(); return;
           }
-          if (seen[key]) {
-            const run = st.classList.contains('is-run');
-            const nm = ((st.querySelector('.sn') || {}).textContent || '').replace(/^over /, '');
-            st.classList.remove('is-run'); st.classList.add('is-name');
-            if (run) st.classList.add('was-run');
-            st.innerHTML = run ? `<span class="tag">same as</span><span class="sn">bar ${seen[key]}</span>` : `<span class="tag">back to</span><span class="sn">${nm}</span>`;
-          } else seen[key] = label || true;
           last = st; lastKey = key;
         });
         /* tidy the arrows left between the diagrams */
