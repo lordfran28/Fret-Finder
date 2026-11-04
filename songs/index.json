@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-02T08:17:08Z",
+ "generatedAt": "2026-11-04T22:12:43Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -388,6 +388,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-02T08:16:51Z"
+  },
+  {
+   "id": "viva-la-vida",
+   "file": "songs/viva-la-vida/",
+   "page": "songs/viva-la-vida/",
+   "title": "Viva la Vida",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-04T22:12:43Z"
   }
  ]
 }
