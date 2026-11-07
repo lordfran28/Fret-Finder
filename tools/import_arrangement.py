@@ -2,7 +2,7 @@
 """Put an arrangement page made in conversation onto the Fret Finder shelf.
 
     python3 tools/import_arrangement.py PAGE.html SLUG "Title" [--file NAME=PATH ...] [--drop-alt]
-        [--locked NAME.mp3.locked=PATH ...] [--instrument guitar] [--source URL] [--added ISO-DATE]
+        [--instrument guitar] [--source URL] [--singer] [--added ISO-DATE]
 
 Writes songs/SLUG/index.html (the page with Fret Finder's look and a way back to the songs),
 copies the media files it uses next to it, and writes songs/SLUG/song.json for the song list.
@@ -10,14 +10,14 @@ copies the media files it uses next to it, and writes songs/SLUG/song.json for t
 --drop-alt removes the page's second audio track (audio_alt), for example a mix with a record's
 own vocal, which mustn't go on a public site.
 
---locked puts a track with a record's own singer on the page locked (see assets/voice.js): PATH is the
-mp3, NAME is what the page's data calls it and must end in ".mp3.locked". It plays only on devices
-where the owner entered the singer key; everywhere else its button is hidden.
+Fret Finder has no keys. Any ".locked" track in the page's track list is taken out: a mix with a
+record's own singer, or with the tune of a song still under copyright, stays on the private page.
+--singer (with --source) puts a "With the singer" link to that private page in the bar at the top.
 """
 import argparse, datetime, json, os, re, shutil, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import shelf_voice
+import shelf_tracks
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, ".."))
@@ -30,7 +30,7 @@ def main():
     ap.add_argument("title")
     ap.add_argument("--file", action="append", default=[], help="NAME=PATH of a file the page uses")
     ap.add_argument("--drop-alt", action="store_true")
-    ap.add_argument("--locked", action="append", default=[], help="NAME.mp3.locked=PATH of a singer's track")
+    ap.add_argument("--singer", action="store_true", help="the private page (--source) has the singer: link to it")
     ap.add_argument("--instrument", default="guitar")
     ap.add_argument("--source", default="")
     ap.add_argument("--added", default="")
@@ -64,8 +64,10 @@ def main():
     # The dots light up as their notes sound, and the fret number beside each diagram is huge.
     ring = '<script src="../../assets/ring.js" defer></script>'
     html = html.replace(ring, "")
-    # The singer's track, locked: playable only on the owner's devices.
-    html = shelf_voice.mark_locked(shelf_voice.add_voice_script(html))
+    # No keys: tracks with a record's singer or a copyrighted tune stay on the private page, linked from the top bar.
+    html = shelf_tracks.strip_locked(html)
+    if a.singer and a.source:
+        html = shelf_tracks.singer_link(html, a.source)
     html = html.replace("</body>", ring + "</body>", 1) if "</body>" in html else html + ring
     # Slower tracks for practising along: a row of speeds under every player, the pitch unchanged.
     speed = '<script src="../../assets/speed.js" defer></script>'
@@ -83,15 +85,6 @@ def main():
             print("Skipped %s: the page no longer uses it." % name)
             continue
         shutil.copyfile(path, os.path.join(out, name))
-        used.append(name)
-
-    for spec in a.locked:
-        name, _, path = spec.partition("=")
-        if not name.endswith(".mp3.locked") or not path or "/" in name:
-            sys.exit("Bad --locked %r" % spec)
-        if name not in html:
-            sys.exit("The page doesn't use %s; add it to the page's track list first." % name)
-        shelf_voice.lock(path, os.path.join(out, name))
         used.append(name)
 
     meta_path = os.path.join(out, "song.json")

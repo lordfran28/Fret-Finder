@@ -384,7 +384,6 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
 <div class="silk-band" aria-hidden="true"></div>
 <div id="nowplaying" class="nowplaying" aria-hidden="true"><span id="nowpos" class="nowpos"></span><button type="button" id="stopbtn" class="btn primary">Stop</button></div>
 
-<script src="assets/voice.js"></script>
 <script>
 (function(){
 "use strict";
@@ -2240,17 +2239,8 @@ function route(){
   if (saveTimer) flushSave();
   stopRun();
   var h = decodeURIComponent(location.hash.replace(/^#/, ""));
-  if (h.indexOf("connect=") === 0){
-    var ok = takeConnectLink(h);
-    try { history.replaceState(null, "", location.pathname + "#owner"); } catch(e){ location.hash = "owner"; }
-    state.rec = null; showView("owner"); renderOwner();
-    ghMsg(ok ? "This device is now an owner." : "That code didn't work. Make a new one and scan it again.", !ok);
-    syncLibrary();
-    return;
-  }
   if (h.indexOf("song-") === 0) openSong(h.slice(5));
   else if (h === "example") openExample();
-  else if (h === "owner"){ state.rec = null; showView("owner"); renderOwner(); }
   else { state.rec = null; showView("library"); renderLibrary(); syncLibrary(); }
 }
 

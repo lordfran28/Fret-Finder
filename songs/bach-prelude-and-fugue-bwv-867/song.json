@@ -5,11 +5,7 @@
  "files": [
   "index.html",
   "prelude-guitar.mp3",
-  "fugue-guitar.mp3",
-  "prelude-recording.mp3.locked",
-  "prelude-both.mp3.locked",
-  "fugue-recording.mp3.locked",
-  "fugue-both.mp3.locked"
+  "fugue-guitar.mp3"
  ],
  "source": "https://claude.ai/artifact/AbV1VhSu9yD2JJJx6d41nJ",
  "addedAt": "2026-11-01T04:03:11Z"
