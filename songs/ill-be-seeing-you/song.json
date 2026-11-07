@@ -4,7 +4,8 @@
  "instrument": "guitar",
  "files": [
   "index.html",
-  "ibsy-guitar.mp3"
+  "ibsy-guitar.mp3",
+  "ibsy-voice.mp3.locked"
  ],
  "source": "https://claude.ai/artifact/8FytBUK6Ta89MjaKt6pvNh",
  "addedAt": "2026-11-02T07:33:03Z"

@@ -4,7 +4,9 @@
  "instrument": "guitar",
  "files": [
   "index.html",
-  "twnb-guitar.mp3"
+  "twnb-guitar.mp3",
+  "twnb-tune.mp3.locked",
+  "twnb-voice.mp3.locked"
  ],
  "source": "https://claude.ai/artifact/NyDUEUh47QYn1x9eN6wGhU",
  "addedAt": "2026-11-07T04:53:30Z"

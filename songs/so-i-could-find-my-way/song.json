@@ -4,7 +4,8 @@
  "instrument": "guitar",
  "files": [
   "index.html",
-  "enya-guitar.mp3"
+  "enya-guitar.mp3",
+  "enya-voice.mp3.locked"
  ],
  "source": "https://claude.ai/artifact/8zyE7XMxeH6dqbRKSadnXu",
  "addedAt": "2026-11-02T07:33:02Z"
