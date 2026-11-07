@@ -4,7 +4,8 @@
  "instrument": "guitar",
  "files": [
   "index.html",
-  "misty-guitar.mp3"
+  "misty-guitar.mp3",
+  "misty-voice.mp3.locked"
  ],
  "source": "https://claude.ai/artifact/N4AM8jZCR5tufb2WFAgDvf",
  "addedAt": "2026-11-01"

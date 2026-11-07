@@ -5,7 +5,9 @@
  "files": [
   "index.html",
   "iwonder-full.mp3",
-  "iwonder-short.mp3"
+  "iwonder-short.mp3",
+  "iwonder-short-dean.mp3.locked",
+  "iwonder-full-dean.mp3.locked"
  ],
  "source": "https://claude.ai/artifact/2UiV3kZd44SBgjFsJicj9t",
  "addedAt": "2026-10-28T12:00:00Z"

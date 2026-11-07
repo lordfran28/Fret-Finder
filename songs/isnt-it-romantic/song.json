@@ -4,7 +4,8 @@
  "instrument": "guitar",
  "files": [
   "index.html",
-  "iir-guitar.mp3"
+  "iir-guitar.mp3",
+  "iir-voice.mp3.locked"
  ],
  "source": "https://claude.ai/artifact/Fv5e5rY8ZFiMc2Zbyt4JnD",
  "addedAt": "2026-11-02T07:33:01Z"

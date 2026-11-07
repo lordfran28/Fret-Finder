@@ -4,7 +4,8 @@
  "instrument": "guitar",
  "files": [
   "index.html",
-  "ybsn-guitar.mp3"
+  "ybsn-guitar.mp3",
+  "ybsn-voice.mp3.locked"
  ],
  "source": "https://claude.ai/artifact/Xs4UBHmPTGzgXD8rndhAUj",
  "addedAt": "2026-11-02T07:33:03Z"
