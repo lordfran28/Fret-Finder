@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-04T22:12:43Z",
+ "generatedAt": "2026-11-07T04:53:30Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -397,6 +397,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-04T22:12:43Z"
+  },
+  {
+   "id": "there-will-never-be-another-you",
+   "file": "songs/there-will-never-be-another-you/",
+   "page": "songs/there-will-never-be-another-you/",
+   "title": "There Will Never Be Another You",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-07T04:53:30Z"
   }
  ]
 }
