@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-07T04:53:30Z",
+ "generatedAt": "2026-11-08T07:17:47Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -406,6 +406,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-07T04:53:30Z"
+  },
+  {
+   "id": "the-nearness-of-you",
+   "file": "songs/the-nearness-of-you/",
+   "page": "songs/the-nearness-of-you/",
+   "title": "The Nearness of You",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-08T07:17:46Z"
   }
  ]
 }
