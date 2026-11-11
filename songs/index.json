@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-08T07:17:47Z",
+ "generatedAt": "2026-11-11T15:34:03Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -277,15 +277,6 @@
    "file": "songs/where-or-when/",
    "page": "songs/where-or-when/",
    "title": "Where or When",
-   "kind": "arrangement",
-   "instrument": "guitar",
-   "addedAt": "2026-11-02T07:33:02Z"
-  },
-  {
-   "id": "white-christmas",
-   "file": "songs/white-christmas/",
-   "page": "songs/white-christmas/",
-   "title": "White Christmas",
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-02T07:33:02Z"
