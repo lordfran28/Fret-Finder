@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-11T15:34:03Z",
+ "generatedAt": "2026-11-13T04:19:11Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -406,6 +406,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-08T07:17:46Z"
+  },
+  {
+   "id": "mozart-soave-sia-il-vento",
+   "file": "songs/mozart-soave-sia-il-vento/",
+   "page": "songs/mozart-soave-sia-il-vento/",
+   "title": "Mozart – Soave sia il vento (Così fan tutte)",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-13T04:19:11Z"
   }
  ]
 }
