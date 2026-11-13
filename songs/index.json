@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-13T05:00:02Z",
+ "generatedAt": "2026-11-13T05:31:38Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -424,6 +424,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-13T05:00:02Z"
+  },
+  {
+   "id": "ill-get-by",
+   "file": "songs/ill-get-by/",
+   "page": "songs/ill-get-by/",
+   "title": "I’ll Get By",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-13T05:31:03Z"
   }
  ]
 }
