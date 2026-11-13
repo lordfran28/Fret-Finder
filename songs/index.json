@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-13T05:31:38Z",
+ "generatedAt": "2026-11-13T06:18:32Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -433,6 +433,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-13T05:31:03Z"
+  },
+  {
+   "id": "just-in-time",
+   "file": "songs/just-in-time/",
+   "page": "songs/just-in-time/",
+   "title": "Just in Time",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-13T06:08:52Z"
   }
  ]
 }
