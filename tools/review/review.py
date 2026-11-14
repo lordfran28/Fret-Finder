@@ -239,10 +239,27 @@ def sound_report(D, slug):
     return rep
 
 
+def cp_report(html):
+    """the compendium's sound: every ▶ plays (string index 0–5 from the low E, a real fret)"""
+    m = re.search(r'<script id="cp-data" type="application/json">(.*?)</script>', html, re.S)
+    if not m: return []
+    C = json.loads(m.group(1)); rep = []
+    def walk(x, where):
+        if isinstance(x, dict):
+            if isinstance(x.get('ev'), list):
+                bad = [e for e in x['ev'] if not (isinstance(e, list) and len(e) >= 3 and 0 <= e[1] <= 5 and 0 <= e[2] <= 24)]
+                if bad: rep.append(('cp', where, 'cp sound', f"{x.get('where') or x.get('title') or ''}: {len(bad)} notes with no string (e.g. {bad[0][:3]})"))
+            for k, v in x.items(): walk(v, where if k != 'replaced' else 'replaced')
+        elif isinstance(x, list):
+            for v in x: walk(v, where)
+    walk(C, '-')
+    return rep
+
+
 if __name__ == '__main__':
     slug = sys.argv[1]
     D, html = load(slug)
-    rep = grips_report(D)
+    rep = grips_report(D) + cp_report(html)
     if '--voice' in sys.argv: rep += voice_report(D, html, slug)
     if '--sound' in sys.argv: rep += sound_report(D, slug)
     if '--kf' in sys.argv: rep += kf_report(slug, '--voice' in sys.argv)
