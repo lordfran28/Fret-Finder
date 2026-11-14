@@ -4,7 +4,10 @@
  "instrument": "guitar",
  "files": [
   "index.html",
-  "dga-guitar.mp3"
+  "dga-guitar.mp3",
+  "real.html",
+  "real.html.locked",
+  "dga-guitar-real.mp3.locked"
  ],
  "source": "https://claude.ai/artifact/NcuGWZPc7DFzZhQrGXmEKX",
  "addedAt": "2026-11-02T07:33:09Z"
