@@ -15,3 +15,9 @@ Each mistake, why it happened, and the rule (and check) that prevents it. Newest
 ## 13 November 2026
 
 - **How Deep Is the Ocean, bar 29.** A♭7♭13 was bent to fit Perry's blue note instead of the song's D♭ major 7. *Rule:* follow the song's harmony; a blue note sits over the real chord.
+
+## 14 November 2026
+
+- **I Wish You Love on Rod's record, while it was being built.** The last A walked its bass down G♭, F, E, E♭ on the A string, right in the range where Rod sings F and E♭, so the bass sat a half step above his held notes. *Rule:* keep the bass under the voice; when a bass line walks in the singer's range, move the shapes down the neck (here the low E string, with the open E). *Check:* the rub check in the song's `build_audio.py`, and `review.py SLUG --voice`.
+- **I Wish You Love, the same build.** Two-beat chords in the flowing pattern played only two of their three inner notes, so B♭7♭9 lost its A♭ and the line inside E♭ minor (D, D♭, C) was never heard. *Rule:* a short chord plays every inner note once, the notes that moved from the chord before first. *Check:* `review.py SLUG --sound` (“diagram's … not heard”).
+- **I Wish You Love, the same build.** The free-time verse timed chord changes inside a bar from the record, but the page lights a bar's beats evenly, so the dots ran early or late. *Rule:* in free time, write each chord's length in beats so even beats land where the record changes. *Check:* `review.py SLUG --sound`.
