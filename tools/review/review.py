@@ -163,7 +163,11 @@ def sung_segments(work):
         if cur and cur[1] - cur[0] > 16: out.append(cur)
         cur = [i, i]
     seg = [(tt[a], tt[b], float(np.median(vm[a:b + 1]))) for a, b in out]
-    off = float(np.median([p - round(p) for _, _, p in seg])) if seg else 0.0
+    # the singer's tuning: a circular mean over the steady frames (a median of rounded fractions misreads a singer
+    # who is a quarter tone flat: Dean's flat B♭ read as A, 14 Nov)
+    from scipy.ndimage import uniform_filter1d
+    ms = uniform_filter1d(vm, 9); steady = voiced & (np.abs(np.gradient(uniform_filter1d(vm, 15))) < 0.045)
+    off = float(np.angle(np.mean(np.exp(2j * np.pi * ms[steady]))) / (2 * np.pi)) if steady.any() else 0.0
     return [(a, b, int(round(p - off))) for a, b, p in seg], off
 
 
