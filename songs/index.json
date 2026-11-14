@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-14T07:02:01Z",
+ "generatedAt": "2026-11-14T18:01:19Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -451,6 +451,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-14T07:02:00Z"
+  },
+  {
+   "id": "fly-me-to-the-moon",
+   "file": "songs/fly-me-to-the-moon/",
+   "page": "songs/fly-me-to-the-moon/",
+   "title": "Fly Me to the Moon",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-14T17:56:39Z"
   }
  ]
 }
