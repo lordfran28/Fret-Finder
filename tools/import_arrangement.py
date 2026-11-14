@@ -71,6 +71,10 @@ def main():
     speed = '<script src="../../assets/speed.js" defer></script>'
     html = html.replace(speed, "")
     html = html.replace("</body>", speed + "</body>", 1) if "</body>" in html else html + speed
+    # Arrows under each chord diagram: other ways to play that chord there, and the other chords that fit.
+    grips = '<script src="../../assets/grips.js" defer></script>'
+    html = html.replace(grips, "")
+    html = html.replace("</body>", grips + "</body>", 1) if "</body>" in html else html + grips
     with open(os.path.join(out, "index.html"), "w", encoding="utf-8") as f:
         f.write(html)
 

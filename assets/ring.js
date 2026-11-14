@@ -225,7 +225,8 @@
       if (!dots.length) steps.forEach(function (stp) {
         var svg = stp.querySelector("svg"); if (!svg) return;
         var byS = stringDots(svg);
-        (ev.s || [0, 1, 2, 3, 4, 5]).forEach(function (i) { (byS[i] || []).forEach(function (d) { if (dots.indexOf(d) < 0) dots.push(d); }); });
+        // a diagram switched to another grip lights all its dots: its strings are not the track's strings
+        (stp.hasAttribute("data-ff-alt") ? [0, 1, 2, 3, 4, 5] : (ev.s || [0, 1, 2, 3, 4, 5])).forEach(function (i) { (byS[i] || []).forEach(function (d) { if (dots.indexOf(d) < 0) dots.push(d); }); });
       });
       return { dots: dots, steps: steps.filter(function (x) { return !x.classList.contains("is-run"); }) };
     }
