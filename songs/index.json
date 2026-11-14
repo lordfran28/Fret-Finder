@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-14T18:01:19Z",
+ "generatedAt": "2026-11-14T20:08:57Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -460,6 +460,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-14T17:56:39Z"
+  },
+  {
+   "id": "have-your-way",
+   "file": "songs/have-your-way/",
+   "page": "songs/have-your-way/",
+   "title": "Have Your Way",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-14T20:08:41Z"
   }
  ]
 }
