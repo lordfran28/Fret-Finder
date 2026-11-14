@@ -187,6 +187,77 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
     <div id="pt-body" class="pt"></div>
   </section>
 
+  
+
+  
+
+  
+
+  <!-- riffs:start -->
+  <section class="rf" id="riff-ways" aria-labelledby="h-rf">
+    <style>
+.rf .moves { gap: 12px; }
+.rf .strip { gap: 10px; align-items: flex-start; }
+.rf .strip .s { gap: 3px; }
+.rf .strip .s svg.dg { width: 128px; }
+@media (min-width: 700px) { .rf .strip .s svg.dg { width: 150px; } }
+.rf .strip .s .q { font-family: var(--mono); font-size: 11.5px; color: var(--muted); text-align: center; max-width: 150px; line-height: 1.35; }
+.rf .dg .gx { fill: none; stroke: var(--rule-strong); stroke-width: 1.2; stroke-dasharray: 2.4 2; }
+.rf .dg .dl.two { font-size: 6.4px; }
+.rf .dg .ol.two { font-size: 5.8px; }
+.rf .player { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; background: var(--sunk); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 10px; }
+.rf .player audio { flex: 1 1 240px; min-width: 0; width: 100%; height: 40px; }
+</style>
+    <div class="sec-head"><span class="eyebrow">Over the riff</span><h2 id="h-rf">Three other ways to play D6/A and Amaj9</h2><p>Two bars each, to play in place of the riff wherever it goes from D6/A to Amaj9. Numbers give the order of the notes; dashed rings are the riff’s own grip. Each track ends with two bars of the riff.</p></div>
+    <div class="moves" id="rf-ways"></div>
+    <script id="rf-data" type="application/json">[{"id": "rf-1", "title": "A harmonic minor run", "where": "5th position, then 4th", "how": "Up the D chord to the high D, then down F♯ harmonic minor from B to C♯. The E♯ on beat 3 of the A bar, and the drop from it to D, give it the Spanish sound. The C♯ steps up to D when the riff comes back.", "src": "rf-1.mp3", "bars": [{"c": "D6/A", "grip": [-1, 0, 7, 7, 7, 7], "dots": [{"s": 1, "f": 0, "n": [1], "nm": "A"}, {"s": 3, "f": 7, "n": [1], "nm": "D"}, {"s": 4, "f": 7, "n": [2], "nm": "F♯"}, {"s": 5, "f": 5, "n": [3], "nm": "A"}, {"s": 5, "f": 7, "n": [4], "nm": "B"}, {"s": 5, "f": 10, "n": [5], "nm": "D"}, {"s": 5, "f": 9, "n": [6], "nm": "C♯"}], "seq": ["D", "F♯", "A", "B", "D", "C♯"]}, {"c": "Amaj9", "grip": [-1, 0, 6, 6, 5, 7], "dots": [{"s": 1, "f": 0, "n": [1], "nm": "A"}, {"s": 5, "f": 7, "n": [1], "nm": "B"}, {"s": 5, "f": 5, "n": [2], "nm": "A"}, {"s": 5, "f": 4, "n": [3], "nm": "G♯"}, {"s": 4, "f": 7, "n": [4], "nm": "F♯"}, {"s": 4, "f": 6, "n": [5], "nm": "E♯"}, {"s": 3, "f": 7, "n": [6], "nm": "D"}, {"s": 3, "f": 6, "n": [7], "nm": "C♯"}], "seq": ["B", "A", "G♯", "F♯", "E♯", "D", "C♯"]}], "light": [[0.35, 0.886, 0, "1-0"], [0.35, 0.618, 0, "3-7"], [0.618, 0.886, 0, "4-7"], [0.886, 1.154, 0, "5-5"], [1.154, 1.421, 0, "5-7"], [1.421, 1.957, 0, "5-10"], [2.225, 2.493, 0, "5-9"], [2.493, 3.029, 1, "1-0"], [2.493, 2.761, 1, "5-7"], [2.761, 3.029, 1, "5-5"], [3.029, 3.296, 1, "5-4"], [3.296, 3.564, 1, "4-7"], [3.564, 3.832, 1, "4-6"], [3.832, 4.1, 1, "3-7"], [4.1, 4.636, 1, "3-6"]], "len": 13.65}, {"id": "rf-2", "title": "Two voices", "where": "4th position", "how": "Two lines over the open A. The top one goes F♯, F, E; under it, D walks down to A, then climbs G♯, A, B, C♯. The F natural makes the D chord minor for two beats.", "src": "rf-2.mp3", "bars": [{"c": "D6/A", "grip": [-1, 0, 7, 7, 7, 7], "dots": [{"s": 1, "f": 0, "n": [1], "nm": "A"}, {"s": 3, "f": 7, "n": [1], "nm": "D"}, {"s": 4, "f": 7, "n": [1], "nm": "F♯"}, {"s": 3, "f": 6, "n": [2], "nm": "C♯"}, {"s": 3, "f": 4, "n": [3], "nm": "B"}, {"s": 4, "f": 6, "n": [3], "nm": "F"}, {"s": 2, "f": 7, "n": [4], "nm": "A"}], "seq": ["D+F♯", "C♯", "B+F", "A"]}, {"c": "Amaj9", "grip": [-1, 0, 6, 6, 5, 7], "dots": [{"s": 1, "f": 0, "n": [1], "nm": "A"}, {"s": 2, "f": 6, "n": [1], "nm": "G♯"}, {"s": 4, "f": 5, "n": [1], "nm": "E"}, {"s": 2, "f": 7, "n": [2], "nm": "A"}, {"s": 3, "f": 4, "n": [3], "nm": "B"}, {"s": 3, "f": 6, "n": [4], "nm": "C♯"}], "seq": ["G♯+E", "A", "B", "C♯"]}], "light": [[0.35, 0.886, 0, "1-0"], [0.35, 0.886, 0, "3-7"], [0.35, 0.886, 0, "4-7"], [0.886, 1.421, 0, "3-6"], [1.421, 1.957, 0, "3-4"], [1.421, 1.957, 0, "4-6"], [1.957, 2.493, 0, "2-7"], [2.493, 3.029, 1, "1-0"], [2.493, 3.029, 1, "2-6"], [2.493, 3.029, 1, "4-5"], [3.029, 3.564, 1, "2-7"], [3.564, 4.1, 1, "3-4"], [4.1, 4.636, 1, "3-6"]], "len": 13.65}, {"id": "rf-3", "title": "Octaves", "where": "Sliding down from the 11th fret to the 2nd", "how": "One small figure in octaves on the G and high E strings: F♯, E, F♯, D over D6/A, then a step lower, C♯, B, C♯, A, over Amaj9. The finger on the G string lies against the B string to keep it quiet.", "src": "rf-3.mp3", "bars": [{"c": "D6/A", "grip": [-1, 0, 7, 7, 7, 7], "dots": [{"s": 1, "f": 0, "n": [1], "nm": "A"}, {"s": 3, "f": 11, "n": [1, 3], "nm": "F♯"}, {"s": 5, "f": 14, "n": [1, 3], "nm": "F♯"}, {"s": 3, "f": 9, "n": [2], "nm": "E"}, {"s": 5, "f": 12, "n": [2], "nm": "E"}, {"s": 3, "f": 7, "n": [4], "nm": "D"}, {"s": 5, "f": 10, "n": [4], "nm": "D"}], "seq": ["F♯", "E", "F♯", "D"]}, {"c": "Amaj9", "grip": [-1, 0, 6, 6, 5, 7], "dots": [{"s": 1, "f": 0, "n": [1], "nm": "A"}, {"s": 3, "f": 6, "n": [1, 3], "nm": "C♯"}, {"s": 5, "f": 9, "n": [1, 3], "nm": "C♯"}, {"s": 3, "f": 4, "n": [2], "nm": "B"}, {"s": 5, "f": 7, "n": [2], "nm": "B"}, {"s": 3, "f": 2, "n": [4], "nm": "A"}, {"s": 5, "f": 5, "n": [4], "nm": "A"}], "seq": ["C♯", "B", "C♯", "A"]}], "light": [[0.35, 0.886, 0, "1-0"], [0.35, 0.886, 0, "3-11"], [0.35, 0.886, 0, "5-14"], [0.886, 1.154, 0, "3-9"], [0.886, 1.154, 0, "5-12"], [1.154, 1.421, 0, "3-11"], [1.154, 1.421, 0, "5-14"], [1.421, 1.957, 0, "3-7"], [1.421, 1.957, 0, "5-10"], [2.493, 3.029, 1, "1-0"], [2.493, 3.029, 1, "3-6"], [2.493, 3.029, 1, "5-9"], [3.029, 3.296, 1, "3-4"], [3.029, 3.296, 1, "5-7"], [3.296, 3.564, 1, "3-6"], [3.296, 3.564, 1, "5-9"], [3.564, 4.1, 1, "3-2"], [3.564, 4.1, 1, "5-5"]], "len": 13.65}]</script>
+    <script>
+(function () {
+  const W = JSON.parse(document.getElementById('rf-data').textContent);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  function diagram(bar, bi) {
+    const all = bar.dots.map(d => d.f).concat(bar.grip).filter(x => x > 0);
+    const mx = Math.max(...all), mn = Math.min(...all);
+    const base = mx <= 4 ? 1 : mn, rows = Math.max(4, mx - base + 1);
+    const L = 30, T = 18, SX = 16, FY = 20, Wd = L + 5 * SX + 10, H = T + rows * FY + 8;
+    const label = bar.dots.slice().sort((a, b) => a.n[0] - b.n[0]).map(d => d.nm).join(', ');
+    let s = `<svg class="dg" viewBox="0 0 ${Wd} ${H}" role="img" aria-label="${esc(bar.c)}: ${esc(label)}">`;
+    for (let i = 0; i < 6; i++) s += `<line class="st" x1="${L + i * SX}" y1="${T}" x2="${L + i * SX}" y2="${T + rows * FY}"/>`;
+    for (let j = 0; j <= rows; j++) s += `<line class="${j === 0 && base === 1 ? 'nut' : 'fr'}" x1="${L}" y1="${T + j * FY}" x2="${L + 5 * SX}" y2="${T + j * FY}"/>`;
+    if (base > 1) s += `<text class="fn" x="${L - 11}" y="${T + 0.5 * FY}">${base}</text>`;
+    const here = new Set(bar.dots.map(d => d.s + '-' + d.f));
+    bar.grip.forEach((f, i) => { if (f > 0 && !here.has(i + '-' + f)) s += `<circle class="gx" cx="${L + i * SX}" cy="${T + (f - base + 0.5) * FY}" r="6.4"/>`; });
+    bar.dots.forEach(d => {
+      const x = L + d.s * SX, n = d.n.join('·'), two = d.n.length > 1 ? ' two' : '', k = `data-k="${bi}|${d.s}-${d.f}"`;
+      if (d.f === 0) s += `<circle class="op" ${k} cx="${x}" cy="${T - 8}" r="6.2"/><text class="ol${two}" x="${x}" y="${T - 7.5}">${n}</text>`;
+      else { const y = T + (d.f - base + 0.5) * FY; s += `<circle class="dot" ${k} cx="${x}" cy="${y}" r="7.4"/><text class="dl${two}" x="${x}" y="${y + 0.5}">${n}</text>`; }
+    });
+    return s + '</svg>';
+  }
+  const box = document.getElementById('rf-ways');
+  box.innerHTML = W.map(w => `<article class="move" id="${w.id}"><div class="move-h"><h3>${esc(w.title)}</h3><span class="wh">${esc(w.where)}</span></div><p class="how">${esc(w.how)}</p><div class="strip">${w.bars.map((b, i) => `${i ? '<span class="arrow" aria-hidden="true">›</span>' : ''}<div class="s"><b>${esc(b.c)}</b>${diagram(b, i)}<span class="q">${esc(b.seq.join(' '))}</span></div>`).join('')}</div><div class="player"><audio controls preload="none" src="${esc(w.src)}" aria-label="${esc(w.title)}, then two bars of the riff"></audio></div></article>`).join('');
+  // each dot lights while its note sounds, at whatever speed the track plays
+  W.forEach(w => {
+    const art = document.getElementById(w.id), au = art.querySelector('audio');
+    const els = {}; art.querySelectorAll('[data-k]').forEach(e => { els[e.dataset.k] = e; });
+    let on = new Set(), raf = 0;
+    function paint() {
+      const t = au.currentTime, now = new Set();
+      w.light.forEach(([a, b, bi, k]) => { if (t >= a && t < b) now.add(bi + '|' + k); });
+      on.forEach(k => { if (!now.has(k) && els[k]) els[k].classList.remove('ff-on', 'ff-ring'); });
+      now.forEach(k => { if (!on.has(k) && els[k]) { const e = els[k]; e.classList.remove('ff-ring'); void e.getBBox(); e.classList.add('ff-on', 'ff-ring'); } });
+      on = now;
+      if (!au.paused) raf = requestAnimationFrame(paint);
+    }
+    au.addEventListener('play', () => { document.querySelectorAll('audio').forEach(o => { if (o !== au && !o.paused) o.pause(); }); cancelAnimationFrame(raf); raf = requestAnimationFrame(paint); });
+    ['pause', 'ended', 'seeked'].forEach(e => au.addEventListener(e, () => { cancelAnimationFrame(raf); paint(); }));
+    document.addEventListener('play', e => { if (e.target !== au && !au.paused) au.pause(); }, true);
+  });
+})();
+</script>
+  </section>
+<!-- riffs:end -->
+
   <p class="below">Everything below is reference: how to play it, the moves that make it, what differs from the record, every chord with its other grips, the trumpet’s valve fingerings, and a practice order.</p>
 
   <section aria-labelledby="h-how">
