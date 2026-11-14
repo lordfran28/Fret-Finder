@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-13T06:18:32Z",
+ "generatedAt": "2026-11-14T07:02:01Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -442,6 +442,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-13T06:08:52Z"
+  },
+  {
+   "id": "long-ago-and-far-away",
+   "file": "songs/long-ago-and-far-away/",
+   "page": "songs/long-ago-and-far-away/",
+   "title": "Long Ago (and Far Away)",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-14T07:02:00Z"
   }
  ]
 }
