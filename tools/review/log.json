@@ -5,7 +5,10 @@
   "balfe-marble-halls": "2026-11-14",
   "i-wish-you-love": "2026-11-14",
   "where-or-when": "2026-11-14",
-  "have-your-way": "2026-11-14"
+  "have-your-way": "2026-11-14",
+  "barquito-de-papel": "2026-11-15",
+  "fly-me-to-the-moon": "2026-11-15",
+  "seria-fantastico": "2026-11-15"
  },
  "nights": [
   {
@@ -18,6 +21,26 @@
    ],
    "proposals": [
     "Marble Halls, bars 34, 38, 78, 82: the arpeggio never plays the E♭ of E♭/B♭"
+   ]
+  },
+  {
+   "date": "2026-11-15",
+   "site_check": "231 pages, 94 locked tracks and every named track fine; the song lists match the folders (the check read them wrong and was fixed)",
+   "songs": [
+    "Fly Me to the Moon",
+    "Barquito de papel (and on Key Finder)",
+    "Sería fantástico (and on Key Finder)"
+   ],
+   "fixes": [
+    "Fret Finder, Fly Me to the Moon, bars 10, 26, 58: G7/G9 under Rod's held C to G9sus4 then G7/G9 as he falls to B, as the record's band plays it",
+    "Fret Finder, Fly Me to the Moon, bar 11: the note said 7th fret; E minor 7 is open",
+    "Fret Finder, Sería fantástico, bars 13 and 47: G♯7♭9 now sounds its 3rd, B♯",
+    "Fret Finder, Sería fantástico, bars 29 and 63: B minor add 11 sounds its open D on the beat; the open strings ring through the bar"
+   ],
+   "proposals": [
+    "Barquito de papel: rebuild the main guitar track from the page with today's tools, so E9 and E7♭9 sound their G♯ and D6/A its D (bars 13, 15, 17, 23, 25, 45, 47, 48, 49, 53, 55, 57, 63, 65)",
+    "Key Finder, Barquito de papel, bar 39: F♯7 then F♯7♭13 (or C♯ an octave up), so the piano's C♯ doesn't sit under Serrat's D",
+    "Should the 7th always sound too? Sería fantástico's C♯m7, F♯7 and E7 picking leaves it out in bars 16, 17, 23, 28, 50, 51, 57, 62"
    ]
   }
  ]

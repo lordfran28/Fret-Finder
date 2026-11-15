@@ -50,11 +50,26 @@ def pos(f):
     return sum(fz) / len(fz) if fz else 0.0
 
 
+def ascii_name(c):
+    """a chord name as the kit reads it: F♯m(maj9) → F#mmaj9"""
+    c = c.replace('♭', 'b').replace('♯', '#').replace('Δ', 'maj').replace('ø7', 'm7b5').replace('°7', 'dim7').replace('°', 'dim')
+    return re.sub(r'm\(maj(\d+)\)', r'mmaj\1', c)
+
+
 def load(slug):
     s = open(f'{ROOT}/songs/{slug}/index.html', encoding='utf-8').read()
     m = re.search(r'const DATA = (\{.*?\});\n', s, re.S)
-    if not m: raise SystemExit(f'{slug}: no DATA (an older page)')
-    return json.loads(m.group(1)), s
+    if m: return json.loads(m.group(1)), s
+    # an older page (Barquito de papel): <script id="data"> with bars[].segs[] (chord, grip f, beats) and bar times t
+    m = re.search(r'<script id="data"[^>]*>(.*?)</script>', s, re.S)
+    d = json.loads(m.group(1)) if m else None
+    if not (isinstance(d, dict) and isinstance(d.get('bars'), list) and d['bars'] and 'segs' in d['bars'][0]):
+        raise SystemExit(f'{slug}: no DATA (an older page in a form the review does not read)')
+    bars = [dict(label=str(b['n']), start=b.get('t'), note=b.get('badge') or '',
+                 items=[['K', ascii_name(g['c']), g['f'], [[g.get('beats', 4), 'a']]] for g in b['segs']]) for b in d['bars']]
+    vers = [(lab, src) for src, lab in re.findall(r'data-src="([^"$]+)"[^>]*>([^<]+)<', s)]
+    vers.sort(key=lambda v: 0 if re.search(r'alone', v[0], re.I) else 1)   # the guitar alone first, for taking it out of the singer's track
+    return dict(tracks=[dict(key='main', bars=bars, versions=vers, old=True)]), s     # old=True: no picking pattern in the data
 
 
 def spans(track):
@@ -107,6 +122,60 @@ def grips_report(D):
 
 
 def gtr_str(g): return ''.join('x' if x < 0 else (str(x) if x < 10 else f'({x})') for x in g)
+
+
+def notes_report(D):
+    """a bar's note that puts the hand at a fret no grip of the bar is at (Fly Me to the Moon bar 11 said "E minor 7
+    at the 7th fret" over the open grip 020000, 15 Nov)"""
+    rep = []
+    for tr in D['tracks']:
+        for b in tr['bars']:
+            note = b.get('note') or ''
+            gs = [it[2] for it in b['items'] if it[0] in ('K', 'C', 'T')]
+            if not gs or 'open' in note.lower(): continue
+            for m in re.finditer(r'at the (\d+)(?:st|nd|rd|th)(?:[–-](\d+)(?:st|nd|rd|th))? fret', note):
+                lo = int(m.group(1)); hi = int(m.group(2) or lo)
+                if not any(any(lo - 1 <= f <= hi + 1 for f in g if f > 0) for g in gs):
+                    rep.append((tr['key'], b['label'], 'note', f"says “{m.group(0)}” but the grips are {', '.join(gtr_str(g) for g in gs)}"))
+    return rep
+
+
+def plays_report(D):
+    """from the page's own data: a chord whose hits never sound its root, its 3rd or its 7th. A string struck before
+    on the same fret still rings and counts, and a chord held across a run in its own bar (the same grip both sides)
+    is taken whole. The 7th is told apart: the agreed rule (14 Nov) lets a pattern leave it out."""
+    rep = []
+    for tr in D['tracks']:
+        if tr.get('old'): continue                     # an older page keeps no picking pattern: --sound checks it
+        ringing = {}                                   # string -> fret still sounding
+        for b in tr['bars']:
+            groups = []                                # [name, grip, sounding strings]
+            for it in b['items']:
+                if it[0] != 'K':
+                    if it[0] in ('C', 'T'): ringing = {6 - i: f for i, f in enumerate(it[2]) if f >= 0}
+                    elif it[0] in ('R', 'X', 'H'): ringing.update({s: f for s, f in it[1]})
+                    elif it[0] == 'P': ringing.update({s: f for pr in it[1] for s, f in pr})
+                    continue
+                g = it[2]; idx = [6 - i for i, f in enumerate(g) if f >= 0]       # strings low to high
+                masks = {'a': idx, 'b': idx[:1], 't': idx[1:], 'h': idx[-3:], '-': []}
+                struck = {s for h in it[3] for s in (h[1] if isinstance(h[1], list) else masks.get(h[1], []))}
+                sounding = {s for s in range(1, 7) if g[6 - s] >= 0 and (s in struck or ringing.get(s) == g[6 - s])}
+                if groups and groups[-1][0] == it[1] and groups[-1][1] == g: groups[-1][2] |= sounding; groups[-1][3] |= struck
+                else: groups.append([it[1], g, set(sounding), set(struck)])
+                ringing = {s: g[6 - s] for s in sounding} | {s: f for s, f in ringing.items() if g[6 - s] == f}
+            for name, g, sounding, struck in groups:
+                if not struck: continue
+                try:
+                    r_, q_, _ = gtr.parse(name); req_ = gtr.QUAL[q_][0]
+                except Exception: continue
+                pcs_ = {(gtr.OPEN[6 - s] + g[6 - s]) % 12 for s in sounding}
+                want = [(r_, 'root')] + [((r_ + i) % 12, '3rd') for i in (4, 3) if i in req_][:1] + [((r_ + i) % 12, '7th') for i in (10, 11) if i in req_][:1]
+                gp = set(gtr.pcs(g))
+                lost = [(w, f'{NM[p]} ({w})') for p, w in want if p in gp and p not in pcs_]
+                hard = [x for w, x in lost if w != '7th']; soft = [x for w, x in lost if w == '7th']
+                if hard: rep.append((tr['key'], b['label'], 'plays', f"{T.disp(name)} {gtr_str(g)}: the pattern never sounds {', '.join(hard + soft)}"))
+                elif soft: rep.append((tr['key'], b['label'], 'plays 7', f"{T.disp(name)} {gtr_str(g)}: the pattern never sounds {', '.join(soft)}"))
+    return rep
 
 
 # ---------------- the singer
@@ -230,6 +299,18 @@ def sound_report(D, slug):
                     if i < len(f): e[i] += 0.6 ** (h - 1)
             return pcmap @ e
         for lab, it, t0, t1 in spans(tr):
+            if it[0] == 'R' and t1 > t0:
+                # a run, a line or a bass under it: every note of its diagram heard at its own time
+                bt = sum(it[2]) or 1; spb = (t1 - t0) / bt; x = 0.0; miss = []
+                for (s_, f_), d in zip(it[1], it[2]):
+                    on = t0 + x * spb; x += d
+                    w = (t >= on + 0.03) & (t < on + max(0.08, min(0.3, 0.8 * d * spb)))
+                    if not w.any(): continue
+                    c = C[:, w].mean(1); c = c / (c.max() + 1e-9)
+                    m = gtr.OPEN[6 - s_] + f_
+                    if c[m % 12] < 0.22: miss.append(f"{nn(m)} (string {s_}, fret {f_}) at {on:.1f}s")
+                if miss: rep.append((tr['key'], lab, 'sound', f"run over {T.disp(it[3]) if len(it) > 3 and isinstance(it[3], str) else ''}: diagram's {'; '.join(miss[:4])} not heard"))
+                continue
             if it[0] not in ('K', 'C', 'T') or t1 - t0 < 0.6: continue
             s = (t >= t0 + min(0.3, 0.3 * (t1 - t0))) & (t < t0 + 0.9 * (t1 - t0))   # past the last chord's release
             if not s.any(): continue
@@ -238,6 +319,21 @@ def sound_report(D, slug):
             want = {m % 12 for m in gtr.notes(it[2])}
             extra = [NM[p] for p in range(12) if p not in want and c[p] > 0.4 and c[p] - e[p] > 0.3]
             missing = [NM[p] for p in want if c[p] < 0.08]
+            # the root and the 3rd, by their own fundamentals (a pitch class can hide in another note's overtones:
+            # Barquito's E9 kept E but never played its G♯, 15 Nov)
+            try:
+                r_, q_, _ = gtr.parse(it[1]); req_ = gtr.QUAL[q_][0]
+                third = next(((r_ + i) % 12 for i in (4, 3) if i in req_), None)
+            except Exception: r_, third = None, None
+            fe = {}
+            for m in set(gtr.notes(it[2])):
+                fq = 440 * 2 ** ((m - 69) / 12); i = int(round(fq / (f[1] - f[0])))
+                fe[m] = float(M[max(0, i - 1):i + 2, s].mean(1).max())
+            top = max(fe.values()) if fe else 0
+            for p, what in ((r_, 'root'), (third, '3rd')):
+                if p is None or top <= 0: continue
+                ms = [m for m in fe if m % 12 == p]
+                if ms and max(fe[m] for m in ms) < 0.06 * top and NM[p] not in missing: missing.append(f'{NM[p]} ({what})')
             if extra or missing:
                 rep.append((tr['key'], lab, 'sound', f"{T.disp(it[1])} {gtr_str(it[2])} at {t0:.1f}s: track has {', '.join(extra) or '-'} not in the diagram; diagram's {', '.join(missing) or '-'} not heard"))
     return rep
@@ -258,17 +354,6 @@ def cp_report(html):
             for v in x: walk(v, where)
     walk(C, '-')
     return rep
-
-
-if __name__ == '__main__':
-    slug = sys.argv[1]
-    D, html = load(slug)
-    rep = grips_report(D) + cp_report(html)
-    if '--voice' in sys.argv: rep += voice_report(D, html, slug)
-    if '--sound' in sys.argv: rep += sound_report(D, slug)
-    if '--kf' in sys.argv: rep += kf_report(slug, '--voice' in sys.argv)
-    print(f'== {slug}: {sum(len(t["bars"]) for t in D["tracks"])} bars in {len(D["tracks"])} track(s)')
-    for k, lab, kind, msg in rep: print(f'[{kind:8s}] {k:>5s} {lab:>9s}  {msg}', flush=True)
 
 
 # ---------------- Key Finder: the same song's piano page
@@ -328,3 +413,14 @@ def kf_report(slug, voice=True):
     for lab, w in bybar.items():
         if w > 0.3: rep.append(('kf', lab, 'rub', f"{w:.1f} s: " + '; '.join(x for _, x in sorted(ex[lab], reverse=True)[:3])))
     return rep
+
+
+if __name__ == '__main__':
+    slug = sys.argv[1]
+    D, html = load(slug)
+    rep = grips_report(D) + plays_report(D) + notes_report(D) + cp_report(html)
+    if '--voice' in sys.argv: rep += voice_report(D, html, slug)
+    if '--sound' in sys.argv: rep += sound_report(D, slug)
+    if '--kf' in sys.argv: rep += kf_report(slug, '--voice' in sys.argv)
+    print(f'== {slug}: {sum(len(t["bars"]) for t in D["tracks"])} bars in {len(D["tracks"])} track(s)')
+    for k, lab, kind, msg in rep: print(f'[{kind:8s}] {k:>5s} {lab:>9s}  {msg}', flush=True)

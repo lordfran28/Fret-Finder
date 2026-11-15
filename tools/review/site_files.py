@@ -4,7 +4,7 @@ for site in ('Fret-Finder', 'Key-Finder'):
     root = SITE + site + '/songs/'
     idx = json.load(open(root + 'index.json'))
     songs = idx['songs'] if isinstance(idx, dict) else idx
-    listed = {s.get('slug') or s.get('path', '').strip('/').split('/')[-1] for s in songs}
+    listed = {s.get('id') or s.get('slug') or (s.get('page') or s.get('path', '')).strip('/').split('/')[-1] for s in songs}
     folders = {d for d in os.listdir(root) if os.path.isdir(root + d)}
     print(site, len(folders), 'folders,', len(listed), 'listed; missing from index', sorted(folders - listed), 'listed without folder', sorted(listed - folders))
     probs = []
