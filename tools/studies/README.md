@@ -44,3 +44,5 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
 - `gypsy/`: Wrembel's accompaniment rhythms (la pompe, waltz, bolero, bossa-manouche) on Moonglow, Я вас любил and Очи чёрные.
 - `flamenco/`: Graf-Martinez's arpeggio exercises I–IV (right hand kept, on Очи чёрные's open chords) and the five-note tremolo on Я вас любил's tremolo opening.
 - `vaneps/`: Van Eps's scale in first-inversion triads, worked out for F major (string sets and positions chosen by least movement).
+- `vaneps/entry2.py`: more of Van Eps's mechanisms (open triads in three spreads, triads through the cycle of fifths, two lines of triads in contrary
+  motion) in E♭ and C harmonic minor, added to `entry.py`'s page; `check2.py` checks every voicing. `build.py` builds the page from `entry2`.

@@ -1,15 +1,15 @@
 """Build the Van Eps entry: python3 build.py [audio]"""
 import sys, os
-sys.path.insert(0, '/home/claude/studies'); sys.path.insert(0, '/home/claude/studies/vaneps')
+sys.path.insert(0, '/home/claude/studies'); sys.path.insert(0, '/home/claude/studies/tango'); sys.path.insert(0, '/home/claude/studies/vaneps')
 import study_page as SP
 SP.BPM = 72; SP.QUOTE_PAD = 4
-import entry as E
+import entry2 as E
 OUT = '/home/claude/studies/vaneps/out/'; os.makedirs(OUT, exist_ok=True)
 ENTRY = dict(key='vaneps', title='Three-voice triads', eyebrow='Exercises · George Van Eps',
-             meta=[['Style', 'Harmony on the neck (Van Eps, Harmonic Mechanisms)'], ['Set on', 'F major (Moonglow), A harmonic minor (Очи чёрные)'], ['Tempo', f'{SP.BPM} a minute']],
-             lede='The scale in three-voice triads, root on top, root in the middle, root at the bottom, in the keys of Moonglow and Очи чёрные, from the bottom of the neck to the top and back.',
-             contents_intro='Everything on this page, in order. It opens with Van Eps’s own first two triads, then the same in the key of one of your songs.',
-             track_title='The rhythms, one after another',
+             meta=[['Style', 'Harmony on the neck (Van Eps, Harmonic Mechanisms)'], ['Set on', 'F major (Moonglow), A harmonic minor (Очи чёрные), E♭ major and C harmonic minor (I Wonder Who’s Kissing Her Now)'], ['Tempo', f'{SP.BPM} a minute']],
+             lede='The scale in three-voice triads, close and open, every inversion, from the bottom of the neck to the top and back; triads through the cycle of fifths; two lines of triads crossing. In the keys of your songs.',
+             contents_intro='Everything on this page, in order. Each mechanism opens with what Van Eps does, then the same in the key of one of your songs.',
+             track_title='The triads, one after another',
              track_intro='Every bar in order. Tap a bar’s number to play from there; the speeds below the player slow it down.',
              track_pattern='Bars marked V are Van Eps’s own. One triad to a beat.',
              accent=('#3A2F1E', '#F3EDE2', '#7A5A22', '#E3CFA4', '#16120A', '#E8D3A6'))
