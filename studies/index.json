@@ -1,6 +1,27 @@
 {
  "studies": [
   {
+   "id": "sor-1",
+   "page": "studies/sor-1/",
+   "title": "Sor’s studies, I–VI",
+   "style": "Sor",
+   "addedAt": "2026-11-16T10:08:15Z"
+  },
+  {
+   "id": "sor-2",
+   "page": "studies/sor-2/",
+   "title": "Sor’s studies, XI–XII",
+   "style": "Sor",
+   "addedAt": "2026-11-16T10:08:15Z"
+  },
+  {
+   "id": "sor-3",
+   "page": "studies/sor-3/",
+   "title": "Sor’s studies, XIV and XVII",
+   "style": "Sor",
+   "addedAt": "2026-11-16T10:08:15Z"
+  },
+  {
    "id": "wyble",
    "page": "studies/wyble/",
    "title": "Two lines at once",
