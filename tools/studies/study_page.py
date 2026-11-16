@@ -35,7 +35,9 @@ def assemble(sections, mark='W'):
                 its = list(q['items']) if q.get('items') else [q['item']]
                 L = sum(item_len(x) for x in its)
                 if L < QUOTE_PAD: its.append(['W', QUOTE_PAD - L])
-                bars.append(dict(label=f'{mark}{len(toc_flat(toc, sec_toc)) + 1}', sec=ex['title'], items=its, chords=[],
+                mk = S.get('mark', mark)
+                n_mk = len(toc_flat(toc, sec_toc)) + 1 if mk == mark else sum(1 for x in bars if x.get('quote') and x['label'].startswith(mk)) + 1
+                bars.append(dict(label=f'{mk}{n_mk}', sec=ex['title'], items=its, chords=[],
                                  note=f"{head} {q.get('whose', 'Wyble’s own')}, {q['where']}: {q['text']} {q.get('played', 'Played here: its opening only.')}", quote=True))
                 first_note_done = True
             else:

@@ -67,6 +67,9 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
   the strokes with a table read from his pages and the chords with your Очи чёрные page; `build_hand.py` (46 a minute).
 - `page/template_study.html`: note lengths of a seventh or a ninth of a beat are written 1/7 and 1/9.
 - `flamenco/`: Graf-Martinez's arpeggio exercises I–IV (right hand kept, on Очи чёрные's open chords) and the five-note tremolo on Я вас любил's tremolo opening.
+- `flamenco/serrano_arp.py`: Serrano's four arpeggio exercises (pp. 46–48) over Очи чёрные's changes with the root on the low E
+  string, added to the flamenco right-hand page; `check_arp.py` compares every note with his patterns read from his tablature.
+  `build.py` builds that page from it. A section can carry its own quote mark (`mark`), numbered from 1.
 - `flamenco/rasgueado.py`: Serrano's rasgueado (Basic Techniques pp. 21–29): the preparatory study, three exercises and five
   studies, his strokes and fingers on Очи чёрные's chords; `check_ras.py` compares every stroke with his bars as transcribed and
   the chords with your Очи чёрные page; `build_ras.py`. Rhythm items may now carry `{'up': [...], 'marks': [...]}`: upstrokes in the
