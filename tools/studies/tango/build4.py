@@ -12,7 +12,7 @@ ENTRY = dict(key='vals', title='Vals', eyebrow='Exercises · Julián Graciano',
              contents_intro='Everything on this page, in order. Each rhythm opens with Graciano’s own bar, then the same in G on Я вас любил.',
              track_title='The vals, one figure after another',
              track_intro='Every bar in order. Tap a bar’s number to play from there; the speeds below the player slow it down.',
-             track_pattern='Bars marked G are Graciano’s own. Bars marked G are Graciano’s own, in A; the rest are in G, on Я вас любил.',
+             track_pattern='Bars marked G are Graciano’s own, in A; the rest are in G, on Я вас любил.',
              accent=('#3A2326', '#F3E8E6', '#7A2E2E', '#E0B4B0', '#170D0E', '#E9C2BC'))
 bars, toc = SP.assemble(E.SECTIONS, mark='G')
 starts, spb = SP.times(bars)
