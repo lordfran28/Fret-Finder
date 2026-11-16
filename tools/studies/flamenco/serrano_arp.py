@@ -123,5 +123,35 @@ EX.append(dict(id='thumb', title='Serrano’s study for the thumb',
                quote=dict(where=f'{BOOK}, p. 41', text='his scale is A natural minor (C major’s notes), from A, the same contour.', item=None, by='Serrano'),
                bars=tb))
 
+# ---------- the tremolo study (p. 36): p i a m i on the top note, the thumb walking the chord ----------
+TREM_THUMB = [6, 5, 4, 3, 2, 3, 4, 5]                 # his thumb, a beat each over two bars: up the chord to the B string and back
+
+
+def trem_bars(chord):
+    g = GRIP[chord]
+    top = [1, g[5]]
+    out = []
+    for half in (TREM_THUMB[:4], TREM_THUMB[4:]):
+        notes, durs = [], []
+        for s_ in half:
+            notes += [[s_, g[6 - s_]]] + [top] * 4
+            durs += [0.2] * 5
+        out.append(dict(chords=[chord], note='', items=[['R', notes, durs, chord, {'vel': [0.08, 0, 0, 0, 0] * 4}]]))
+    return out
+
+
+tr = []
+for c in CHANGES: tr += trem_bars(c)
+tr.append(dict(chords=['Am'], note='', items=[K('Am', GRIP['Am'], [(4, [6, 1], ACC['p'])])]))
+tr[0]['note'] = ('Five notes a beat, p i a m i: the thumb, then the top note of the chord four times on the high E string. The thumb walks the chord a beat at a time, '
+                 'low E, A, D, G strings, then B, G, D, A, over two bars. On Очи чёрные’s changes, two bars each, with the same grips as the arpeggios: '
+                 'E7 open (the tremolo on the open E), A minor at the 5th fret (on A), D minor at the 10th (on D). Every note tirando.')
+EX.append(dict(id='trem', title='Serrano’s tremolo study',
+               idea=('Serrano’s first tremolo study: the five-note tremolo held on the top note of a chord while the thumb walks up the chord and back, two bars to a chord, '
+                     'the hand moving to the next barre; he goes on down the neck the same way to the first position.'),
+               quote=dict(where=f'{BOOK}, p. 36', text='his first beat on E: the low E, then the open high E four times.',
+                          items=[['R', [[6, 0]] + [[1, 0]] * 4, [0.2] * 5, 'E']], whose='Serrano’s own', played='Played here: that beat.'),
+               bars=tr))
+
 SECTION = dict(id='flamenco-serrano', title='Serrano’s arpeggios', part='Exercises', ex=EX, mark='S')
 SECTIONS = list(F0.SECTIONS) + [SECTION]

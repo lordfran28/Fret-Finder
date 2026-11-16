@@ -21,7 +21,7 @@ m = re.search(r'"title": "The plain chart".*?"chords": (\[\[.*?\]\]), "tab"', h,
 changes = [b[0]['c'] for b in json.loads(m.group(1))][0::2]
 OPENS = [40, 45, 50, 55, 59, 64]
 EXS = {ex['id']: ex for ex in A.SECTION['ex']}
-if set(EXS) != set(HIS) | {'thumb'}: P(f'exercises {sorted(EXS)}')
+if set(EXS) != set(HIS) | {'thumb', 'trem'}: P(f'exercises {sorted(EXS)}')
 for exid, beats in HIS.items():
     ex = EXS.get(exid)
     if not ex: continue
@@ -69,6 +69,27 @@ else:
         if [NMS.get(n) for n in names] != [(OPENS[6 - st] + f) % 12 for st, f in it[1]]: P('thumb: the names do not match the notes')
     if got != want: P(f'thumb: the notes differ from his contour at {next((k for k, (a, b) in enumerate(zip(got, want)) if a != b), len(got))}')
     if durs[:-1] != [0.5] * (len(durs) - 1) or durs[-1] != 1.0: P('thumb: not eighths ending on a quarter')
+# the tremolo study (p. 36): each beat the thumb on the chord's string, then the top note (high E string) four times;
+# the thumb over two bars: low E, A, D, G, then B, G, D, A strings
+THUMB = [6, 5, 4, 3, 2, 3, 4, 5]
+ex = EXS.get('trem')
+if not ex: P('tremolo study missing')
+else:
+    if len(ex['bars']) != 2 * len(changes) + 1: P(f'trem: {len(ex["bars"])} bars')
+    for k, B in enumerate(ex['bars'][:-1]):
+        it = B['items'][0]
+        chord = changes[k // 2]
+        g = A.GRIP[chord] if B['chords'] == [chord] else None
+        if g is None: P(f'trem bar {k + 1}: {B["chords"]}, the song has {chord}'); continue
+        notes, durs = it[1], it[2]
+        if len(notes) != 20 or any(abs(d - 0.2) > 1e-9 for d in durs): P(f'trem bar {k + 1}: not five to a beat'); continue
+        for b in range(4):
+            th, *tr = notes[5 * b:5 * b + 5]
+            s_ = THUMB[4 * (k % 2) + b]
+            if th != [s_, g[6 - s_]]: P(f'trem bar {k + 1} beat {b + 1}: thumb {th}, wants string {s_}')
+            if any(t != [1, g[5]] for t in tr): P(f'trem bar {k + 1} beat {b + 1}: the tremolo is not the top note')
+        pcs = {(OPENS[i] + f) % 12 for i, f in enumerate(g) if f >= 0}
+        if not pcs <= gtr.chord_pcs(chord): P(f'trem: {chord} grip')
 print('patterns checked:', len(HIS), '· changes:', ' '.join(changes))
 print('\n'.join(probs) if probs else 'all good')
 sys.exit(1 if probs else 0)
