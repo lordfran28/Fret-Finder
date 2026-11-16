@@ -69,6 +69,12 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
 - `gypsy/hand.py`: Wrembel's right-hand warm-up (ch. 1): the beat divided by 1 to 9 with his strokes, four beats on each string, on the
   bass of Очи чёрные (E7, Am, Dm on the open strings), the pivot 5-1-5-2-5-3-5-4 and the loops 2-3, 2-4, 2-5; `check_hand.py` compares
   the strokes with a table read from his pages and the chords with your Очи чёрные page; `build_hand.py` (46 a minute).
+- `gypsy/romane.py`: L'Esprit Manouche (Romane and Derek Sébastian), part A of chapters 1–4: their fingerboard diagrams
+  (minor and major triads in many forms, the diminished seventh, the harmonic minor in position and reaching over, the minor
+  chord with a 6th or a 9th, speed on two strings, the chromatic scale with open strings), each moved one fret up on the same
+  strings from their A minor into It Had to Be You's B♭ minor; `check_romane.py` reads their diagrams again as notes on strings,
+  checks ours is theirs moved up a fret, every note against its chord, the rhythm, the names, the fingers and the song bars
+  the text names (from your page); `build_romane.py` (100 a minute). Needs `m(add9)` in `scripts/gtr.py`.
 - `page/template_study.html`: note lengths of a seventh or a ninth of a beat are written 1/7 and 1/9.
 - `flamenco/`: Graf-Martinez's arpeggio exercises I–IV (right hand kept, on Очи чёрные's open chords) and the five-note tremolo on Я вас любил's tremolo opening.
 - `flamenco/serrano_arp.py`: Serrano's four arpeggio exercises (pp. 46–48) over Очи чёрные's changes with the root on the low E
