@@ -41,6 +41,10 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
 - `tango/entry11.py`: the rest of Graciano's chapter 7 on that tune: his ten paraphrase techniques and four of expression, a guide line
   against the tune, Grela's two lines in one, and an étude. Each change to the tune is made by one function per technique and logged;
   `check11.py` checks every logged change against the technique's rule with its own code. `build9.py` now builds the page from `entry11`.
+- `tango/entry12.py`: Graciano's chapter 8, the guitar alone, on that tune: the tune on the top strings, over the plainest chord, over a
+  bass line, with dressed-up chords, and an étude mixing them. `solo.py` fingers a tune with chords or a bass under it (one string per
+  sounding note, the tune on top on the first three strings, the stretch and four fingers kept at every moment, the hand moving least);
+  `check12.py` checks the fingering and each part's rule with its own code. `build12.py` builds the page.
 - `tango/quotes.py`: cuts every quote of a book to its first two beats; each entry calls it last.
 - `sola/`: Sola's five steps for colouring a song's chords, applied to Очи чёрные (it borrows `K` from `tango/entry.py`).
   Minor 11 chords need the `m11` quality in the song kit's chord table (`scripts/gtr.py`).
