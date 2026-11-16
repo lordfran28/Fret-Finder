@@ -3,13 +3,13 @@ import sys, os
 sys.path.insert(0, '/home/claude/studies'); sys.path.insert(0, '/home/claude/studies/gypsy')
 import study_page as SP
 SP.BPM = 100; SP.QUOTE_PAD = 3
-import romane3 as E
+import romane4 as E
 OUT = '/home/claude/studies/gypsy/out_romane/'; os.makedirs(OUT, exist_ok=True)
 ENTRY = dict(key='gypsy-romane', title='Gypsy jazz: arpeggios and scales across the neck', eyebrow='Exercises · Romane',
              meta=[['Style', 'Gypsy jazz (Romane)'], ['Set on', 'It Had to Be You: D♭, B♭ minor and G♭'], ['Tempo', f'{SP.BPM} a minute, in eighths']],
              lede=('Triads all over the neck, the diminished seventh plain and broken, the harmonic minor and whole tone scales, the minor chord with a 6th or a 9th, '
-                   'the major seventh, sweeps, notes reached from a half step below, the roots and tritones on the neck, designated notes, II–V–I voicings, '
-                   'broken scales and exercises for speed: '
+                   'the major seventh, sweeps, notes reached from a half step below, the roots and tritones on the neck, designated notes, II–V–I and Manouche voicings, '
+                   'broken scales, two triads a step apart, skipping intervals and exercises for speed: '
                    'Romane’s diagrams, each moved a fret into the keys of It Had to Be You.'),
              contents_intro='Everything on this page, in order.',
              track_title='The exercises, one after another',

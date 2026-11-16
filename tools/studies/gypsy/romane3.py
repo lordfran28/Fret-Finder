@@ -62,9 +62,9 @@ STAR = ['', '*'] * 4
 
 
 def cell_bars(key, chord, what):
+    """two bars as one: eight eighths, the last tied over the bar line into a half note"""
     ns, nm = ours(key), names(key)
-    return [dict(chords=[chord], note='', items=[['R', [list(x) for x in ns], [0.5] * 8, lab(nm, STAR, what)]]),
-            dict(chords=[chord], note='', items=[['R', [list(ns[-1])], [2], lab(nm[-1:], ['*'], 'held')], ['W', 2]])]
+    return [dict(chords=[chord], note='', items=[['R', [list(x) for x in ns], [0.5] * 7 + [2.5], lab(nm, STAR, what)], ['W', 2]])]
 
 
 b = cell_bars('d31', 'Gb', 'D♭ then G♭, each from above and below')

@@ -121,10 +121,10 @@ for key, ex in EXS.items():
         lens.append(L)
     if notes[:len(R.ours(key))] != R.ours(key): P(f'{key}: not the notes in order')
     if any(pc(re.sub(r'[*]', '', l)) != at(*n) % 12 for l, n in zip(labs, notes)): P(f'{key}: a name')
-    want_len = {'d37': 2, 'd38': 2}.get(key, 4)
+    want_len = {'d37': 2, 'd38': 2, 'd31': 8, 'd32': 8, 'd33': 8, 'd34': 8}.get(key, 4)
     if any(abs(L - want_len) > 1e-9 for L in lens): P(f'{key}: bars of {lens}')
     if key in ('d31', 'd32', 'd33', 'd34'):
-        if durs != [0.5] * 8 + [2] or notes[8] != notes[7]: P(f'{key}: rhythm')
+        if durs != [0.5] * 7 + [2.5] or len(notes) != 8: P(f'{key}: rhythm')
         if [('*' in l) for l in labs[:8]] != [False, True] * 4: P(f'{key}: stars')
     if key in ('d37', 'd38'):
         if durs != [0.5] * 24 or [('*' in l) for l in labs] != [False, False, False, True] * 6: P(f'{key}: rhythm or stars')
