@@ -15,3 +15,5 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
 - `tango/`: Graciano's accompaniment rhythms (chapter 1), each a pattern of strokes on a grip: bass, chord, middle
   notes, open low strings; staccato is a stroke then a rest, accents and ghost notes a third value on the stroke, and the
   arrastre a slide up the bass string into the next downbeat.
+- `sola/`: Sola's five steps for colouring a song's chords, applied to Очи чёрные (it borrows `K` from `tango/entry.py`).
+  Minor 11 chords need the `m11` quality in the song kit's chord table (`scripts/gtr.py`).
