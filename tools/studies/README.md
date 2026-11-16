@@ -67,6 +67,8 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
 - `vaneps/entry5.py`: Van Eps's chromatics: major triads climbing by half steps over G (Я вас любил) and minor over A (Очи чёрные), each
   inversion, the pedal moving only when the triad leaves the hand; chromatic scales in octaves, 10ths, 12ths, 13ths and two octaves;
   the 10th to the 3rd over a held bass (one hand position the whole time). `check5.py` works every note out again from the exercise's
-  definition and checks names, strings and reach. `build.py` now builds the page from `entry5`; page numbers are the printed ones.
+  definition and checks names, strings and reach; page numbers are the printed ones.
+- `vaneps/entry6.py`: the melodic minor in first- and second-inversion triads in A (up melodic, down natural, as Van Eps does),
+  placed after the other scales in triads; `check6.py`. `build.py` now builds the page from `entry6`.
 - `study_page.py`: a two-voice item may carry `{'hold': [strings]}` (those notes ring until struck again, the rest stop at their own
   end); pages longer than five minutes are rendered in pieces and added up.
