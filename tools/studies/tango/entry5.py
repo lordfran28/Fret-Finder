@@ -38,6 +38,9 @@ def tr(n, steps, semis):
         j2 = next(k for k in range(7) if (LPC[k] - target) % 12 == 0)
         return LET[j2] + str((target - LPC[j2]) // 12 - 1)
     assert acc in (-1, 0, 1), (n, steps, semis)
+    if (LET[j], acc) in (('C', -1), ('F', -1), ('E', 1), ('B', 1)):     # C♭, F♭, E♯, B♯ are written as B, E, F, C
+        j2 = next(k for k in range(7) if (LPC[k] - target) % 12 == 0)
+        return LET[j2] + str((target - LPC[j2]) // 12 - 1)
     return LET[j] + {-1: 'b', 0: '', 1: '#'}[acc] + str(o2)
 
 
