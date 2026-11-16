@@ -27,6 +27,8 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
   line from his degrees for the chord, `place_bar` puts the bass on the low strings and the chord above it with every held chord under
   the hand, and `check8.py` checks each line against the rule. Held chords use a K item's `{'hold': beats, 'strings': [...]}` and
   bass lines an R item's `{'stop': True}` (both read by `study_page.render`).
+- `tango/entry3b.py`: the rest of the milonga chapter (milongueo in major, improvising its bass, the contemporary milonga, the fills,
+  the plans), added to `entry3.py`'s page; `check3b.py` checks it. `build3.py` builds the whole milonga page from `entry3b`.
 - `tango/entry9.py`: Graciano's melody chapter (chapter 7): his scale for each chord, the tango minor, chromatic notes, blue notes
   and guide tones, each applied to the songs' chords. `mel.py` holds the spelled notes (C♭ and E♯ kept), his scales, his
   scale-for-a-chord rules (`rule_for`) and a single-line fingering in position; `check9.py` checks every line against its rule.
