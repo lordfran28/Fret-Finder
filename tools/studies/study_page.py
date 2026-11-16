@@ -10,6 +10,7 @@ import page as PG
 from song_page import build as build_song
 
 BPM = 66
+QUOTE_PAD = 4          # a quote shorter than this many beats is filled out with silence (2 for pieces in 2/4)
 
 
 def item_len(it):
@@ -33,7 +34,7 @@ def assemble(sections, mark='W'):
             if q.get('item') or q.get('items'):
                 its = list(q['items']) if q.get('items') else [q['item']]
                 L = sum(item_len(x) for x in its)
-                if L < 4: its.append(['W', 4 - L])
+                if L < QUOTE_PAD: its.append(['W', QUOTE_PAD - L])
                 bars.append(dict(label=f'{mark}{len(toc_flat(toc, sec_toc)) + 1}', sec=ex['title'], items=its, chords=[],
                                  note=f"{head} {q.get('whose', 'Wyble’s own')}, {q['where']}: {q['text']} {q.get('played', 'Played here: its opening only.')}", quote=True))
                 first_note_done = True
