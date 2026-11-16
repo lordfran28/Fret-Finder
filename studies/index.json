@@ -1,6 +1,13 @@
 {
  "studies": [
   {
+   "id": "carcassi",
+   "page": "studies/carcassi/",
+   "title": "Right-hand arpeggios",
+   "style": "Carcassi",
+   "addedAt": "2026-11-16T10:15:46Z"
+  },
+  {
    "id": "sor-1",
    "page": "studies/sor-1/",
    "title": "Sor’s studies, I–VI",
