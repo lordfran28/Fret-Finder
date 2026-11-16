@@ -25,6 +25,11 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
   (minor and major, both voicings), the ♭VI7, triads over an open-string pedal, four ways from I to the relative minor's dominant (a
   voice-leading search places each chord: the bass line his, the upper voices moving least), barres sliding from Im to V7, and the six
   endings, in the keys of Очи чёрные, I Wonder Who's Kissing Her Now, Я помню чудное мгновенье and Я вас любил. `check14.py` checks each rule.
+- `tango/entry15.py`: Graciano's harmony (chapter 5), rebuilt from his rules on entry14's voicing search: the key's own chords from Im
+  to IVm and to V7, Grela's pedal on top, the circle of 5ths (twice), tritone substitutes (the shared notes held), diminished chords for
+  the dominant and their grips, the line cliché from the octave and from the 5th in every voice and way of playing it, and the tritone
+  with its four replacements, resolutions, fingerings and uses, on Очи чёрные, I Wonder Who's Kissing Her Now and Я вас любил.
+  `check15.py` checks each rule.
 - `tango/entry8.py`: Graciano's walking bass with chords (chapter 6), built from his rules, not from his notes: `formula` makes each bass
   line from his degrees for the chord, `place_bar` puts the bass on the low strings and the chord above it with every held chord under
   the hand, and `check8.py` checks each line against the rule. Held chords use a K item's `{'hold': beats, 'strings': [...]}` and
