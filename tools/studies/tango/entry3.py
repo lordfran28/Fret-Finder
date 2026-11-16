@@ -151,5 +151,6 @@ EX[-1]['bars'][0]['note'] = ('On D minor the same rule: D, then F and D above, B
 
 SECTIONS = [dict(id='milonga', title='Milonga', part='Exercises', ex=EX)]
 
+sys.path.insert(0, '/home/claude/studies/tango')
 from quotes import trim as _trim_quotes   # quotes stay a beat or two
 _trim_quotes(SECTIONS)

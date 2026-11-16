@@ -313,5 +313,6 @@ SECTIONS = [dict(id='apoyaturas', title='Leaning into the bass', part='Exercises
             dict(id='frases', title='Bass phrases', part='Exercises', ex=EX_F),
             dict(id='inversiones', title='The bass to the 3rd and the 7th', part='Exercises', ex=EX_I)]
 
+sys.path.insert(0, '/home/claude/studies/tango')
 from quotes import trim as _trim_quotes   # quotes stay a beat or two
 _trim_quotes(SECTIONS)

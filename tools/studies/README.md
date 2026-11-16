@@ -23,6 +23,11 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
   pair of notes (one note per string, the stretch kept, nearest the position asked); `check6.py` proves the notes are his, moved.
 - `tango/entry7.py`: Graciano's harmony (chapter 5), on `entry6.py`'s chords and pairs (it loads that file and clears its record
   of moves); `check7.py` checks it the same way. The ♯11 chord and the augmented 5th need the `m#5` quality in `scripts/gtr.py`.
+- `tango/entry8.py`: Graciano's walking bass with chords (chapter 6), built from his rules, not from his notes: `formula` makes each bass
+  line from his degrees for the chord, `place_bar` puts the bass on the low strings and the chord above it with every held chord under
+  the hand, and `check8.py` checks each line against the rule. Held chords use a K item's `{'hold': beats, 'strings': [...]}` and
+  bass lines an R item's `{'stop': True}` (both read by `study_page.render`).
+- `tango/quotes.py`: cuts every quote of a book to its first two beats; each entry calls it last.
 - `sola/`: Sola's five steps for colouring a song's chords, applied to Очи чёрные (it borrows `K` from `tango/entry.py`).
   Minor 11 chords need the `m11` quality in the song kit's chord table (`scripts/gtr.py`).
 - `morel/`: Morel's dance patterns (malambo, samba, clave) on Очи чёрные and Я вас любил.

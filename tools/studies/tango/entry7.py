@@ -403,5 +403,6 @@ def _labels():
 
 _labels()
 
+sys.path.insert(0, '/home/claude/studies/tango')
 from quotes import trim as _trim_quotes   # quotes stay a beat or two
 _trim_quotes(SECTIONS)
