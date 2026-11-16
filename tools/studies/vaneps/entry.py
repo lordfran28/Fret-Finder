@@ -56,17 +56,31 @@ def path(chords):
     return min(best.values())[1]
 
 
-# the scale from the lowest first-inversion triad on the low strings (D minor: F, A, D) up to the top of the neck, and back
-seq, deg, octv = [], 5, 3               # D minor, root D3
-while True:
-    t = triad(deg, octv)
-    if t[2] > N('F5'): break
-    seq.append((NAMES[deg % 7], t))
-    deg += 1
-    if deg % 7 == 5 and False: pass
-    if F_MAJ[deg % 7] < F_MAJ[(deg - 1) % 7]: octv += 1
+def scale_in(inv, top=None):
+    """the scale's triads in one inversion (1: root on top; 2: root in the middle, 3rd on top), from the lowest that fits on
+    the three low strings up to the top of the neck"""
+    out = []
+    for octv in range(1, 7):
+        for deg in range(7):
+            r = 12 * (octv + 1) + F_MAJ[deg]
+            if deg >= 4: r += 12                      # the scale runs F G A Bb C D E: C, D, E belong to the octave above F
+            t = r + (F_MAJ[(deg + 2) % 7] - F_MAJ[deg]) % 12
+            f = r + (F_MAJ[(deg + 4) % 7] - F_MAJ[deg]) % 12
+            ms = [t, f, r + 12] if inv == 1 else [f, r + 12, t + 12]
+            if placements(ms) and ms[0] >= 40:
+                out.append((NAMES[deg], ms))
+    out.sort(key=lambda x: x[1][0])
+    first = next(i for i, (n, ms) in enumerate(out) if any(p[0] == 4 for p in placements(ms)))
+    out = out[first:]
+    return [x for x in out if x[1][2] <= (top or N('F5'))]
+
+
+seq = scale_in(1)
 up = path([m for _, m in seq])
 names = [n for n, _ in seq]
+seq2 = scale_in(2, N('A5'))
+up2 = path([m for _, m in seq2])
+names2 = [n for n, _ in seq2]
 
 
 def bars_from(names_, grips, per_bar=4):
@@ -79,14 +93,22 @@ def bars_from(names_, grips, per_bar=4):
     return out
 
 
-down = list(reversed(up))[1:]
-b = bars_from(names, up) + bars_from(list(reversed(names))[1:], down)
-sets_used = []
-for n, g in up:
-    if not sets_used or sets_used[-1] != n: sets_used.append(n)
+def section(names_, up_, label):
+    down_ = list(reversed(up_))[1:]
+    bb = bars_from(names_, up_) + bars_from(list(reversed(names_))[1:], down_)
+    used = []
+    for n, g in up_:
+        if not used or used[-1] != n: used.append(n)
+    return bb, used
+
+
+b, sets_used = section(names, up, 'first')
 b[0]['note'] = ('Moonglow’s key, F major: each triad with its root on top (the 3rd at the bottom), one to a beat, from D minor on the three low strings up the scale to the top of the neck, then back down. '
                 f'The string sets change as the scale climbs: {", ".join(f"{n}/3" for n in sets_used)} (Van Eps’s names: 4/3 is the low E, A and D strings, 1/3 the G, B and high E). '
                 'Alternate two fingers where you can, as he advises, rather than hopping on one.')
+b2, sets2 = section(names2, up2, 'second')
+b2[0]['note'] = (f'F major again, each triad now with its root in the middle and its 3rd on top, from {names2[0].replace("dim", "°")} on the low strings up and back; the string sets: '
+                 f'{", ".join(f"{n}/3" for n in sets2)}.')
 EX = [dict(
     id='triads-1st', title='The scale in first-inversion triads',
     idea=('Van Eps: three voices on three adjacent strings, the scale’s own triads one after another, the root on top. The same three notes in every position up the neck; '
@@ -94,5 +116,12 @@ EX = [dict(
     quote=dict(where=f'{BOOK}, p. 29', text='his first key, C major, begins on the lowest strings with D minor (F, A, D) and E minor (G, B, E).',
                items=[['C', 'Dm', [1, 0, 0, -1, -1, -1], 1.0, {'roll': 0.004}], ['C', 'Em', [3, 2, 2, -1, -1, -1], 1.0, {'roll': 0.004}], ['W', 2]],
                whose='Van Eps’s own', played='Played here: those two.'),
-    bars=b)]
+    bars=b),
+    dict(
+    id='triads-2nd', title='The scale in second-inversion triads',
+    idea='The same climb with each triad in second inversion: the 5th at the bottom, the root in the middle (Van Eps: “middle voice is tonic of each triad”), the 3rd on top.',
+    quote=dict(where=f'{BOOK}, p. 36', text='his C major line begins with B diminished (F, B, D) and C (G, C, E) on the lowest strings.',
+               items=[['C', 'Bdim', [1, 2, 0, -1, -1, -1], 1.0, {'roll': 0.004}], ['C', 'C', [3, 3, 2, -1, -1, -1], 1.0, {'roll': 0.004}], ['W', 2]],
+               whose='Van Eps’s own', played='Played here: those two.'),
+    bars=b2)]
 SECTIONS = [dict(id='vaneps', title='Three-voice triads', part='Exercises', ex=EX)]

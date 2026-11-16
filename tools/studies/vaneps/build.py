@@ -7,7 +7,7 @@ import entry as E
 OUT = '/home/claude/studies/vaneps/out/'; os.makedirs(OUT, exist_ok=True)
 ENTRY = dict(key='vaneps', title='Three-voice triads', eyebrow='Exercises · George Van Eps',
              meta=[['Style', 'Harmony on the neck (Van Eps, Harmonic Mechanisms)'], ['Set on', 'F major, the key of Moonglow'], ['Tempo', f'{SP.BPM} a minute']],
-             lede='The scale of your key in three-voice triads, the root on top, from the bottom of the neck to the top and back.',
+             lede='The scale of your key in three-voice triads, first with the root on top, then with it in the middle, from the bottom of the neck to the top and back.',
              contents_intro='Everything on this page, in order. It opens with Van Eps’s own first two triads, then the same in the key of one of your songs.',
              track_title='The rhythms, one after another',
              track_intro='Every bar in order. Tap a bar’s number to play from there; the speeds below the player slow it down.',
