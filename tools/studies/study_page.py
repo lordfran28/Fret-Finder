@@ -79,7 +79,7 @@ def render(bars, starts, spb, out_mp3):
                 hold = it[4]; it = it[:4]
             if it[0] == 'R' and len(it) > 4 and isinstance(it[4], dict) and it[4].get('stop'):
                 stop = True                                         # a bass line: each note stops at its written end
-            pinfo = None
+            pinfo = None; harm = None
             if it[0] == 'P' and len(it) > 4 and isinstance(it[4], dict):   # {'hold': [strings]}: those notes ring until
                 pinfo = it[4]; it = it[:4]                          # struck again; every other note ends at its own end
             ups = []                                                # upstrokes: the strum runs from the high string down
@@ -95,6 +95,13 @@ def render(bars, starts, spb, out_mp3):
                     y += h[0]
                 it = ['K', it[1], it[2], [list(h[:2]) for h in it[3]]]
             elif it[0] == 'R' and len(it) > 4 and isinstance(it[4], dict):
+                harm = it[4].get('harm')                            # artificial harmonics: each note sounds an octave up
+                if it[4].get('trem'):                               # tremolo picking: each note repeated, `trem` to a beat,
+                    n_b = it[4]['trem']; nn_, dd_, vv_ = [], [], []  # down (stronger) and up in turn
+                    for (sf, d), v in zip(zip(it[1], it[2]), it[4].get('vel', [0] * len(it[1]))):
+                        k = max(1, round(d * n_b))
+                        nn_ += [sf] * k; dd_ += [d / k] * k; vv_ += [(v or 0) + (0.04 if j % 2 == 0 else -0.04) for j in range(k)]
+                    it = ['R', nn_, dd_, it[3], dict(it[4], vel=vv_, trem=None)]
                 y = 0.0
                 for d, v in zip(it[2], it[4].get('vel', [])):
                     if v: dv.append((y, v))
@@ -107,6 +114,9 @@ def render(bars, starts, spb, out_mp3):
             e = bar_events([it], lambda y, x0=x, t0=t0: t0 + (x0 + y) * spb, vel=0.5, rng=rng, accent_beats=())
             for q in e:
                 q['src'] = it[0]
+                if it[0] == 'R' and harm and q.get('midi') is not None:      # 'nat': a natural harmonic, at the pitch written
+                    if harm != 'nat': q['midi'] += 12
+                    q['vel'] -= 0.06; q['bright'] = 0.6
                 if hold and q['string'] in hold.get('strings', []): q['hold_end'] = q['t'] + hold['hold'] * spb
                 if stop: q['stop'] = True
                 if pinfo is not None:
