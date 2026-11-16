@@ -99,6 +99,13 @@
    "addedAt": "2026-11-16T10:59:15Z"
   },
   {
+   "id": "tango-fills",
+   "page": "studies/tango-fills/",
+   "title": "Tango: fills",
+   "style": "Tango",
+   "addedAt": "2026-11-16T12:06:43Z"
+  },
+  {
    "id": "vals",
    "page": "studies/vals/",
    "title": "Vals",

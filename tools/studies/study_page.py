@@ -71,7 +71,7 @@ def render(bars, starts, spb, out_mp3):
     for B in bars:
         x = 0.0; t0 = starts[B['label']]
         for it in B['items']:
-            dv = []                                   # (beat in the item, velocity change): accents, ghost notes
+            dv = []; shorts = []                                   # (beat in the item, velocity change): accents, ghost notes
             if it[0] == 'K' and any(len(h) > 2 for h in it[3]):
                 y = 0.0
                 for h in it[3]:
@@ -83,6 +83,10 @@ def render(bars, starts, spb, out_mp3):
                 for d, v in zip(it[2], it[4].get('vel', [])):
                     if v: dv.append((y, v))
                     y += d
+                y = 0.0
+                for d, sh in zip(it[2], it[4].get('short', [])):     # staccato notes in a run: half their length
+                    if sh: shorts.append((x + y, d))
+                    y += d
                 it = it[:4]
             e = bar_events([it], lambda y, x0=x, t0=t0: t0 + (x0 + y) * spb, vel=0.5, rng=rng, accent_beats=())
             for q in e:
@@ -90,6 +94,8 @@ def render(bars, starts, spb, out_mp3):
                 yb = (q['t'] - t0) / spb - x
                 for y, v in dv:
                     if -0.02 <= yb - y <= 0.14: q['vel'] += v
+                for y, d in shorts:
+                    if abs((q['t'] - t0) / spb - y) < 0.02: q['short_end'] = q['t'] + 0.45 * d * spb
             ev += e; x += item_len(it)
     notes = damp(ev, staccato=0.05)
     # two lines: each voice rings until its string is played again (legato), as the lines are written
@@ -99,6 +105,7 @@ def render(bars, starts, spb, out_mp3):
         for a, b in zip(lst, lst[1:] + [None]):
             if a.get('src') in ('P', 'R'):
                 a['off'] = min(b['t'] + 0.01 if b else a['t'] + 2.0, a['t'] + 2.4); a['rel_tau'] = 0.06
+            if a.get('short_end'): a['off'] = min(a['off'], a['short_end'])
     import guitar
     from core import render_guitar
     SR = guitar.SR

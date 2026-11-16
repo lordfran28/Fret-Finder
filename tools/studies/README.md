@@ -15,6 +15,10 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
 - `tango/`: Graciano's accompaniment rhythms (chapter 1), each a pattern of strokes on a grip: bass, chord, middle
   notes, open low strings; staccato is a stroke then a rest, accents and ghost notes a third value on the stroke, and the
   arrastre a slide up the bass string into the next downbeat.
+- `tango/entry5.py`: Graciano's fills (chapter 3). Each fill is kept twice, his notes in C and ours, made by moving his
+  whole by one interval (letters and semitones, so the spelling follows); `check5.py` proves every note moved by the
+  same amount and the rhythm is his, value for value, and checks the grips, the two-note shapes and where the x falls.
+  A run's given names may carry their own label after a bar: `=E,G,F|over E7`. A run may mark short notes: `{'short': [...]}`.
 - `sola/`: Sola's five steps for colouring a song's chords, applied to Очи чёрные (it borrows `K` from `tango/entry.py`).
   Minor 11 chords need the `m11` quality in the song kit's chord table (`scripts/gtr.py`).
 - `morel/`: Morel's dance patterns (malambo, samba, clave) on Очи чёрные and Я вас любил.
