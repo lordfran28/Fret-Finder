@@ -30,6 +30,8 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
 - `tango/entry9.py`: Graciano's melody chapter (chapter 7): his scale for each chord, the tango minor, chromatic notes, blue notes
   and guide tones, each applied to the songs' chords. `mel.py` holds the spelled notes (C♭ and E♯ kept), his scales, his
   scale-for-a-chord rules (`rule_for`) and a single-line fingering in position; `check9.py` checks every line against its rule.
+- `tango/entry10.py`: Graciano's melodic patterns (end of chapter 7): `pattern` runs a pattern's shape over a song's chords, each chord
+  in the scale `mel.rule_for` gives it and starting on one of its own notes; `check10.py` checks every group against the shape.
 - `tango/quotes.py`: cuts every quote of a book to its first two beats; each entry calls it last.
 - `sola/`: Sola's five steps for colouring a song's chords, applied to Очи чёрные (it borrows `K` from `tango/entry.py`).
   Minor 11 chords need the `m11` quality in the song kit's chord table (`scripts/gtr.py`).
