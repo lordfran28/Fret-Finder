@@ -80,6 +80,7 @@ These come from his own corrections over many arrangements. They outrank anythin
 
 **Arranging**
 - Never stuffed. Add a scale, an octave, counterpoint or an extra chord only where it's truly beautiful.
+- The record's orchestration (keyboards, synths, strings, horns) goes into the guitar for the whole song, under the singing too, not only where the voice rests: inner lines, octaves, counterpoint, tremolo, harmonics, the record's chord colours. Still never stuffed, and always playable while singing.
 - He always plays alone, so the bass never drops out: in an instrumental, keep it going under the line (on 1 and 3 at least), and runs or variations that stand in for a riff keep the riff's bass and its rhythm.
 - Never simplify. Don't drop or thin a part on the assumption it's too hard. Write the real part.
 - It must be easy to play while singing. When two choices are equal, take the one with more notes or the nicer sound that's also easier to play.
@@ -88,6 +89,7 @@ These come from his own corrections over many arrangements. They outrank anythin
 
 **Keys**
 - Keep the key the owner asks for. Don't add a capo unless he asks.
+- When he names no key, he likes a deep baritone range, like Dick Haymes's (starting low, around B♭2, the top around D4 or E♭4); never at the cost of the harmony or a beautiful arrangement.
 
 ## How work is done here
 
