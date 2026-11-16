@@ -18,3 +18,4 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
 - `sola/`: Sola's five steps for colouring a song's chords, applied to Очи чёрные (it borrows `K` from `tango/entry.py`).
   Minor 11 chords need the `m11` quality in the song kit's chord table (`scripts/gtr.py`).
 - `morel/`: Morel's dance patterns (malambo, samba, clave) on Очи чёрные and Я вас любил.
+- `folk/`: the strummed patterns of Música folklórica argentina's rhythm table (bailecito, gato, zamba, cueca, carnavalito).
