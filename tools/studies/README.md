@@ -20,3 +20,4 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
 - `morel/`: Morel's dance patterns (malambo, samba, clave) on Очи чёрные and Я вас любил.
 - `folk/`: the strummed patterns of Música folklórica argentina's rhythm table (bailecito, gato, zamba, cueca, carnavalito).
 - `gypsy/`: Wrembel's accompaniment rhythms (la pompe, waltz, bolero, bossa-manouche) on Moonglow, Я вас любил and Очи чёрные.
+- `flamenco/`: Graf-Martinez's arpeggio exercises I–IV (right hand kept, on Очи чёрные's open chords) and the five-note tremolo on Я вас любил's tremolo opening.
