@@ -3,12 +3,12 @@ import sys, os
 sys.path.insert(0, '/home/claude/studies'); sys.path.insert(0, '/home/claude/studies/gypsy')
 import study_page as SP
 SP.BPM = 132; SP.QUOTE_PAD = 3
-import entry as E
+import manouche as E
 OUT = '/home/claude/studies/gypsy/out/'; os.makedirs(OUT, exist_ok=True)
-ENTRY = dict(key='gypsy', title='Gypsy jazz: rhythm and shapes', eyebrow='Exercises · Stéphane Wrembel',
+ENTRY = dict(key='gypsy', title='Gypsy jazz: rhythm, chords and shapes', eyebrow='Exercises · Stéphane Wrembel',
              meta=[['Style', 'Gypsy jazz accompaniment (Wrembel)'], ['Set on', 'Moonglow, Я вас любил, Очи чёрные'], ['Tempo', f'{SP.BPM} a minute']],
-             lede='La pompe, the gypsy waltz, the bolero and the bossa-manouche, then the first steps of improvising from the chord shapes, on your songs.',
-             contents_intro='Everything on this page, in order. Each rhythm opens with Wrembel’s bar, then the same pattern on one of your songs.',
+             lede='La pompe, the gypsy waltz, the bolero and the bossa-manouche; the accompanist’s chords (6/9, minor 6, the 7th chord by where it goes, diminished chords, clichés, the harmonic march); then the first steps of improvising from the chord shapes, on your songs.',
+             contents_intro='Everything on this page, in order. Each rhythm opens with Wrembel’s bar; each chord rule with what his page shows; then the same on one of your songs.',
              track_title='The rhythms, one after another',
              track_intro='Every bar in order. Tap a bar’s number to play from there; the speeds below the player slow it down.',
              track_pattern='Bars marked W are Wrembel’s own rhythms. Squashed strokes ring a little; whipped ones are cut at once.',

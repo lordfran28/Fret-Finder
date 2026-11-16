@@ -58,6 +58,10 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
 - `morel/`: Morel's dance patterns (malambo, samba, clave) on Очи чёрные and Я вас любил.
 - `folk/`: the strummed patterns of Música folklórica argentina's rhythm table (bailecito, gato, zamba, cueca, carnavalito).
 - `gypsy/`: Wrembel's accompaniment rhythms (la pompe, waltz, bolero, bossa-manouche) on Moonglow, Я вас любил and Очи чёрные.
+- `gypsy/manouche.py`: Wrembel's accompanist's chords (ch. 2): 6/9, minor 6, sevenths by where they go, minor 7♭5 as minor 6,
+  diminished for 7♭9 and passing, the line clichés, the harmonic march, on Очи чёрные and Я вас любил in la pompe. The grips come
+  from `voicing.py` (chord tones, no open strings, four frets, four fingers, the bass in reach, one grip per chord on the page);
+  `check_manouche.py` checks every grip, every rule and the song bars against your pages. `build.py` builds the page from it.
 - `gypsy/hand.py`: Wrembel's right-hand warm-up (ch. 1): the beat divided by 1 to 9 with his strokes, four beats on each string, on the
   bass of Очи чёрные (E7, Am, Dm on the open strings), the pivot 5-1-5-2-5-3-5-4 and the loops 2-3, 2-4, 2-5; `check_hand.py` compares
   the strokes with a table read from his pages and the chords with your Очи чёрные page; `build_hand.py` (46 a minute).
