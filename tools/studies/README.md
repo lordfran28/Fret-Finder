@@ -80,6 +80,10 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
   steps and in tritones, major with the 9th, the key in sweeps, 7sus4 and 7♭5 swept, the anatole's roots, the circle of fifths
   and tritones on the bass strings. A minor and C major move up a fret, G major down a fret (into G♭); the tritone three frets.
   Their phrases (exercises 23, 25, 26) are left out. `check_romane2.py`; `build_romane.py` now builds from `romane2`.
+- `gypsy/romane3.py`: chapters 10–11: designated notes (a chord's root or 5th circled from the step above and the half step below)
+  in G♭ and B♭ minor, on two strings and on every string; II–V–I voicings in G♭ in la pompe; designated notes through the V chord
+  and its diminished arpeggio in B♭ minor; D♭ major broken in pairs and G♭ major in fours. G down a fret, A minor and C up a
+  fret, C minor down two, B♭ major down four. `check_romane3.py`; `build_romane.py` now builds from `romane3`.
 - `page/template_study.html`: note lengths of a seventh or a ninth of a beat are written 1/7 and 1/9.
 - `flamenco/`: Graf-Martinez's arpeggio exercises I–IV (right hand kept, on Очи чёрные's open chords) and the five-note tremolo on Я вас любил's tremolo opening.
 - `flamenco/serrano_arp.py`: Serrano's four arpeggio exercises (pp. 46–48) over Очи чёрные's changes with the root on the low E
