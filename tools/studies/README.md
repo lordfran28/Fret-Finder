@@ -15,14 +15,8 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
 - `tango/`: Graciano's accompaniment rhythms (chapter 1), each a pattern of strokes on a grip: bass, chord, middle
   notes, open low strings; staccato is a stroke then a rest, accents and ghost notes a third value on the stroke, and the
   arrastre a slide up the bass string into the next downbeat.
-- `tango/entry5.py`: Graciano's fills (chapter 3). Each fill is kept twice, his notes in C and ours, made by moving his
-  whole by one interval (letters and semitones, so the spelling follows); `check5.py` proves every note moved by the
-  same amount and the rhythm is his, value for value, and checks the grips, the two-note shapes and where the x falls.
-  A run's given names may carry their own label after a bar: `=E,G,F|over E7`. A run may mark short notes: `{'short': [...]}`.
-- `tango/entry6.py`: Graciano's cadences (chapter 4), kept the same way as the fills; `place` finds strings for each chord or
-  pair of notes (one note per string, the stretch kept, nearest the position asked); `check6.py` proves the notes are his, moved.
-- `tango/entry7.py`: Graciano's harmony (chapter 5), on `entry6.py`'s chords and pairs (it loads that file and clears its record
-  of moves); `check7.py` checks it the same way. The ♯11 chord and the augmented 5th need the `m#5` quality in `scripts/gtr.py`.
+- `tango/entry5.py`, `entry6.py`, `entry7.py` (Graciano's fills, cadences and harmony, chapters 3–5) were taken out on 16 November: they kept
+  his examples as data and moved them whole into other keys. Those pages are being rebuilt from his rules, as `entry8.py` on.
 - `tango/entry8.py`: Graciano's walking bass with chords (chapter 6), built from his rules, not from his notes: `formula` makes each bass
   line from his degrees for the chord, `place_bar` puts the bass on the low strings and the chord above it with every held chord under
   the hand, and `check8.py` checks each line against the rule. Held chords use a K item's `{'hold': beats, 'strings': [...]}` and
