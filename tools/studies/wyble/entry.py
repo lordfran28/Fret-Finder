@@ -230,24 +230,33 @@ def intervals_ok(dyads, want=(11, 8)):
 
 CEX = []
 
-# ---- Exercise 1 (with 2 and 3, the same cell higher up the neck): a minor 6th, a note, a major 7th, a note; the cell
-#      moves up a minor 3rd each bar. Relative to the cell's first bass note X: X with the note a minor 6th above;
-#      X + a whole step; X − a half step with X + a minor 7th; X + a minor 3rd (which is the next bar's X).
-def cell1(x):
-    X = N(x)
-    return [(X, X + 8, 1.0), (X + 2, None, 1.0), (X - 1, X + 10, 1.0), (X + 3, None, 1.0)]
+# ---- Exercise 1's devices (p. 4) on a bar of our own: a two-note shape and a single note in turn, one to a beat; then
+#      Berman's re-orderings of a bar: the beats in the order 3-4-2-1, the bar backwards, the single notes an octave up.
+#      Our bar is built from Moonglow's first chord, B♭ major 7: root with 7th, the 3rd, the 5th with the 9th, the 13th.
+CELL = [('Bb2', 'A3'), (None, 'D3'), ('F3', 'C4'), (None, 'G3')]
 
-c1 = [two_lines(place_lines(cell1('F2'), up_strings=(5, 4, 3, 2)), over='F6'), two_lines(place_lines(cell1('Ab2'), up_strings=(5, 4, 3, 2)), over='')]
+
+def cell_bar(beats, over):
+    seq = [(N(lo_) if lo_ else None, N(up_), 1.0) for lo_, up_ in beats]
+    return two_lines(place_lines(seq, lo_strings=(6, 5, 4), up_strings=(4, 3, 2, 1)), over=over)
+
+
+def octave_up(b): return [(lo_, up_ if lo_ else up_[:-1] + str(int(up_[-1]) + 1)) for lo_, up_ in b]
+
+
+CELLS = [('as written', CELL), ('beats 3-4-2-1', [CELL[2], CELL[3], CELL[1], CELL[0]]), ('backwards', CELL[::-1]), ('single notes up an octave', octave_up(CELL))]
 CEX.append(dict(
-    id='c-cell', title='A 6th, a 7th, up a minor third',
-    idea='One bar, four beats: two notes a minor 6th apart, a single note a step above the lower one, two notes a major 7th apart (the lower note a half step down, the upper a step up), and a single note a minor 3rd above where the bar began. That last note starts the next bar, so the bar climbs the neck in minor thirds; in four bars it has used all twelve notes.',
-    quote=dict(where=f'{W1}, p. 4, Exercise 1 (CD 1), with Exercises 2 and 3 (pp. 5–6), the same bar carried higher',
-               text='Wyble starts on C on the A string (3rd fret) with G♯ above it, then D, then B with A♯, then D♯, and goes on from E♭, F♯ and A; Exercises 2 and 3 carry it on up the neck. Berman’s versions play the beats in the order 3-4-2-1, play it falling, and put each single note an octave up. The opening: C with G♯ (G string, 1st fret).',
+    id='c-cell', title='Two notes, one note: a bar and its re-orderings',
+    idea=('Wyble’s first exercise is a bar that alternates a two-note shape and a single note, one to a beat, and travels up the neck. Berman then re-orders it: '
+          'the beats played 3-4-2-1, the bar played backwards, the single notes moved up an octave. Here the re-orderings are applied to a bar of our own '
+          'from Moonglow’s first chord.'),
+    quote=dict(where=f'{W1}, p. 4, Exercise 1 (CD 1), with Berman’s re-orderings (pp. 4–7)',
+               text='A bar of two-note shapes and single notes in turn, carried up the neck; Berman’s versions re-order its beats, play it backwards and move its single notes up an octave. The opening: C with G♯ above it.',
                item=two_lines([([[5, 3], [3, 1]], 1.0)])),
-    bars=[dict(chords=['F6'], note='The same bar from F, Moonglow’s home note: F with D♭ above, G, E with E♭ above, A♭. Wyble writes it as a figure, not over a chord; on Moonglow it is a colour to slip in over the last F, or to practise on its own.',
-               items=[c1[0]]),
-          dict(chords=[], note='Up a minor third, from A♭: A♭ with E, B♭, G with F♯, B. Two more bars (from B and from D) bring it back to F an octave up.',
-               items=[c1[1]])]))
+    bars=[dict(chords=['Bbmaj7'], note=('Our bar on B♭ major 7: B♭ with A (root and 7th), D (the 3rd), F with C (5th and 9th), G (the 13th). ' if k == 0 else '') +
+               {'as written': 'As written.', 'beats 3-4-2-1': 'The same four beats in the order 3, 4, 2, 1.', 'backwards': 'Backwards: 4, 3, 2, 1.',
+                'single notes up an octave': 'As written, with D and G an octave up: the line jumps between the low pairs and the high single notes.'}[nm],
+               items=[cell_bar(b_, 'Bbmaj7')]) for k, (nm, b_) in enumerate(CELLS)]))
 
 # ---- Berman's patterns on p. 5: major 7th to minor 6th, each voice moving by fixed steps.
 pa = rule_dyads('Bb2', 'A3', 8, top=(-2, +5), bot=(+1, +2)); assert intervals_ok(pa)
@@ -305,7 +314,7 @@ CEX.append(dict(
     id='c-eleven', title='Five notes, the top one held',
     idea='Bars of five beats. The top note is struck on beat 1 and held; under it four notes climb one to a beat: the root, its 5th, its 7th and its 11th, with the top note the 13th. There is no 3rd anywhere, so the figure floats; Wyble carries it up every degree of the scale. Hold every note as long as the fingers allow.',
     quote=dict(where=f'{W1}, p. 14, Exercise 11 (CD 32), with Berman’s versions in harmonic and melodic minor (pp. 17–22)',
-               text='In 5/4, on every degree of C major: the top note held as a whole note from beat 1, a quarter rest under it, then four quarters climbing; the first bar is C held over the open low E, B, the open D and A. Berman also plays it in 4/4 and 6/8, drops the last note for a five-note figure, and builds chords from its notes. The opening: C on the B string (1st fret), then the open low E.',
+               text='In 5/4, on every degree of C major: the top note held from beat 1 while four notes climb under it. Berman also plays it in 4/4 and 6/8, drops the last note for a five-note figure, and builds chords from its notes. The opening: C on the B string (1st fret), then the open low E.',
                item=two_lines([([[2, 1]], 1.0), ([[6, 0]], 1.0)])),
     bars=fig_bars))
 
