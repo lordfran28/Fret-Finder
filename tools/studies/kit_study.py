@@ -56,7 +56,7 @@ def check_item(it, label=''):
     return probs
 
 
-def place_lines(seq, lo_strings=(6, 5, 4, 3), up_strings=(1, 2, 3), maxf=12, prefer=5):
+def place_lines(seq, lo_strings=(6, 5, 4, 3), up_strings=(1, 2, 3), maxf=12, prefer=5, open_cost=0.4):
     """Finger two voices together. seq: list of (lower midi or None, upper midi or None, beats). Each voice keeps
     its place while it rests or holds; both are never on one string; the hand (index finger at fret h) covers frets
     h..h+3 below the 7th fret and h..h+4 from it up, and it moves only as far as the notes make it; the path that
@@ -93,7 +93,7 @@ def place_lines(seq, lo_strings=(6, 5, 4, 3), up_strings=(1, 2, 3), maxf=12, pre
                         if m is None or P0 is None: continue
                         if P[0] != P0[0]: c += 0.15
                         if last[k] == m and P != P0: c += 3.0       # a repeated note stays where it was
-                    c += sum((0.4 if p[1] == 0 else 0) for p in (Lc, Uc) if p) + 0.03 * abs(h - prefer)
+                    c += sum((open_cost if p[1] == 0 else 0) for p in (Lc, Uc) if p) + 0.03 * abs(h - prefer)
                     key = (L, U, h)
                     if key not in new or new[key][0] > c:
                         new[key] = (c, path + [(Lc if lo is not None else None, Uc if up is not None else None, d, h)])
