@@ -3,11 +3,11 @@ import sys, os
 sys.path.insert(0, '/home/claude/studies'); sys.path.insert(0, '/home/claude/studies/tango'); sys.path.insert(0, '/home/claude/studies/vaneps')
 import study_page as SP
 SP.BPM = 72; SP.QUOTE_PAD = 4
-import entry2 as E
+import entry4 as E
 OUT = '/home/claude/studies/vaneps/out/'; os.makedirs(OUT, exist_ok=True)
 ENTRY = dict(key='vaneps', title='Three-voice triads', eyebrow='Exercises · George Van Eps',
              meta=[['Style', 'Harmony on the neck (Van Eps, Harmonic Mechanisms)'], ['Set on', 'F major (Moonglow), A harmonic minor (Очи чёрные), E♭ major and C harmonic minor (I Wonder Who’s Kissing Her Now)'], ['Tempo', f'{SP.BPM} a minute']],
-             lede='The scale in three-voice triads, close and open, every inversion, from the bottom of the neck to the top and back; triads through the cycle of fifths; two lines of triads crossing. In the keys of your songs.',
+             lede='The scale in three-voice triads, close and open, every inversion, from the bottom of the neck to the top and back; triads through the cycle of fifths; two lines of triads crossing; Van Eps’s super and sub, a voice moved a step and back; and his reductions, a 3rd opening to a 6th and back. In the keys of your songs.',
              contents_intro='Everything on this page, in order. Each mechanism opens with what Van Eps does, then the same in the key of one of your songs.',
              track_title='The triads, one after another',
              track_intro='Every bar in order. Tap a bar’s number to play from there; the speeds below the player slow it down.',

@@ -46,3 +46,5 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
 - `vaneps/`: Van Eps's scale in first-inversion triads, worked out for F major (string sets and positions chosen by least movement).
 - `vaneps/entry2.py`: more of Van Eps's mechanisms (open triads in three spreads, triads through the cycle of fifths, two lines of triads in contrary
   motion) in E♭ and C harmonic minor, added to `entry.py`'s page; `check2.py` checks every voicing. `build.py` builds the page from `entry2`.
+- `vaneps/entry4.py`: Van Eps's reductions (a held voice and a voice walking the scale between a 3rd and a 6th, four ways) in E♭;
+  `check4.py` checks every interval. `build.py` now builds the page from `entry4`.
