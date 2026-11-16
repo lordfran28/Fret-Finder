@@ -43,6 +43,13 @@
    "addedAt": "2026-11-16T10:08:15Z"
   },
   {
+   "id": "tango",
+   "page": "studies/tango/",
+   "title": "Tango: the right hand",
+   "style": "Tango",
+   "addedAt": "2026-11-16T10:48:00Z"
+  },
+  {
    "id": "wyble",
    "page": "studies/wyble/",
    "title": "Two lines at once",

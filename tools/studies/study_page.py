@@ -20,8 +20,9 @@ def item_len(it):
     return 0
 
 
-def assemble(sections):
-    """Bars in order. A quote of Wyble's opening figure (when there is one) leads each exercise, then our bars."""
+def assemble(sections, mark='W'):
+    """Bars in order. A quote of the original's opening figure (when there is one) leads each exercise, then our bars.
+    The quote's bar is labelled with `mark` (W for Wyble, Carcassi and the classical books, G for Graciano...)."""
     bars, toc = [], []
     for S in sections:
         sec_toc = dict(title=S['title'], part=S['part'], items=[])
@@ -29,11 +30,11 @@ def assemble(sections):
             first = len(bars)
             q = ex['quote']
             head = f"{ex['idea']}"
-            if q.get('item'):
-                its = [q['item']]
-                L = item_len(q['item'])
+            if q.get('item') or q.get('items'):
+                its = list(q['items']) if q.get('items') else [q['item']]
+                L = sum(item_len(x) for x in its)
                 if L < 4: its.append(['W', 4 - L])
-                bars.append(dict(label=f'W{len(toc_flat(toc, sec_toc)) + 1}', sec=ex['title'], items=its, chords=[],
+                bars.append(dict(label=f'{mark}{len(toc_flat(toc, sec_toc)) + 1}', sec=ex['title'], items=its, chords=[],
                                  note=f"{head} {q.get('whose', 'Wyble’s own')}, {q['where']}: {q['text']} {q.get('played', 'Played here: its opening only.')}", quote=True))
                 first_note_done = True
             else:
@@ -41,7 +42,7 @@ def assemble(sections):
             for j, b in enumerate(ex['bars']):
                 note = b['note']
                 if not first_note_done and j == 0:
-                    note = f"{head} {('Wyble (' + q['where'] + '): ' + q['text'] + ' ') if q.get('text') else ''}{note}"
+                    note = f"{head} {(q.get('by', 'Wyble') + ' (' + q['where'] + '): ' + q['text'] + ' ') if q.get('text') else ''}{note}"
                 bars.append(dict(label=b.get('label') or str(sum(1 for x in bars if not x.get('quote')) + 1), sec=ex['title'], items=b['items'], chords=b['chords'], note=note))
             sec_toc['items'].append(dict(id=ex['id'], title=ex['title'], bar=first))
         toc.append(sec_toc)
@@ -69,8 +70,25 @@ def render(bars, starts, spb, out_mp3):
     for B in bars:
         x = 0.0; t0 = starts[B['label']]
         for it in B['items']:
+            dv = []                                   # (beat in the item, velocity change): accents, ghost notes
+            if it[0] == 'K' and any(len(h) > 2 for h in it[3]):
+                y = 0.0
+                for h in it[3]:
+                    if len(h) > 2 and h[2]: dv.append((y, h[2]))
+                    y += h[0]
+                it = ['K', it[1], it[2], [list(h[:2]) for h in it[3]]]
+            elif it[0] == 'R' and len(it) > 4 and isinstance(it[4], dict):
+                y = 0.0
+                for d, v in zip(it[2], it[4].get('vel', [])):
+                    if v: dv.append((y, v))
+                    y += d
+                it = it[:4]
             e = bar_events([it], lambda y, x0=x, t0=t0: t0 + (x0 + y) * spb, vel=0.5, rng=rng, accent_beats=())
-            for q in e: q['src'] = it[0]
+            for q in e:
+                q['src'] = it[0]
+                yb = (q['t'] - t0) / spb - x
+                for y, v in dv:
+                    if -0.02 <= yb - y <= 0.14: q['vel'] += v
             ev += e; x += item_len(it)
     notes = damp(ev, staccato=0.05)
     # two lines: each voice rings until its string is played again (legato), as the lines are written
@@ -119,10 +137,12 @@ def page(entry, bars, toc, starts, spb, out_html, audio_name):
     # the compendium belongs to song pages
     h = re.sub(r'<!-- compendium:start -->.*?<!-- compendium:end -->', '<!-- compendium:start --><!-- compendium:end -->', h, flags=re.S)
     # the contents at the front: every exercise (and later every étude and piece) on the page, linked
-    parts = []
+    parts, last = [], None
     for S in toc:
         lis = ''.join(f'<li><a href="#fb-{key}-{it["bar"]}">{html.escape(it["title"])}</a></li>' for it in S['items'])
-        parts.append(f'<div class="toc-part"><h3>{html.escape(S["part"])}</h3><div class="toc-sec">{html.escape(S["title"])}</div><ol>{lis}</ol></div>')
+        head = f'<h3>{html.escape(S["part"])}</h3>' if S['part'] != last else ''      # the part's name once, over its sections
+        last = S['part']
+        parts.append(f'<div class="toc-part">{head}<div class="toc-sec">{html.escape(S["title"])}</div><ol>{lis}</ol></div>')
     contents = (f'<section class="block" id="contents"><div class="block-head"><h2>Contents</h2><p>{html.escape(entry["contents_intro"])}</p></div>'
                 + ''.join(parts) + '</section>')
     h = h.replace('<div id="tracks"></div>', contents + '<div id="tracks"></div>', 1)

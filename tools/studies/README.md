@@ -12,3 +12,6 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
 - `classical/`: public-domain pieces from Mutopia's LilyPond files: `lyparse.py` reads them (checked against the
   file's own bar checks), `finger.py` fingers a whole piece, `pieces.py` turns it into bars, `sor.py` builds the
   Sor entries. Mutopia's files are fetched with a sparse checkout of github.com/MutopiaProject/MutopiaProject.
+- `tango/`: Graciano's accompaniment rhythms (chapter 1), each a pattern of strokes on a grip: bass, chord, middle
+  notes, open low strings; staccato is a stroke then a rest, accents and ghost notes a third value on the stroke, and the
+  arrastre a slide up the bass string into the next downbeat.
