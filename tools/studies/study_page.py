@@ -72,6 +72,11 @@ def render(bars, starts, spb, out_mp3):
         x = 0.0; t0 = starts[B['label']]
         for it in B['items']:
             dv = []; shorts = []                                   # (beat in the item, velocity change): accents, ghost notes
+            hold = stop = None
+            if it[0] == 'K' and len(it) > 4 and isinstance(it[4], dict):    # {'hold': beats, 'strings': [...]}: those strings ring on
+                hold = it[4]; it = it[:4]
+            if it[0] == 'R' and len(it) > 4 and isinstance(it[4], dict) and it[4].get('stop'):
+                stop = True                                         # a bass line: each note stops at its written end
             if it[0] == 'K' and any(len(h) > 2 for h in it[3]):
                 y = 0.0
                 for h in it[3]:
@@ -91,6 +96,8 @@ def render(bars, starts, spb, out_mp3):
             e = bar_events([it], lambda y, x0=x, t0=t0: t0 + (x0 + y) * spb, vel=0.5, rng=rng, accent_beats=())
             for q in e:
                 q['src'] = it[0]
+                if hold and q['string'] in hold.get('strings', []): q['hold_end'] = q['t'] + hold['hold'] * spb
+                if stop: q['stop'] = True
                 yb = (q['t'] - t0) / spb - x
                 for y, v in dv:
                     if -0.02 <= yb - y <= 0.14: q['vel'] += v
@@ -106,6 +113,8 @@ def render(bars, starts, spb, out_mp3):
             if a.get('src') in ('P', 'R'):
                 a['off'] = min(b['t'] + 0.01 if b else a['t'] + 2.0, a['t'] + 2.4); a['rel_tau'] = 0.06
             if a.get('short_end'): a['off'] = min(a['off'], a['short_end'])
+            if a.get('hold_end'): a['off'] = min(b['t'] + 0.01 if b else a['hold_end'], a['hold_end']); a['rel_tau'] = 0.06
+            if a.get('stop'): a['off'] = min(a['off'], a['end'] + 0.03)
     import guitar
     from core import render_guitar
     SR = guitar.SR

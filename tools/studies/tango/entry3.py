@@ -150,3 +150,6 @@ EX[-1]['bars'][0]['note'] = ('On D minor the same rule: D, then F and D above, B
                              'The A minor and E7 bars are Graciano’s own, since his example is in the song’s key; the E7 bar is in open position.')
 
 SECTIONS = [dict(id='milonga', title='Milonga', part='Exercises', ex=EX)]
+
+from quotes import trim as _trim_quotes   # quotes stay a beat or two
+_trim_quotes(SECTIONS)

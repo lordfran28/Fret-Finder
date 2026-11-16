@@ -402,3 +402,6 @@ def _labels():
 
 
 _labels()
+
+from quotes import trim as _trim_quotes   # quotes stay a beat or two
+_trim_quotes(SECTIONS)

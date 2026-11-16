@@ -486,3 +486,6 @@ SECTIONS = [dict(id='marcatto', title='Marcatto and pesante', part='Exercises', 
             dict(id='tres', title='3+3+2', part='Exercises', ex=EX_T),
             dict(id='gardel', title='Gardel’s rhythms', part='Exercises', ex=EX_G),
             dict(id='etudes', title='Études', part='Études', ex=ETUDES)]
+
+from quotes import trim as _trim_quotes   # quotes stay a beat or two
+_trim_quotes(SECTIONS)

@@ -183,3 +183,6 @@ for _e in EX_B: _e['quote']['played'] = ''          # these quotes say in their 
 
 SECTIONS = [dict(id='vals-ritmos', title='Vals rhythms', part='Exercises', ex=EX_R),
             dict(id='vals-bordoneos', title='Vals bass phrases', part='Exercises', ex=EX_B)]
+
+from quotes import trim as _trim_quotes   # quotes stay a beat or two
+_trim_quotes(SECTIONS)

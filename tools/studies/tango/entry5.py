@@ -166,8 +166,8 @@ def first_beat(f, strings, n=3):
 ex('escalar', 'relleno-escalar-desc-menor', 'Down the scale into the tonic (minor)',
    ('Over the dominant, after two strokes, a sixteenth rest and seven sixteenths: the 5th of the key, up a minor 3rd to the key’s 7th (the natural minor’s, not the leading note), '
     'then straight down the scale to the 2nd, landing on the tonic chord. Graciano: this fill is one of the bass phrases of chapter 2, raised; in A minor it is the bass phrase down to the tonic (on Tango: the bass) an octave higher.'),
-   dict(where=where(27), text='Relleno escalar descendente, en tonalidad menor: on G7, two strokes, then G, B♭, A♭, G, F, E♭, D into C minor (the bass C, then G, C, E♭ above it). Played here: the two strokes and his first three notes.',
-        items=[K('G7', GQ['G7'], [(1, 'A'), (1, 'A')])] + first_beat(H_DESC_MIN, [1, 1, 1]), whose=OWN, played=''),
+   dict(where=where(27), text='Relleno escalar descendente, en tonalidad menor: on G7, two strokes, then G, B♭, A♭, G, F, E♭, D into C minor (the bass C, then G, C, E♭ above it). Played here: his first three notes.',
+        items=first_beat(H_DESC_MIN, [1, 1, 1]), whose=OWN, played=''),
    [bar(['E7'], [K('E7', OC['E7'], [(1, 'A'), (1, 'A')])] + H_DESC_MIN.moved(DOWN_m3).items([2, 2, 2, 2, 3, 3, 3]),
         'Очи чёрные’s E7 into A minor, a minor 3rd below his key: E, G, F, E, D, C, B. E on the B string at the 5th fret, G at the 8th (little finger), F at the 6th, E at the 5th; '
         'then D, C, B on the G string at the 7th, 5th and 4th. The strokes are the E7 from the A string at the 7th fret.'),
@@ -175,8 +175,8 @@ ex('escalar', 'relleno-escalar-desc-menor', 'Down the scale into the tonic (mino
 
 ex('escalar', 'relleno-escalar-desc-mayor', 'Down the scale into the tonic (major)',
    'The same in a major key: from the 5th up a major 3rd to the 7th, then down the scale to the 2nd and onto the tonic.',
-   dict(where=where(27), text='En tonalidad mayor: on G7, two strokes, then G, B, A, G, F, E, D into C. Played here: the strokes and his first three notes.',
-        items=[K('G7', GQ['G7'], [(1, 'A'), (1, 'A')])] + first_beat(H_DESC_MAJ, [1, 1, 1]), whose=OWN, played=''),
+   dict(where=where(27), text='En tonalidad mayor: on G7, two strokes, then G, B, A, G, F, E, D into C. Played here: his first three notes.',
+        items=first_beat(H_DESC_MAJ, [1, 1, 1]), whose=OWN, played=''),
    [bar(['Bb7'], [K('Bb7', IW['Bb7'], [(1, 'A'), (1, 'A')])] + H_DESC_MAJ.moved(UP_m3).items([2, 1, 1, 2, 2, 2, 3]),
         'I Wonder Who’s Kissing Her Now, its B♭7 into E♭ (the intro into the chorus), a minor 3rd above his key: B♭, D, C, B♭, A♭, G, F. '
         'In the 8th position: B♭ on the B string (11th fret), D and C on the top string (10th, 8th), B♭, A♭, G on the B string (11th, 9th, 8th), F on the G string (10th). '
@@ -485,3 +485,6 @@ SECTIONS = [dict(id='escalar', title='Scale fills', part='Exercises', ex=EXS['es
             dict(id='marcatto', title='The marcatto as a fill', part='Exercises', ex=EXS['marcatto']),
             dict(id='etudes', title='Études', part='Études', ex=ETUDES)]
 
+
+from quotes import trim as _trim_quotes   # quotes stay a beat or two
+_trim_quotes(SECTIONS)

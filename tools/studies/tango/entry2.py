@@ -26,7 +26,7 @@ def where(p): return f'Método de guitarra tango, p. {p}'
 
 
 OWN = dict(whose='Graciano’s own')
-PL = 'Played here: his figure and the bar it leads into (his chords are ours, as he writes them in slashes or plain notes).'
+PL = 'Played here: his figure and the chord it leads into (his chords are ours, as he writes them in slashes or plain notes).'
 E7o = [0, -1, 6, 7, 5, -1]          # E7 with the open low E as its bass (E2, G#3, D4, E4)
 G = dict(G4, **{'E7o': E7o, 'E7/D': [-1, 5, 6, 7, 5, -1], 'Am/G': [3, -1, -1, 5, 5, 5], 'Dm/C': [-1, 3, 3, 2, 3, -1]})
 
@@ -65,7 +65,7 @@ def app_bars(kind):
 def app_quote(kind, notes, s, target, grip):
     """his figure on the 4th beat, then the bar it leads into (bass, chord, bass, chord)"""
     a = APP[kind]
-    return [['W', 3 + a['rest']], run(notes, [S16] * len(notes), target), K(target, grip, SINC + [(1, '-')])]
+    return [run(notes, [S16] * len(notes), target), K(target, grip, [(1, 'A')])]
 
 
 A7 = [5, -1, 5, 6, 5, -1]
@@ -125,7 +125,7 @@ EX_F.append(dict(
     idea=('A whole bass phrase in place of a single approach: in a minor key, from the tonic, a turn round it (down a semitone and back), then up the scale to the dominant, '
           'the last step a semitone. Two beats of sixteenths. Graciano’s fingers: 2, 1, 2, 4 on the low E string (5th position), then 1, 2, 3 on the A string, the 3rd sliding into E.'),
     quote=dict(where=where(23), text='Como frase melódica, para ir al dominante en tonalidad menor: into E7. Played here: its first beat, the turn round A.',
-               items=[['W', 2.25], run(TO_V[:3], [S16] * 3, 'Am')], **OWN, played=''),
+               items=[run(TO_V[:3], [S16] * 3, 'Am')], **OWN, played=''),
     bars=[dict(chords=['Am'], note='Очи чёрные’s A minor before E7: bass and chord, then the phrase from A up to E, as Graciano has it, since his example is in your key.',
                items=[half_bar('Am', G['Am']), run(TO_V, [S16] * 7, 'Am')]),
           dict(chords=['E7'], note='', items=[sincopado('E7', G['E7'])])]))
@@ -134,7 +134,7 @@ EX_F.append(dict(
     idea=('From the dominant’s root, a turn above it (up to the ♭7 of the key, down a step), then down the scale to the tonic. All in the 5th position: '
           'fingers 3, 1, 4, 3, 1, 4, 3, then 1 on the A.'),
     quote=dict(where=where(23), text='Para ir a la tónica en tonalidad menor: E, G, F, E… into A. Played here: its first beat.',
-               items=[['W', 2.25], run(TO_I[:3], [S16] * 3, 'E7')], **OWN, played=''),
+               items=[run(TO_I[:3], [S16] * 3, 'E7')], **OWN, played=''),
     bars=[dict(chords=['E7'], note='Очи чёрные’s E7 before A minor: the phrase from E down to A, Graciano’s own notes, since the song is in his key.',
                items=[half_bar('E7', G['E7']), run(TO_I, [S16] * 7, 'E7')]),
           dict(chords=['Am'], note='', items=[sincopado('Am', G['Am'])]),
@@ -163,7 +163,7 @@ EX_F.append(dict(
     idea=('The levare: on the “and” of 3 the 5th below the coming chord’s root, then four sixteenths climbing by semitones into it. For the start of the song or of a section, '
           'into the tonic (major or minor) or into a dominant.'),
     quote=dict(where=where(24), text='Como levare: B, then C, C♯, D, D♯ into E7 (fingers 1, 1, 2, 3, 3: the index slides, then the ring finger).',
-               items=[['W', 2.5], run(LEV, [0.5] + [S16] * 4, 'E7'), K('E7', G['E7'], SINC + [(1, '-')])], **OWN, played='Played here: his pick-up and the bar it leads into.'),
+               items=[run(LEV, [0.5] + [S16] * 4, 'E7'), K('E7', G['E7'], [(0.5, 'A')])], **OWN, played='Played here: his pick-up and the chord it lands on.'),
     bars=[dict(chords=[], note='Into the start of Очи чёрные’s second half, D minor: A (the open A string), then B♭, B, C, C♯ up the A string to D.',
                 items=[['W', 2.5], run(LEV_D, [0.5] + [S16] * 4, 'Dm')]),
           dict(chords=['Dm'], note='', items=[sincopado('Dm', G['Dm'])]),
@@ -190,7 +190,7 @@ EX_I.append(dict(
     idea=('Turn the chord to its 3rd in the bass on a weak beat: from the root, two sixteenths and an eighth climbing to the 3rd, then the chord again over the new bass. '
           'A major or dominant chord climbs a tone and two semitones (fingers 1, 2, 3); a minor chord two semitones and a tone (fingers 1, 2, 2).'),
     quote=dict(where=where(24), text='Como inversión de bajos a la 3era., on the low E string: A major, the bass A, then B, C, C♯; the chord over C♯.',
-               items=[K('A', qA, [(0.5, 'B'), (1, 'C')]), run([(6, 'B2'), (6, 'C3'), (6, 'C#3')], [S16, S16, 0.5], 'A'), K('A/C#', qA3, [(1.5, [4, 3])])], **OWN, played='Played here: that bar.'),
+               items=[run([(6, 'B2'), (6, 'C3'), (6, 'C#3')], [S16, S16, 0.5], 'A'), K('A/C#', qA3, [(1, [4, 3])])], **OWN, played='Played here: the walk and the chord over the new bass.'),
     bars=[dict(chords=[c, c2], note='', items=inv_bar(c, g, n, c2, g2, up)) for c, g, n, c2, g2, up in INV3]))
 EX_I[-1]['bars'][0]['note'] = ('On Очи чёрные’s three chords. D minor: D, then E♭, E, F up the A string (5th to 8th fret), the chord over F. '
                                'A minor: A, then B♭, B, C up the low E (5th to 8th). E7, from the open low E: F♯, G, G♯ (2nd to 4th fret).')
@@ -199,8 +199,8 @@ EX_I.append(dict(
     idea=('Turn a dominant or minor chord to its 7th in the bass: from the root, down by semitones (a sixteenth on the root, a sixteenth, then the 7th as an eighth), the chord over it. '
           'Fingers 3, 2, 2. Graciano advises against doing this to a major 7 chord as a bordoneo.'),
     quote=dict(where=where(25), text='Como inversión de bajos a la 7ma., on the A string: E7, the bass E, then E, D♯, D; the chord over D.',
-               items=[K('E7', G['E7'], [(0.5, 'B'), (1, 'C')]), run([(5, 'E3'), (5, 'D#3'), (5, 'D3')], [S16, S16, 0.5], 'E7/D'), K('E7/D', [-1, 5, 6, 4, 5, -1], [(1.5, [4, 3, 2])])],
-               **OWN, played='Played here: that bar.'),
+               items=[run([(5, 'E3'), (5, 'D#3'), (5, 'D3')], [S16, S16, 0.5], 'E7/D'), K('E7/D', [-1, 5, 6, 4, 5, -1], [(1, [4, 3, 2])])],
+               **OWN, played='Played here: the walk and the chord over the new bass.'),
     bars=[dict(chords=[c, c2], note='', items=[K(c, g, [(0.5, 'B'), (1, 'C')]), run([(n[0][0], nn(OPEN[6 - n[0][0]] + g[6 - n[0][0]]))] + n, [S16, S16, 0.5], c2), K(c2, g2, [(1.5, up)])])
           for c, g, n, c2, g2, up in INV7]))
 EX_I[-1]['bars'][0]['note'] = ('D minor: D, C♯, C down the A string (5th to 3rd fret), the chord over C. A minor: A, A♭, G down the low E (5th to 3rd), the chord on the top strings. '
@@ -241,7 +241,7 @@ _maj_v = dict(
     id='frase-a-la-dominante-mayor', title='A phrase up to the dominant (major)',
     idea='The same phrase in a major key: the turn round the tonic, then up the major scale to the dominant, the last step a semitone. His fingers: 2, 1, 2, 4, then 2, 3, 3.',
     quote=dict(where=where(23), text='Para ir al dominante en tonalidad mayor: A, G♯, A, B, C♯, D, D♯ into E7 (root, chord, then the 5th below, chord). Played here: its first beat, the turn round A.',
-               items=[['W', 2.25], run2(H_TO_V_MAJ[:3], [6, 6, 6], [S16] * 3, 'A')], **OWN, played=''),
+               items=[run2(H_TO_V_MAJ[:3], [6, 6, 6], [S16] * 3, 'A')], **OWN, played=''),
     bars=[dict(chords=['Eb'], note=('I Wonder Who’s Kissing Her Now, E♭ into B♭7 (the chorus’s first two chords), his notes a tritone up: E♭, D, E♭, F up the A string (6th, 5th, 6th, 8th fret), '
                                      'G, A♭, A up the D string (5th, 6th, 7th), into B♭ on the D string at the 8th; his fingers, one string higher.'),
                items=[half_bar('Eb', IWG['Eb']), run2(mv(H_TO_V_MAJ), [5, 5, 5, 5, 4, 4, 4], [S16] * 7, 'E♭')]),
@@ -251,7 +251,7 @@ _maj_i = dict(
     id='frase-a-la-tonica-mayor', title='A phrase down to the tonic (major)',
     idea='In a major key: from the dominant’s root, up to its 3rd, down a step, then down the major scale to the tonic. His fingers: 4, 3, 1, 4, 2, 1, 4, then 1 on the tonic.',
     quote=dict(where=where(23), text='Para ir a la tónica en tonalidad mayor: E, G♯, F♯, E, D, C♯, B into A. Played here: its first beat.',
-               items=[['W', 2.25], run2(H_TO_I_MAJ[:3], [5, 4, 4], [S16] * 3, 'E7')], **OWN, played=''),
+               items=[run2(H_TO_I_MAJ[:3], [5, 4, 4], [S16] * 3, 'E7')], **OWN, played=''),
     bars=[dict(chords=['Bb7'], note=('B♭7 into E♭: B♭, D, C, B♭, A♭, G on the D and G strings, F on the A string (8th, 7th, 5th, 8th, 6th, 5th; then 8th), '
                                       'into E♭ on the A string at the 6th.'),
                items=[half_bar('Bb7', IWG['Bb7h']), run2(mv(H_TO_I_MAJ), [4, 3, 3, 4, 4, 4, 5], [S16] * 7, 'B♭7')]),
@@ -298,8 +298,8 @@ _inv_maj = dict(
     id='bajo-a-la-tercera-mayor', title='The bass walks up to the 3rd (major, on the A string)',
     idea=('The same walk from a root on the A string, and on a dominant from the low E: a major chord and a dominant both climb a tone and two semitones to the major 3rd, fingers 1, 2, 3; '
           'over the new bass the chord keeps its notes (a dominant its 7th).'),
-    quote=dict(where=where(24), text='5ta. cuerda, acorde mayor: D, the chord A, D, F♯ above it; then E, F, F♯; the chord over F♯. Played here: that bar.',
-               items=[K('D', qD, [(0.5, [5]), (1, [4, 3, 2])]), run2(H_INV_D, [5, 5, 5], [S16, S16, 0.5], 'D'), K('D/F#', qD3, [(1.5, [4, 3, 2])])], **OWN, played='Played here: that bar.'),
+    quote=dict(where=where(24), text='5ta. cuerda, acorde mayor: D, the chord A, D, F♯ above it; then E, F, F♯; the chord over F♯.',
+               items=[run2(H_INV_D, [5, 5, 5], [S16, S16, 0.5], 'D'), K('D/F#', qD3, [(1, [4, 3, 2])])], **OWN, played='Played here: the walk and the chord over the new bass.'),
     bars=[dict(chords=['Eb', 'Eb/G'], note=('I Wonder Who’s Kissing Her Now’s E♭, his D a semitone up: E♭ on the A string (6th fret), B♭, E♭, G above it at the 8th; '
                                             'F, G♭, G up the A string (8th, 9th, 10th), the chord over G.'),
                items=[K('Eb', IWG['Eb'], [(0.5, [5]), (1, [4, 3, 2])]), run2(INV_EB, [5, 5, 5], [S16, S16, 0.5], 'E♭'), K('Eb/G', [-1, 10, 8, 8, 8, -1], [(1.5, [4, 3, 2])])]),
@@ -312,3 +312,6 @@ _after(EX_I, 'bajo-a-la-tercera', _inv_maj)
 SECTIONS = [dict(id='apoyaturas', title='Leaning into the bass', part='Exercises', ex=EX_A),
             dict(id='frases', title='Bass phrases', part='Exercises', ex=EX_F),
             dict(id='inversiones', title='The bass to the 3rd and the 7th', part='Exercises', ex=EX_I)]
+
+from quotes import trim as _trim_quotes   # quotes stay a beat or two
+_trim_quotes(SECTIONS)

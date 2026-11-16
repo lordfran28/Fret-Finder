@@ -372,3 +372,6 @@ _labels()
 
 SECTIONS = [dict(id='entre', title='Between two sections', part='Exercises', ex=EXS['entre']),
             dict(id='final', title='Into the end', part='Exercises', ex=EXS['final'])]
+
+from quotes import trim as _trim_quotes   # quotes stay a beat or two
+_trim_quotes(SECTIONS)
