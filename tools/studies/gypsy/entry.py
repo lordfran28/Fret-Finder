@@ -110,3 +110,23 @@ for z in (1, 2):
         bars=[dict(chords=[c], note='', items=[K(c, SH[c][ZONE[z][c]], [(3, 'A')])]) for c in CHART]))
     EX2[-1]['bars'][0]['note'] = (f'Очи чёрные’s sixteen bars, each chord struck once and left ringing, every shape between the {"5th and 7th" if z == 1 else "8th and 12th"} fret.')
 SECTIONS.append(dict(id='gypsy-shapes', title='Improvising from the shapes: first steps', part='Exercises', ex=EX2))
+
+# ---------- step 5–6: a fragment, a motif, a sequence (p. 28) ----------
+FRAG = {'Am': [[2, 5], [3, 5], [1, 5]], 'E7': [[2, 5], [3, 7], [1, 7]], 'Dm': [[2, 6], [3, 7], [1, 5]]}   # same strings each time: B, G, high E
+
+
+def motif(c):
+    return [dict(chords=[c], note='', items=[['R', FRAG[c], [1.5, 0.5, 1], c]]), dict(chords=[c], note='', items=[['W', 3]])]
+
+
+seqbars = []
+for c in ['E7', 'Am', 'E7', 'Am', 'Dm', 'Am', 'E7', 'Am']:
+    seqbars += motif(c)
+EX2.append(dict(
+    id='motif', title='A fragment, a motif, a sequence',
+    idea=('Wrembel’s steps 5 and 6: take two to four notes from one shape (a fragment), give them a rhythm (now it is a motif), then carry the same rhythm to the next chord on the same strings, '
+          'changing only the notes that are not in the new chord (a sequence). Down-strokes only; keep the shapes in view.'),
+    quote=dict(where=f'{BOOK}, p. 28', text='his fragment is three notes of A minor in the first position, A, E, C, set to rhythm and carried to D minor.', item=None, by='Wrembel'),
+    bars=seqbars))
+EX2[-1]['bars'][0]['note'] = ('Our fragment: E, C, A from A minor at the 5th fret (B string, G string, high E), in the rhythm of a quarter and a half, an eighth, a quarter; the last note held through the next bar. '
+                              'On E7 the same strings give E, D, B; on D minor F, D, A. Through Очи чёрные’s chords, two bars each.')
