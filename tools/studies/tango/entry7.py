@@ -90,7 +90,7 @@ ex('diatonica', 'circulo-1', 'The circle of 5ths',
    ('Where the harmony goes IVm, Im, V7, Im, run the circle of 5ths from the minor IV at twice the speed, the chords of the key: '
     'IVm, ♭VII7, ♭IIImaj7, ♭VImaj7, IIm7♭5, V7, Im. The functions still fall where they did; the dominant comes a little later, after its own II.'),
    dict(where=where(42), text='In C minor, over F minor, C minor, G7, C minor: F minor, B♭7; E♭maj7, A♭maj7; D half-diminished, G7; C minor. He gives the chord names; the grips are ours. Played here: the first bar.',
-        items=Cad(HC.ev[:2]).items(5, grips=GQ), whose=OWN, played=''),
+        items=Cad([('KN', 1, e[2]) for e in HC.ev[:2]]).items(5, grips=GQ), whose=OWN, played=''),
    [bar([e[2] for e in c.ev], c.items(3, grips=GC), CIRCLE_NOTE if j == 0 else '') for j, c in enumerate(cb)])
 EXS['diatonica'][-1]['bars'][0]['note'] = 'Очи чёрные’s second half (D minor, A minor, E7, A minor) with the circle in its place: ' + CIRCLE_NOTE
 # ================================================================ tritone substitutes (pp. 43–44)
@@ -109,7 +109,7 @@ H5 = Cad([('K', 4, ['Db3', 'F3', 'B3', 'Eb4', 'G4'], 'Db7#11')])
 O5 = H5.moved(DOWN_m3)
 ex('tritonal', 'sustituto-11', 'The substitute with its 9th and ♯11',
    'Graciano: it is very common to colour the substitute with its 9th and its ♯11.',
-   dict(where=where(44), text='D♭7(9,♯11): D♭, F, B, E♭, G. Played here: that chord.', items=H5.items(6), whose=OWN, played=''),
+   dict(where=where(44), text='D♭7(9,♯11): D♭, F, B, E♭, G. Played here: that chord.', items=Cad([('K', 2) + tuple(H5.ev[0][2:])]).items(6), whose=OWN, played=''),
    [bar(['Bb7#11'], O5.items(6), 'B♭7 with 9th and ♯11, his chord a minor 3rd lower: B♭, D, A♭, C, E from the low E string, at the 5th and 6th fret.')])
 
 # ================================================================ diminished chords for the dominant (p. 44)
@@ -118,7 +118,7 @@ O6 = H6.moved(DOWN_m3)
 ex('disminuidos', 'disminuido-por-dominante', 'A diminished chord for the dominant',
    ('A tango sound from the very start: the dominant, primary or secondary, replaced by the diminished 7th on its 3rd (the dominant with ♭9, its root left out). '
     'Being symmetrical, it can move a minor 3rd at a time along the neck and stay the same chord: B°7, D°7, F°7, A♭°7.'),
-   dict(where=where(44), text='G7 (G, D, F, B, D), then B°7 (B, F, A♭, D). Played here: both.', items=H6.items(3), whose=OWN, played=''),
+   dict(where=where(44), text='G7 (G, D, F, B, D), then B°7 (B, F, A♭, D). Played here: both.', items=Cad([(e[0], 1) + tuple(e[2:]) for e in H6.ev]).items(3), whose=OWN, played=''),
    [bar(['E7', 'G#dim7'], O6.items(1, k_opts={0: dict(allow_open=True)}) + [],
         'Очи чёрные’s E7 and the diminished on its 3rd, G♯°7 (G♯, D, F, B), his chords a minor 3rd lower.'),
     bar(['Am'], [K('Am', [-1, 0, 2, 2, 1, 0], [(2, 'A'), (2, '-')])], 'Into A minor.')])
@@ -248,7 +248,7 @@ HT1 = Cad([('N', 1, TRI[0]), ('N', 1, RES[0]), ('W', 2)]); OT1 = HT1.moved(UP_m3
 ex('tritono', 'tritono-basico', 'The tritone and where it goes',
    ('One of tango’s great resources, for V7 to Im above all (and as much for V7 to I in major): the tritone between the key’s 4th and 7th degrees, '
     'the heart of the dominant, resolving by semitone into the tonic. In A minor, G♯ and D into A and C.'),
-   dict(where=where(47), text='Posibilidad básica: over E7 the tritone G♯ with D, resolving to A with C over A minor. Played here: both.', items=HT1.items(6), whose=OWN, played=''),
+   dict(where=where(47), text='Posibilidad básica: over E7 the tritone G♯ with D, resolving to A with C over A minor. Played here: both.', items=Cad(HT1.ev[:2]).items(6), whose=OWN, played=''),
    [bar(['G7', 'Cm'], OT1.items(9, fix={0: [4, 3], 1: [4, 3]}),
         'I Wonder Who’s Kissing Her Now goes from G7 to C minor (bars 6–7): G7’s tritone, B with F, into C with E♭, his notes a minor 3rd up. On the D and G strings, 9th and 10th fret.')])
 HT2 = Cad([('N', 1, TRI[0]), ('N', 1, TRI[1]), ('N', 1, TRI[2]), ('N', 1, TRI[3])]); OT2 = HT2.moved(UP_m3)
@@ -290,11 +290,9 @@ ex('tritono', 'tritono-cuerdas-3-2', 'The four on the G and B strings',
     bar(['E7', 'Am', 'E7', 'Am'], f43b.items(10, fix={0: [3, 2], 1: [4, 2], 2: [3, 2], 3: [3, 2]}),
         'D/G♯ (7th, 9th) to C on the D string (10th) with A on the B string (10th), as his; F/B (10th, 12th) to E/C (9th, 13th).')])
 
-# examples of application (p. 49): in minor, in major, secondary dominants; ours a minor 3rd up
-GS = {'Cm': [8, 10, 10, 8, 8, 8], 'Ab7': [4, 6, 4, 5, 4, 4], 'G7': [3, 5, 3, 4, 3, 3], 'Eb': [-1, 6, 8, 8, 8, 6], 'B7': [7, 9, 7, 8, 7, 7],
-      'Bb7': [6, 8, 6, 7, 6, 6], 'F#7': [2, 4, 2, 3, 2, 2], 'F7': [1, 3, 1, 2, 1, 1], 'B7': [7, 9, 7, 8, 7, 7]}
-
-
+# examples of application (p. 49). His four examples are quoted (their first beat or two); ours apply the same
+# device to I Wonder Who's Kissing Her Now's own dominants: over each dominant its tritone (3rd and 7th) and the
+# replacements a minor 3rd up, each pair moving by step into the next chord. check7.py checks every pair by that rule.
 def slashes(seq):
     return [('KN', d, n) for n, d in seq]
 
@@ -315,47 +313,72 @@ HP4 = Cad(slashes([('C', 1), ('C', 1), ('C', 1), ('C', 1), ('D7', 1), ('D7', 1),
           ('N', 1, ['E3', 'C4']), ('N', 1, ['F4', 'B4']), ('N', 1, ['E4', 'C5']), ('W', 1)])
 GQ2 = {'Am': [5, 7, 7, 5, 5, 5], 'F7': [1, 3, 1, 2, 1, 1], 'E7': [0, 2, 0, 1, 0, 0], 'C': [-1, 3, 2, 0, 1, 0], 'Ab7': [4, 6, 4, 5, 4, 4],
        'G7': [3, 5, 3, 4, 3, 3], 'D#7': [-1, 6, 5, 6, 4, -1], 'D7': [-1, 5, 4, 5, 3, -1]}
-GO = {'Cm': [8, 10, 10, 8, 8, 8], 'Ab7': [4, 6, 4, 5, 4, 4], 'G7': [3, 5, 3, 4, 3, 3], 'Eb': [-1, 6, 8, 8, 8, 6], 'Cb7': [7, 9, 7, 8, 7, 7],
-      'Bb7': [6, 8, 6, 7, 6, 6], 'F#7': [2, 4, 2, 3, 2, 2], 'F7': [1, 3, 1, 2, 1, 1], 'B7': [7, 9, 7, 8, 7, 7]}
+GI = {'Eb': [-1, 6, 8, 8, 8, 6], 'Bb7': [6, 8, 6, 7, 6, 6], 'Cm7': [8, 10, 8, 8, 8, 8], 'G7': [-1, 10, 12, 10, 12, 10],
+      'Abmaj7': [-1, 11, 13, 12, 13, 11], 'C7': [8, 10, 8, 9, 8, 8], 'Fm7': [-1, 8, 10, 8, 9, 8], 'F7': [-1, 8, 10, 8, 10, 8],
+      'Ab7': [-1, 11, 13, 11, 13, 11], 'G7/D': [-1, 5, 5, 4, 6, -1]}     # the song page's own grips
+OURS = {}          # id: [(song bar, [(chord, beats)], events)]: what check7.py checks by the rule
 
 
-def bars_of(c, near, grips, notes, chords):
-    out, rest = [], c
-    j = 0
-    while rest.ev:
-        a, rest = split(rest, 4)
-        out.append(bar(chords[j], a.items(near, grips=grips), notes[j] if j < len(notes) else ''))
-        j += 1
+def kn(*cs): return [('KN', 1, c) for c in cs]
+
+
+OURS['aplicacion-menor'] = [
+    (7, [('Abmaj7', 2), ('C7', 2)], kn('Abmaj7', 'Abmaj7', 'C7', 'C7')),
+    (8, [('C7', 4)], kn('C7') + [('N', 1, ['E3', 'Bb3']), ('N', 1, ['G3', 'Db4']), ('N', 1, ['Bb3', 'E4'])]),
+    (9, [('Fm7', 4)], [('N', 1, ['Ab3', 'F4'])] + kn('Fm7', 'Fm7') + [('W', 1)])]
+OURS['aplicacion-mayor'] = [
+    (14, [('F7', 4)], kn('F7') + [('N', 1, ['A3', 'Eb4']), ('N', 1, ['C4', 'Gb4']), ('N', 1, ['Eb4', 'A4'])]),
+    (15, [('F7', 2), ('Bb7', 2)], kn('F7') + [('N', 1, ['A3', 'Eb4']), ('N', 1, ['Ab3', 'D4'])] + kn('Bb7')),
+    (16, [('Bb7', 4)], [('KN', 2, 'Bb7'), ('N', 1, ['Ab3', 'D4']), ('N', 1, ['D4', 'Ab4'])]),
+    (17, [('Eb', 4)], [('N', 1, ['Eb4', 'G4']), ('KN', 2, 'Eb'), ('W', 1)])]
+OURS['aplicacion-secundario'] = [
+    (3, [('Eb', 4)], kn('Eb', 'Eb', 'Eb', 'Eb')),
+    (4, [('Eb', 2), ('G7/D', 2)], kn('Eb', 'Eb', 'G7/D') + [('N', 1, ['B3', 'F4'])]),
+    (5, [('Cm7', 4)], [('N', 1, ['C4', 'Eb4']), ('KN', 2, 'Cm7'), ('W', 1)])]
+OURS['aplicacion-cadena'] = [
+    (21, [('Eb', 2), ('G7', 2)], kn('Eb', 'Eb', 'G7') + [('N', 1, ['B3', 'F4'])]),
+    (22, [('Ab7', 4)], [('N', 1, ['C4', 'Gb4'])] + kn('Ab7', 'Ab7') + [('N', 1, ['Gb3', 'C4'])]),
+    (23, [('G7', 2), ('C7', 2)], [('N', 1, ['F3', 'B3'])] + kn('G7') + [('N', 1, ['E3', 'Bb3']), ('N', 1, ['G3', 'Db4'])]),
+    (24, [('Fm7', 4)], [('N', 1, ['Ab3', 'C4']), ('KN', 2, 'Fm7'), ('W', 1)])]
+NEAR = {'aplicacion-menor': 7, 'aplicacion-mayor': 6, 'aplicacion-secundario': 5, 'aplicacion-cadena': 9}
+NOTES = {
+    'aplicacion-menor': ['Bars 7–9 of I Wonder Who’s Kissing Her Now: C7 resolving to F minor.', 'Bar 8, where the voice holds: C7, then its tritone E with B♭, and the two replacements a minor 3rd up, G with D♭ and B♭ with E.',
+                         'Into F minor: B♭ falls a step to A♭, E rises a semitone to F; then the chord.'],
+    'aplicacion-mayor': ['Bars 14–17: F7, B♭7, E♭. Over F7 (bar 14, where the voice holds) its tritone A with E♭ and the replacements C with G♭, E♭ with A.',
+                         'F7’s tritone A/E♭ slides a semitone down, both notes, into B♭7’s A♭/D.', 'B♭7 (the voice holds), its tritone low, then high.',
+                         'Into E♭: A♭ falls to G, D rises to E♭.'],
+    'aplicacion-secundario': ['Bars 3–5: E♭, then G7 over D (the dominant of C minor, the song’s VIm), into C minor 7.', 'G7’s tritone, B with F, on its last beat.',
+                              'Into C minor: B rises to C, F falls to E♭.'],
+    'aplicacion-cadena': ['Bars 21–24, the song’s chain: E♭, G7, A♭7, G7, C7, F minor. Each dominant’s tritone moves by semitones into the next one.',
+                          'G7’s B/F rises to A♭7’s C/G♭; then A♭7’s tritone again, an octave lower.',
+                          'Down a semitone into G7’s F/B (the voice holds), then C7’s E/B♭, and its replacement G/D♭.',
+                          'Into F minor: G rises to A♭, D♭ falls to C.']}
+DESC = {
+    'aplicacion-menor': ('Graciano’s examples of use. For major and minor alike the shapes on the guitar are the same: find the tritone in the dominant, '
+                         'replace it, find the resolution. In a minor key: the dominant resolving into a minor chord.'),
+    'aplicacion-mayor': 'The same in a major key: the dominant into the key’s major chord, here with the dominant before it (V of V) leading in by its own tritone.',
+    'aplicacion-secundario': 'The same on a secondary dominant: the dominant of another of the key’s chords (in E♭, G7 into C minor).',
+    'aplicacion-cadena': 'Secondary dominants in a row, resolving to major or minor chords: each with its tritone, sometimes its replacement a minor 3rd up after it.'}
+
+
+def ours_bars(id_):
+    out = []
+    for n, (songbar, chords, ev) in enumerate(OURS[id_]):
+        out.append(bar([c for c, _ in chords], Cad(ev).items(NEAR[id_], grips=GI), NOTES[id_][n] if n < len(NOTES[id_]) else ''))
     return out
 
 
-CH = {'aplicacion-menor': [['Cm', 'Ab7'], ['G7'], ['G7'], ['Cm']], 'aplicacion-mayor': [['Eb', 'B7'], ['Bb7'], ['Bb7'], ['Eb']],
-      'aplicacion-secundario': [['Eb', 'F#7'], ['G7'], ['G7'], ['Cm']],
-      'aplicacion-cadena': [['Eb'], ['F7'], ['Bb7'], ['Eb', 'Eb7'], ['Ab', 'Bb7'], ['Eb', 'C7'], ['Fm', 'B7', 'Bb7'], ['Eb', 'Bb7', 'Eb']]}
-
-
 APP = [
-    ('aplicacion-menor', 'In a minor key', HP1, 49, 'Tonalidad menor: A minor, F7, E7; then over E7 the tritone G♯/D, its resolution A/C, the other tritone F/B, into A minor with E/C',
-     ['C minor, as in I Wonder Who’s Kissing Her Now’s C minor bars, his example a minor 3rd up: C minor, A♭7, G7.', '',
-      'Over G7: B/F, C/E♭, A♭/D, then C minor: G with E♭, the low C, the chord.']),
-    ('aplicacion-mayor', 'In a major key', HP2, 49, 'Tonalidad mayor: C, A♭7, G7; over G7 its tritone F/B, the resolution E/C, the other tritone G♯/D, into C with G/E',
-     ['I Wonder Who’s Kissing Her Now’s E♭, his example a minor 3rd up: E♭, then C♭7 (B7 on the neck), B♭7.', '',
-      'Over B♭7: A♭/D, G/E♭, B/F (C♭/F), then E♭ with B♭/G, the low E♭, the chord.']),
-    ('aplicacion-secundario', 'On a secondary dominant', HP3, 49, 'C, D♯7, E7 (V of the VIm), the tritones over E7, into A minor',
-     ['E♭, then F♯7 and G7: the dominant of C minor, as in the song’s bars 5–7.', '', 'The tritones over G7 into C minor.']),
-    ('aplicacion-cadena', 'Through a chain of dominants', HP4, 49,
-     'secondary dominants resolving to major or minor chords: C, D7 (its tritone F♯/C), G7 (G/B, the bass, the chord, F/B), C (E/C), C7 (E/B♭), F (F/A, G/C♯, A/C), G7, C, A7 (G/C♯ to F/D, B♭/E), D minor (A/F), A♭7, G7 (F/B), C (E/C), G7 (F/B high), C (E/C)',
-     ['E♭ (his C, a minor 3rd up): the chain on I Wonder Who’s Kissing Her Now’s key, its secondary dominants as the song has them.']),
+    ('aplicacion-menor', 'In a minor key', HP1, 'Tonalidad menor: A minor, F7, E7, then over E7 its tritone and the other one, each resolving into A minor'),
+    ('aplicacion-mayor', 'In a major key', HP2, 'Tonalidad mayor: C, A♭7, G7, then over G7 its tritones, resolving into C'),
+    ('aplicacion-secundario', 'On a secondary dominant', HP3, 'C, D♯7, E7 (V of the VIm), the tritones over E7, into A minor'),
+    ('aplicacion-cadena', 'Through a chain of dominants', HP4, 'C, D7, G7, C, C7, F, G7, C, A7, D minor, A♭7, G7, C, G7, C: secondary dominants each with its tritone'),
 ]
-for id_, title, h, page, txt, notes in APP:
-    o = h.moved(UP_m3)
-    ex('aplicacion', id_, title,
-       ('Graciano’s examples of use. For major and minor alike the shapes on the guitar are the same: find the tritone in the dominant, replace it, find the resolution. '
-        'Here: ' + title.lower() + '.') if id_ == 'aplicacion-menor' else 'The same ' + title.lower() + '.' if id_ != 'aplicacion-cadena' else
-       'Secondary dominants too, resolving to major or minor chords: each with its tritone, often the replacement a minor 3rd up after it.',
-       dict(where=where(page), text=txt + '. Played here: ' + ('the stroke and the first tritone of its third bar.' if id_ != 'aplicacion-cadena' else 'the second bar’s last beat and the next.'),
+for id_, title, h, txt in APP:
+    ex('aplicacion', id_, title, DESC[id_],
+       dict(where=where(49), text=txt + '. Played here: ' + ('his stroke and the first tritone after it.' if id_ != 'aplicacion-cadena' else 'his second bar’s last beat and the next.'),
             items=(Cad(h.ev[8:10]).items(2, grips=GQ2) if id_ != 'aplicacion-cadena' else Cad(h.ev[7:9]).items(4)), whose=OWN, played=''),
-       bars_of(o, 6, GO, notes, CH[id_]))
+       ours_bars(id_))
 
 SECTIONS = [dict(id='diatonica', title='Reharmonizing with the key’s chords', part='Exercises', ex=EXS['diatonica']),
             dict(id='tritonal', title='Tritone substitutes', part='Exercises', ex=EXS['tritonal']),
