@@ -58,7 +58,10 @@ def main():
             meta = json.load(open(meta_path, encoding="utf-8"))
         except ValueError:
             meta = {}
-    meta.update({"title": a.title, "kind": "exercises", "style": a.style, "files": ["index.html"] + used})
+    files = ["index.html"] + used
+    if not used:      # a page-only update keeps the media already there
+        files = [f for f in (meta.get("files") or ["index.html"]) if f == "index.html" or os.path.exists(os.path.join(out, f))]
+    meta.update({"title": a.title, "kind": "exercises", "style": a.style, "files": files})
     meta.setdefault("addedAt", a.added or datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))
     with open(meta_path, "w", encoding="utf-8") as f:
         json.dump(meta, f, ensure_ascii=False, indent=1)
