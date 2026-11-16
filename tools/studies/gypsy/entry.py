@@ -83,3 +83,30 @@ EX.append(dict(
     quote=dict(where=f'{BOOK}, p. 22', text='his bossa-manouche (examples on D minor and G minor); played on D minor.', items=[K('Dm', WR['Dm'], BOSSA)], **OWN),
     bars=bars(lambda n, g: [K(n, g[n], BOSSA)], OCHI_SEQ, OCHI, 'On Очи чёрные.')))
 SECTIONS = [dict(id='gypsy', title='Gypsy jazz accompaniment', part='Exercises', ex=EX)]
+
+# ---------- improvising from the shapes (part 2, pp. 24–26) ----------
+SH = {  # three triad shapes on the top four strings, no open strings, listed up the neck
+    'Am': [[-1, -1, 7, 5, 5, 5], [-1, -1, 10, 9, 10, 8], [-1, -1, 14, 14, 13, 12]],
+    'Dm': [[-1, -1, 3, 2, 3, 1], [-1, -1, 7, 7, 6, 5], [-1, -1, 12, 10, 10, 10]],
+    'E7': [[-1, -1, 2, 4, 3, 4], [-1, -1, 6, 7, 5, 7], [-1, -1, 9, 9, 9, 10]],
+}
+ZONE = {1: {'Am': 0, 'Dm': 1, 'E7': 1}, 2: {'Am': 1, 'Dm': 2, 'E7': 2}}
+CHART = ['E7', 'E7', 'Am', 'Am', 'E7', 'E7', 'Am', 'Am', 'Dm', 'Dm', 'Am', 'Am', 'E7', 'E7', 'Am', 'Am']
+EX2 = []
+EX2.append(dict(
+    id='formes', title='Three shapes for each chord',
+    idea=('Wrembel: improvising on the guitar is thinking in shapes. There are three basic minor shapes and three major ones on the top four strings, so every chord has three places in each octave. '
+          'Find the three for each chord of the song, without open strings for now; listen to each one.'),
+    quote=dict(where=f'{BOOK}, pp. 24–26', text='his practice tune is A minor 6, D minor 6 and E7, each found in three positions.', item=None, by='Wrembel'),
+    bars=[dict(chords=[c], note='', items=[K(c, g, [(3, 'A')])]) for c in ('Am', 'Dm', 'E7') for g in SH[c]]))
+EX2[-1]['bars'][0]['note'] = ('Очи чёрные has the same three chords. A minor at the 5th, 8th–10th and 12th–14th fret; D minor at the 1st–3rd, 5th–7th and 10th–12th; '
+                              'E7 at the 2nd–4th, 5th–7th and 9th–10th (E, G♯, B with D, the song’s 7th).')
+for z in (1, 2):
+    EX2.append(dict(
+        id=f'zone-{z}', title=f'The changes in one zone ({"5th–7th fret" if z == 1 else "8th–12th fret"})',
+        idea=('Wrembel’s next step: play the progression with one chord on the first beat of each bar, letting it ring, all in one area of the neck, '
+              'until each change is found in time and the next shape is seen coming.'),
+        quote=dict(where=f'{BOOK}, p. 26', text='step 4: the progression in position 1, then 2, then 3.', item=None, by='Wrembel'),
+        bars=[dict(chords=[c], note='', items=[K(c, SH[c][ZONE[z][c]], [(3, 'A')])]) for c in CHART]))
+    EX2[-1]['bars'][0]['note'] = (f'Очи чёрные’s sixteen bars, each chord struck once and left ringing, every shape between the {"5th and 7th" if z == 1 else "8th and 12th"} fret.')
+SECTIONS.append(dict(id='gypsy-shapes', title='Improvising from the shapes: first steps', part='Exercises', ex=EX2))
