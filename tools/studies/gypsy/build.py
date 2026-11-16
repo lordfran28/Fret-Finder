@@ -5,9 +5,9 @@ import study_page as SP
 SP.BPM = 132; SP.QUOTE_PAD = 3
 import entry as E
 OUT = '/home/claude/studies/gypsy/out/'; os.makedirs(OUT, exist_ok=True)
-ENTRY = dict(key='gypsy', title='Gypsy jazz rhythm', eyebrow='Exercises · Stéphane Wrembel',
+ENTRY = dict(key='gypsy', title='Gypsy jazz: rhythm and shapes', eyebrow='Exercises · Stéphane Wrembel',
              meta=[['Style', 'Gypsy jazz accompaniment (Wrembel)'], ['Set on', 'Moonglow, Я вас любил, Очи чёрные'], ['Tempo', f'{SP.BPM} a minute']],
-             lede='La pompe, the gypsy waltz, the bolero and the bossa-manouche: the right hand of gypsy jazz on your songs.',
+             lede='La pompe, the gypsy waltz, the bolero and the bossa-manouche, then the first steps of improvising from the chord shapes, on your songs.',
              contents_intro='Everything on this page, in order. Each rhythm opens with Wrembel’s bar, then the same pattern on one of your songs.',
              track_title='The rhythms, one after another',
              track_intro='Every bar in order. Tap a bar’s number to play from there; the speeds below the player slow it down.',
