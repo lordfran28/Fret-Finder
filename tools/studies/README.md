@@ -36,6 +36,11 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
   scale-for-a-chord rules (`rule_for`) and a single-line fingering in position; `check9.py` checks every line against its rule.
 - `tango/entry10.py`: Graciano's melodic patterns (end of chapter 7): `pattern` runs a pattern's shape over a song's chords, each chord
   in the scale `mel.rule_for` gives it and starting on one of its own notes; `check10.py` checks every group against the shape.
+- `tango/tune_iw.py`: the chorus of I Wonder Who's Kissing Her Now as the 1909 song has it (a waltz in G, copied from the owner's
+  score and moved to E♭); `check_tune.py` checks its bars, ties and the move to E♭. `tune_audio.py` makes a sound file of it to check by ear.
+- `tango/entry11.py`: the rest of Graciano's chapter 7 on that tune: his ten paraphrase techniques and four of expression, a guide line
+  against the tune, Grela's two lines in one, and an étude. Each change to the tune is made by one function per technique and logged;
+  `check11.py` checks every logged change against the technique's rule with its own code. `build9.py` now builds the page from `entry11`.
 - `tango/quotes.py`: cuts every quote of a book to its first two beats; each entry calls it last.
 - `sola/`: Sola's five steps for colouring a song's chords, applied to Очи чёрные (it borrows `K` from `tango/entry.py`).
   Minor 11 chords need the `m11` quality in the song kit's chord table (`scripts/gtr.py`).
