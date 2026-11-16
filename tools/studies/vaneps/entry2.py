@@ -1,4 +1,4 @@
-"""Van Eps, Harmonic Mechanisms for Guitar vol. 1, more mechanisms (PDF pp. 51–63 of the owner's copy): the scale in
+"""Van Eps, Harmonic Mechanisms for Guitar vol. 1, more mechanisms (book pp. 45–57; PDF 51–63 of the owner's copy; the page cites the printed numbers): the scale in
 open triads (first inversion, second inversion and root, each spread by an octave), triad arpeggios through the cycle
 of fifths, and two lines of triads in contrary motion.
 
@@ -134,7 +134,7 @@ def sets_text(p):
     return ', '.join(seen)
 
 
-def T(text, p): return dict(where=f'{BOOK}, p. {p}', text=text, item=None, by='Van Eps', whose='Van Eps’s own', played='')
+def T(text, p): return dict(where=f'{BOOK}, p. {p - 6}', text=text, item=None, by='Van Eps', whose='Van Eps’s own', played='')
 
 
 EX = []

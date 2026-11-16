@@ -77,6 +77,9 @@ def render(bars, starts, spb, out_mp3):
                 hold = it[4]; it = it[:4]
             if it[0] == 'R' and len(it) > 4 and isinstance(it[4], dict) and it[4].get('stop'):
                 stop = True                                         # a bass line: each note stops at its written end
+            pinfo = None
+            if it[0] == 'P' and len(it) > 4 and isinstance(it[4], dict):   # {'hold': [strings]}: those notes ring until
+                pinfo = it[4]; it = it[:4]                          # struck again; every other note ends at its own end
             if it[0] == 'K' and any(len(h) > 2 for h in it[3]):
                 y = 0.0
                 for h in it[3]:
@@ -98,6 +101,9 @@ def render(bars, starts, spb, out_mp3):
                 q['src'] = it[0]
                 if hold and q['string'] in hold.get('strings', []): q['hold_end'] = q['t'] + hold['hold'] * spb
                 if stop: q['stop'] = True
+                if pinfo is not None:
+                    if q['string'] in pinfo.get('hold', []): q['p_hold'] = True
+                    else: q['short_end'] = q['end'] + 0.03
                 yb = (q['t'] - t0) / spb - x
                 for y, v in dv:
                     if -0.02 <= yb - y <= 0.14: q['vel'] += v
@@ -112,13 +118,31 @@ def render(bars, starts, spb, out_mp3):
         for a, b in zip(lst, lst[1:] + [None]):
             if a.get('src') in ('P', 'R'):
                 a['off'] = min(b['t'] + 0.01 if b else a['t'] + 2.0, a['t'] + 2.4); a['rel_tau'] = 0.06
+            if a.get('p_hold'): a['off'] = min(b['t'] + 0.01 if b else a['t'] + 4.5, a['t'] + 4.5)
             if a.get('short_end'): a['off'] = min(a['off'], a['short_end'])
             if a.get('hold_end'): a['off'] = min(b['t'] + 0.01 if b else a['hold_end'], a['hold_end']); a['rel_tau'] = 0.06
             if a.get('stop'): a['off'] = min(a['off'], a['end'] + 0.03)
     import guitar
     from core import render_guitar
     SR = guitar.SR
-    gt = render_guitar(notes, None, seed=11, wet=0.24, tail=8.0)
+    if max(e['t'] for e in notes) < 300:
+        gt = render_guitar(notes, None, seed=11, wet=0.24, tail=8.0)
+    else:
+        # a long page: render it in pieces of about two and a half minutes and add them up (the body and the room are
+        # linear filters, so the sum is the same sound); one piece at a time keeps the memory down
+        SEG, TAIL = 150.0, 8.0
+        end = max(e['off'] for e in notes) + TAIL
+        gt = np.zeros((int(end * SR) + SR, 2), dtype=np.float32)
+        k = 0
+        while k * SEG <= max(e['t'] for e in notes):
+            s0 = k * SEG
+            part = [dict(e, t=e['t'] - s0, off=e['off'] - s0) for e in notes if s0 <= e['t'] < s0 + SEG]
+            if part:
+                g = render_guitar(part, None, seed=11 + k, wet=0.24, tail=TAIL).astype(np.float32)
+                a = int(round(s0 * SR)); n = min(len(g), len(gt) - a)
+                gt[a:a + n] += g[:n]
+                del g
+            k += 1
     return round(to_mp3(gt, SR, out_mp3, fade=1.5), 1)
 
 

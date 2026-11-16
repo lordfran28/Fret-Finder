@@ -3,15 +3,15 @@ import sys, os
 sys.path.insert(0, '/home/claude/studies'); sys.path.insert(0, '/home/claude/studies/tango'); sys.path.insert(0, '/home/claude/studies/vaneps')
 import study_page as SP
 SP.BPM = 72; SP.QUOTE_PAD = 4
-import entry4 as E
+import entry5 as E
 OUT = '/home/claude/studies/vaneps/out/'; os.makedirs(OUT, exist_ok=True)
-ENTRY = dict(key='vaneps', title='Three-voice triads', eyebrow='Exercises · George Van Eps',
-             meta=[['Style', 'Harmony on the neck (Van Eps, Harmonic Mechanisms)'], ['Set on', 'F major (Moonglow), A harmonic minor (Очи чёрные), E♭ major and C harmonic minor (I Wonder Who’s Kissing Her Now)'], ['Tempo', f'{SP.BPM} a minute']],
-             lede='The scale in three-voice triads, close and open, every inversion, from the bottom of the neck to the top and back; triads through the cycle of fifths; two lines of triads crossing; Van Eps’s super and sub, a voice moved a step and back; and his reductions, a 3rd opening to a 6th and back. In the keys of your songs.',
+ENTRY = dict(key='vaneps', title='Triads and chromatics', eyebrow='Exercises · George Van Eps',
+             meta=[['Style', 'Harmony on the neck (Van Eps, Harmonic Mechanisms)'], ['Set on', 'F major (Moonglow), A harmonic minor (Очи чёрные), E♭ major and C harmonic minor (I Wonder Who’s Kissing Her Now), G major (Я вас любил)'], ['Tempo', f'{SP.BPM} a minute']],
+             lede='The scale in three-voice triads, close and open, every inversion, from the bottom of the neck to the top and back; triads through the cycle of fifths; two lines of triads crossing; Van Eps’s super and sub, a voice moved a step and back; his reductions, a 3rd opening to a 6th and back; and his chromatics: triads climbing by half steps over a held bass note, two voices climbing together in octaves, 10ths, 12ths, 13ths and two octaves, and a line from the 10th to the 3rd over a held bass. In the keys of your songs.',
              contents_intro='Everything on this page, in order. Each mechanism opens with what Van Eps does, then the same in the key of one of your songs.',
-             track_title='The triads, one after another',
+             track_title='The exercises, one after another',
              track_intro='Every bar in order. Tap a bar’s number to play from there; the speeds below the player slow it down.',
-             track_pattern='Bars marked V are Van Eps’s own. One triad to a beat.',
+             track_pattern='Bars marked V are Van Eps’s own. One triad to a beat; over a pedal, one chord a bar.',
              accent=('#3A2F1E', '#F3EDE2', '#7A5A22', '#E3CFA4', '#16120A', '#E8D3A6'))
 bars, toc = SP.assemble(E.SECTIONS, mark='V')
 starts, spb = SP.times(bars)

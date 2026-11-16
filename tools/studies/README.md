@@ -63,4 +63,10 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
 - `vaneps/entry2.py`: more of Van Eps's mechanisms (open triads in three spreads, triads through the cycle of fifths, two lines of triads in contrary
   motion) in E♭ and C harmonic minor, added to `entry.py`'s page; `check2.py` checks every voicing. `build.py` builds the page from `entry2`.
 - `vaneps/entry4.py`: Van Eps's reductions (a held voice and a voice walking the scale between a 3rd and a 6th, four ways) in E♭;
-  `check4.py` checks every interval. `build.py` now builds the page from `entry4`.
+  `check4.py` checks every interval. `entry3.py`: super and sub (a voice moved a step from the triad and back), `check3.py`.
+- `vaneps/entry5.py`: Van Eps's chromatics: major triads climbing by half steps over G (Я вас любил) and minor over A (Очи чёрные), each
+  inversion, the pedal moving only when the triad leaves the hand; chromatic scales in octaves, 10ths, 12ths, 13ths and two octaves;
+  the 10th to the 3rd over a held bass (one hand position the whole time). `check5.py` works every note out again from the exercise's
+  definition and checks names, strings and reach. `build.py` now builds the page from `entry5`; page numbers are the printed ones.
+- `study_page.py`: a two-voice item may carry `{'hold': [strings]}` (those notes ring until struck again, the rest stop at their own
+  end); pages longer than five minutes are rendered in pieces and added up.

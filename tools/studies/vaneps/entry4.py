@@ -1,4 +1,4 @@
-"""Van Eps's reductions, "scales within scales" (PDF pp. 70–80 of the owner's copy): two voices, one held, the other
+"""Van Eps's reductions, "scales within scales" (book pp. 64–74; PDF 70–80): two voices, one held, the other
 walking the scale from a 3rd to a 6th or from a 6th to a 3rd, up or down; each station a step higher. His studies
 end each station on the first-inversion triad the last interval belongs to, for orientation. Ours: E♭ major (I Wonder
 Who's Kissing Her Now), four stations each way, one note a beat, the held voice struck on the first beat and the last.
@@ -53,7 +53,7 @@ NAMES12 = ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭', 'A', 'B♭',
 def _nm(m): return NAMES12[m % 12]
 
 
-def T(text, p): return dict(where=f'{E3.E2.BOOK}, p. {p}', text=text, item=None, by='Van Eps', whose='Van Eps’s own', played='')
+def T(text, p): return dict(where=f'{E3.E2.BOOK}, p. {p - 6}', text=text, item=None, by='Van Eps', whose='Van Eps’s own', played='')
 
 
 EX = []
