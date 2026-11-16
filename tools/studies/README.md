@@ -17,3 +17,4 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
   arrastre a slide up the bass string into the next downbeat.
 - `sola/`: Sola's five steps for colouring a song's chords, applied to Очи чёрные (it borrows `K` from `tango/entry.py`).
   Minor 11 chords need the `m11` quality in the song kit's chord table (`scripts/gtr.py`).
+- `morel/`: Morel's dance patterns (malambo, samba, clave) on Очи чёрные and Я вас любил.
