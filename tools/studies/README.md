@@ -75,6 +75,11 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
   strings from their A minor into It Had to Be You's B♭ minor; `check_romane.py` reads their diagrams again as notes on strings,
   checks ours is theirs moved up a fret, every note against its chord, the rhythm, the names, the fingers and the song bars
   the text names (from your page); `build_romane.py` (100 a minute). Needs `m(add9)` in `scripts/gtr.py`.
+- `gypsy/romane2.py`: chapters 5–9 of the same book on the same page: the diminished seventh broken, the major seventh over three
+  octaves, sweeps (and the sweeps up the key), each note from a half step below, the whole tone scale in descending and ascending
+  steps and in tritones, major with the 9th, the key in sweeps, 7sus4 and 7♭5 swept, the anatole's roots, the circle of fifths
+  and tritones on the bass strings. A minor and C major move up a fret, G major down a fret (into G♭); the tritone three frets.
+  Their phrases (exercises 23, 25, 26) are left out. `check_romane2.py`; `build_romane.py` now builds from `romane2`.
 - `page/template_study.html`: note lengths of a seventh or a ninth of a beat are written 1/7 and 1/9.
 - `flamenco/`: Graf-Martinez's arpeggio exercises I–IV (right hand kept, on Очи чёрные's open chords) and the five-note tremolo on Я вас любил's tremolo opening.
 - `flamenco/serrano_arp.py`: Serrano's four arpeggio exercises (pp. 46–48) over Очи чёрные's changes with the root on the low E
