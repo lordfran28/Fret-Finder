@@ -56,19 +56,23 @@ def path(chords):
     return min(best.values())[1]
 
 
-def scale_in(inv, top=None):
-    """the scale's triads in one inversion (1: root on top; 2: root in the middle, 3rd on top), from the lowest that fits on
-    the three low strings up to the top of the neck"""
+A_HMIN = [9, 11, 0, 2, 4, 5, 8]                                        # A B C D E F G#: Очи чёрные's harmonic minor
+A_NAMES = ['Am', 'Bdim', 'Caug', 'Dm', 'E', 'F', 'G#dim']
+
+
+def scale_in(inv, top=None, sc=F_MAJ, names=NAMES):
+    """the scale's triads in one inversion (0: root at the bottom; 1: root on top; 2: root in the middle, 3rd on top),
+    from the lowest that fits on the three low strings up to the top of the neck"""
     out = []
     for octv in range(1, 7):
         for deg in range(7):
-            r = 12 * (octv + 1) + F_MAJ[deg]
-            if deg >= 4: r += 12                      # the scale runs F G A Bb C D E: C, D, E belong to the octave above F
-            t = r + (F_MAJ[(deg + 2) % 7] - F_MAJ[deg]) % 12
-            f = r + (F_MAJ[(deg + 4) % 7] - F_MAJ[deg]) % 12
-            ms = [t, f, r + 12] if inv == 1 else [f, r + 12, t + 12]
+            r = 12 * (octv + 1) + sc[deg]
+            if sc[deg] < sc[0]: r += 12                 # the notes after the octave break belong to the octave above the tonic
+            t = r + (sc[(deg + 2) % 7] - sc[deg]) % 12
+            f = r + (sc[(deg + 4) % 7] - sc[deg]) % 12
+            ms = [t, f, r + 12] if inv == 1 else [f, r + 12, t + 12] if inv == 2 else [r, t, f]
             if placements(ms) and ms[0] >= 40:
-                out.append((NAMES[deg], ms))
+                out.append((names[deg], ms))
     out.sort(key=lambda x: x[1][0])
     first = next(i for i, (n, ms) in enumerate(out) if any(p[0] == 4 for p in placements(ms)))
     out = out[first:]
@@ -102,6 +106,10 @@ def section(names_, up_, label):
     return bb, used
 
 
+seq0 = scale_in(0, N('A5'))
+up0 = path([m for _, m in seq0]); names0 = [n for n, _ in seq0]
+seqh = scale_in(0, N('A5'), A_HMIN, A_NAMES)
+uph = path([m for _, m in seqh]); namesh = [n for n, _ in seqh]
 b, sets_used = section(names, up, 'first')
 b[0]['note'] = ('Moonglow’s key, F major: each triad with its root on top (the 3rd at the bottom), one to a beat, from D minor on the three low strings up the scale to the top of the neck, then back down. '
                 f'The string sets change as the scale climbs: {", ".join(f"{n}/3" for n in sets_used)} (Van Eps’s names: 4/3 is the low E, A and D strings, 1/3 the G, B and high E). '
@@ -124,4 +132,23 @@ EX = [dict(
                items=[['C', 'Bdim', [1, 2, 0, -1, -1, -1], 1.0, {'roll': 0.004}], ['C', 'C', [3, 3, 2, -1, -1, -1], 1.0, {'roll': 0.004}], ['W', 2]],
                whose='Van Eps’s own', played='Played here: those two.'),
     bars=b2)]
+b0, sets0 = section(names0, up0, 'root')
+b0[0]['note'] = f'F major with each triad in root position (the root at the bottom, the 5th on top), from {names0[0]} on the low strings; the string sets: {", ".join(f"{n}/3" for n in sets0)}.'
+bh, setsh = section(namesh, uph, 'hmin')
+bh[0]['note'] = (f'The key of Очи чёрные, A minor, with its harmonic minor (G♯): A minor, B diminished, C augmented, D minor, E, F, G♯ diminished, each in root position, '
+                 f'from {namesh[0].replace("dim", "°").replace("G#", "G♯")} on the low strings; the string sets: {", ".join(f"{n}/3" for n in setsh)}.')
+EX.append(dict(
+    id='triads-root', title='The scale in root-position triads',
+    idea='The same climb with each triad in root position: Van Eps’s “lower voice is the tonic”.',
+    quote=dict(where=f'{BOOK}, p. 41', text='his line in A♭ begins with A♭ (A♭, C, E♭) and B♭ minor (B♭, D♭, F) on the lowest strings.',
+               items=[['C', 'Ab', [4, 3, 1, -1, -1, -1], 1.0, {'roll': 0.004}], ['C', 'Bbm', [6, 4, 3, -1, -1, -1], 1.0, {'roll': 0.004}], ['W', 2]],
+               whose='Van Eps’s own', played='Played here: those two.'),
+    bars=b0))
+EX.append(dict(
+    id='triads-harmonic-minor', title='The harmonic minor scale in root-position triads',
+    idea='Van Eps runs every exercise in the harmonic and melodic minor too. In the harmonic minor the triads are minor, diminished, augmented, minor, major, major, diminished.',
+    quote=dict(where=f'{BOOK}, p. 42', text='his harmonic minor line in A begins with G♯ diminished (G♯, B, D) and A minor (A, C, E) on the lowest strings.',
+               items=[['C', 'G#dim', [4, 2, 0, -1, -1, -1], 1.0, {'roll': 0.004}], ['C', 'Am', [5, 3, 2, -1, -1, -1], 1.0, {'roll': 0.004}], ['W', 2]],
+               whose='Van Eps’s own', played='Played here: those two.'),
+    bars=bh))
 SECTIONS = [dict(id='vaneps', title='Three-voice triads', part='Exercises', ex=EX)]
