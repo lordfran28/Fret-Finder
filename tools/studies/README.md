@@ -17,6 +17,10 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
   arrastre a slide up the bass string into the next downbeat.
 - `tango/entry5.py`, `entry6.py`, `entry7.py` (Graciano's fills, cadences and harmony, chapters 3–5) were taken out on 16 November: they kept
   his examples as data and moved them whole into other keys. Those pages are being rebuilt from his rules, as `entry8.py` on.
+- `tango/entry13.py`: Graciano's fills (chapter 3), rebuilt from his rules: one function per fill (the scale down or up, the pattern,
+  the campanitas, tenths, octaves, sixths and thirds, the marcatto in inversions) applied to chords of Очи чёрные, I Wonder Who's Kissing
+  Her Now and Я вас любил, two or three places each, and two études (the second on the 1909 chorus, fills where the voice holds). Only the
+  first beat or two of his examples is kept, for the quotes. `check13.py` checks every fill against the rule with its own code. `build13.py`.
 - `tango/entry8.py`: Graciano's walking bass with chords (chapter 6), built from his rules, not from his notes: `formula` makes each bass
   line from his degrees for the chord, `place_bar` puts the bass on the low strings and the chord above it with every held chord under
   the hand, and `check8.py` checks each line against the rule. Held chords use a K item's `{'hold': beats, 'strings': [...]}` and
