@@ -64,6 +64,13 @@
    "addedAt": "2026-11-16T10:59:15Z"
   },
   {
+   "id": "vals",
+   "page": "studies/vals/",
+   "title": "Vals",
+   "style": "Tango",
+   "addedAt": "2026-11-16T11:09:00Z"
+  },
+  {
    "id": "wyble",
    "page": "studies/wyble/",
    "title": "Two lines at once",
