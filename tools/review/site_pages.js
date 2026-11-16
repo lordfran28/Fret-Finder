@@ -8,6 +8,9 @@ for (const s of ['Fret-Finder', 'Key-Finder']) {
   jobs.push([s, s + '/index.html', 'home'], [s, s + '/index.html#owner', 'owner']);
   if (s === 'Key-Finder') jobs.push([s, s + '/index.html#shapes', 'shapes']);
   for (const d of fs.readdirSync(SITE + s + '/songs').filter(d => fs.statSync(SITE + s + '/songs/' + d).isDirectory())) jobs.push([s, s + '/songs/' + d + '/', 'song']);
+  // the Exercises entries (Fret Finder, since 16 November)
+  if (fs.existsSync(SITE + s + '/studies'))
+    for (const d of fs.readdirSync(SITE + s + '/studies').filter(d => fs.statSync(SITE + s + '/studies/' + d).isDirectory())) jobs.push([s, s + '/studies/' + d + '/', 'study']);
 }
 const vf = JSON.parse(fs.readFileSync(SITE + 'Valve-Finder/songs/index.json'));
 jobs.push(['Valve-Finder', 'Valve-Finder/index.html', 'home'], ['Valve-Finder', 'Valve-Finder/index.html#owner', 'owner']);

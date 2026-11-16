@@ -153,7 +153,13 @@ def plays_report(D):
             for it in b['items']:
                 if it[0] != 'K':
                     if it[0] in ('C', 'T'): ringing = {6 - i: f for i, f in enumerate(it[2]) if f >= 0}
-                    elif it[0] in ('R', 'X', 'H'): ringing.update({s: f for s, f in it[1]})
+                    elif it[0] in ('R', 'X', 'H'):
+                        ringing.update({s: f for s, f in it[1]})
+                        # a run in the bar that breaks the chord it follows plays that chord's notes (Misty, bar 36)
+                        if it[0] == 'R' and groups:
+                            gg = groups[-1][1]
+                            hit = {s for s, f in it[1] if 0 < s < 7 and gg[6 - s] == f}
+                            groups[-1][2] |= hit; groups[-1][3] |= hit
                     elif it[0] == 'P': ringing.update({s: f for pr in it[1] for s, f in pr})
                     continue
                 g = it[2]; idx = [6 - i for i, f in enumerate(g) if f >= 0]       # strings low to high
@@ -161,16 +167,21 @@ def plays_report(D):
                 struck = {s for h in it[3] for s in (h[1] if isinstance(h[1], list) else masks.get(h[1], []))}
                 sounding = {s for s in range(1, 7) if g[6 - s] >= 0 and (s in struck or ringing.get(s) == g[6 - s])}
                 if groups and groups[-1][0] == it[1] and groups[-1][1] == g: groups[-1][2] |= sounding; groups[-1][3] |= struck
-                else: groups.append([it[1], g, set(sounding), set(struck)])
+                elif groups and groups[-1][0] == it[1]:
+                    # the same chord on a second grip in the same bar (Misty's B major 9, bass first, then the top):
+                    # what either grip sounds counts for the chord
+                    groups[-1][4] |= {(gtr.OPEN[6 - s] + g[6 - s]) % 12 for s in sounding}; groups[-1][5] |= set(gtr.pcs(g))
+                    groups[-1][3] |= struck
+                else: groups.append([it[1], g, set(sounding), set(struck), set(), set()])
                 ringing = {s: g[6 - s] for s in sounding} | {s: f for s, f in ringing.items() if g[6 - s] == f}
-            for name, g, sounding, struck in groups:
+            for name, g, sounding, struck, more, more_g in groups:
                 if not struck: continue
                 try:
                     r_, q_, _ = gtr.parse(name); req_ = gtr.QUAL[q_][0]
                 except Exception: continue
-                pcs_ = {(gtr.OPEN[6 - s] + g[6 - s]) % 12 for s in sounding}
+                pcs_ = {(gtr.OPEN[6 - s] + g[6 - s]) % 12 for s in sounding} | more
                 want = [(r_, 'root')] + [((r_ + i) % 12, '3rd') for i in (4, 3) if i in req_][:1] + [((r_ + i) % 12, '7th') for i in (10, 11) if i in req_][:1]
-                gp = set(gtr.pcs(g))
+                gp = set(gtr.pcs(g)) | more_g
                 lost = [(w, f'{NM[p]} ({w})') for p, w in want if p in gp and p not in pcs_]
                 hard = [x for w, x in lost if w != '7th']; soft = [x for w, x in lost if w == '7th']
                 if hard: rep.append((tr['key'], b['label'], 'plays', f"{T.disp(name)} {gtr_str(g)}: the pattern never sounds {', '.join(hard + soft)}"))
@@ -221,6 +232,9 @@ def voice_of(slug, tr, work):
     return (a, left), None
 
 
+WIDE = set()                                   # (start, end) of sung notes whose pitch swings too far to name
+
+
 def sung_segments(work):
     f0 = np.load(work + 'v_f0.npy'); pk = np.load(work + 'v_pk.npy'); E = np.load(work + 'v_E.npy'); tt = np.load(work + 'v_t.npy')
     from scipy.ndimage import median_filter
@@ -232,6 +246,14 @@ def sung_segments(work):
         if cur and cur[1] - cur[0] > 16: out.append(cur)
         cur = [i, i]
     seg = [(tt[a], tt[b], float(np.median(vm[a:b + 1]))) for a, b in out]
+    # how far the pitch swings inside each held note: Hvorostovsky's vibrato is a semitone wide, so a note between
+    # B and C reads as either (16 Nov); such notes are marked, not trusted
+    raw = 69 + 12 * np.log2(np.maximum(f0, 1) / 440)
+    def swing(a, b):                               # the spread of the voiced pitch in the 0.6 s around the note
+        mid = (tt[a] + tt[b]) / 2; w = voiced & (np.abs(tt - mid) < 0.3)
+        x = raw[w]; x = x[np.abs(x - np.median(x)) < 2.5] if len(x) else x
+        return float(np.std(x)) if len(x) > 4 else 0.0
+    WIDE.clear(); WIDE.update({(round(float(tt[a]), 3), round(float(tt[b]), 3)) for a, b in out if swing(a, b) > 0.6})
     # the singer's tuning: a circular mean over the steady frames (a median of rounded fractions misreads a singer
     # who is a quarter tone flat: Dean's flat B♭ read as A, 14 Nov)
     from scipy.ndimage import uniform_filter1d
@@ -249,6 +271,9 @@ def voice_report(D, html, slug):
         rep.append((tr['key'], '-', 'voice', f"singer tuning {off:+.2f} semitones; guitar taken out at ×{info[0]:.3f}, {info[1]:.0%} of the track left as voice; {len(seg)} held notes"))
         sp = spans(tr); bybar = collections.defaultdict(float); ex = collections.defaultdict(list)
         sung_in = collections.defaultdict(collections.Counter)
+        if info[0] < 0.2:
+            rep.append((tr['key'], '-', 'voice', f"the singer's track holds almost none of the guitar-alone track (×{info[0]:.3f}): its guitar is another take, so what he hears with the singer is not what the diagrams show"))
+        wide = collections.defaultdict(float)
         for lab, it, t0, t1 in sp:
             for a, b, q in seg:
                 ov = min(b, t1) - max(a, t0)
@@ -259,8 +284,11 @@ def voice_report(D, html, slug):
                     d = m - q
                     if abs(d) in (1, 13) and ov > 0.12:
                         bybar[lab] += ov; ex[lab].append((round(ov, 2), f"{T.disp(it[1])}: {nn(m)} against sung {nn(q)}"))
+                        if (round(float(a), 3), round(float(b), 3)) in WIDE: wide[lab] += ov
         for lab, w in bybar.items():
-            if w > 0.3: rep.append((tr['key'], lab, 'rub', f"{w:.1f} s: " + '; '.join(x for _, x in sorted(ex[lab], reverse=True)[:3])))
+            if w > 0.3:
+                tag = ' · the sung note swings more than a semitone: check by ear' if wide[lab] > 0.6 * w else ''
+                rep.append((tr['key'], lab, 'rub', f"{w:.1f} s: " + '; '.join(x for _, x in sorted(ex[lab], reverse=True)[:3]) + tag))
         # page lines that say what he sings
         for b in tr['bars']:
             texts = [b.get('note') or ''] + [str(o.get('lab', '')) for it in b['items'] if isinstance(it[-1], dict) for o in [it[-1]]]

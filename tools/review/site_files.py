@@ -25,3 +25,27 @@ for site in ('Fret-Finder', 'Key-Finder'):
         sj = root + d + '/song.json'
         if not os.path.exists(sj): probs.append(d + ': no song.json')
     print('  problems:', len(probs)); [print('   ', p) for p in probs]
+
+# the Exercises entries: every folder listed, every file a page names in its folder, every mp3 playable
+for site in ('Fret-Finder',):
+    root = SITE + site + '/studies/'
+    if not os.path.isdir(root): continue
+    idx = json.load(open(root + 'index.json'))
+    listed = {s.get('id') for s in idx.get('studies', [])}
+    folders = {d for d in os.listdir(root) if os.path.isdir(root + d)}
+    print(site, 'exercises:', len(folders), 'folders,', len(listed), 'listed; missing from index', sorted(folders - listed), 'listed without folder', sorted(listed - folders))
+    probs = []
+    for d in sorted(folders):
+        f = root + d + '/index.html'
+        if not os.path.exists(f): probs.append(d + ': no index.html'); continue
+        html = open(f, encoding='utf-8').read()
+        for r in set(re.findall(r'["\'(/]([\w.%() -]+\.mp3)["\')]', html)):
+            if not os.path.exists(root + d + '/' + r): probs.append(f'{d}: page names {r}, not in folder')
+        for m in os.listdir(root + d):
+            if m.endswith('.mp3'):
+                p = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', root + d + '/' + m], capture_output=True, text=True)
+                try:
+                    if float(p.stdout.strip()) < 5: probs.append(f'{d}/{m}: only {p.stdout.strip()} s')
+                except ValueError: probs.append(f'{d}/{m}: not playable')
+        if not os.path.exists(root + d + '/entry.json'): probs.append(d + ': no entry.json')
+    print('  problems:', len(probs)); [print('   ', p) for p in probs]

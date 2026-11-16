@@ -2,6 +2,14 @@
 
 Each mistake, why it happened, and the rule (and check) that prevents it. Newest first.
 
+## 16 November 2026
+
+- **Misty, C♯ minor 9 (Intro 2 and 4, bars 6, 8, 14, 24, 30, 31).** The picking went up the D, G and B strings and never reached the open E, the 3rd. *Why:* the kit's flowing pattern takes the first three strings above the bass, whatever notes they hold; the 3rd was on the fourth. *Rule:* a pattern may leave notes out, never the root or the 3rd (14 Nov); when the grip's 3rd sits above the strings a pattern reaches, it leaves out the 5th instead. *Check:* `review.py SLUG` (“plays”).
+- **Misty, bars 15 and 16.** In the one-chord-a-beat turnaround each chord got its bass and its top, so G♯ minor 7, F♯7♭9, C♯ minor 7 and D♯ minor 7 never sounded their 3rds. *Rule:* a chord shorter than two beats is struck whole (Where or When, 14 Nov). *Check:* `review.py SLUG` (“plays”).
+- **Misty, the singer's track.** Its guitar was another take from the guitar-alone track (the singer's track came from the conversation's page, the guitar from the build), so what he heard with Crosby was not quite what the diagrams show, and the review couldn't take the guitar out to hear Crosby. *Rule:* the guitar-alone and the singer's tracks come from one render. *Check:* `review.py SLUG --voice` now says so when the singer's track holds almost none of the guitar-alone track.
+- **The review, Я вас любил (nothing changed).** Hvorostovsky's vibrato swings a semitone, so held notes between B and C read as either, and two pitch readers disagree by half a semitone. *Rule:* a rub on a wavering note is checked by ear before anything changes. *Check:* `review.py --voice` marks such rubs “check by ear”.
+- **The review.** It judged each grip of a chord alone, so Misty's B major 9 (bass first, then the top grip with the D♯) and a last chord broken upward by its own run read as missing their 3rds. *Check:* `review.py` now counts every grip of the same chord in a bar, and a run on the chord's own frets.
+
 ## 15 November 2026
 
 - **Fly Me to the Moon, bars 10, 26 and 58.** Where Rod holds C over G, the guitar played G7 (or G9) and its B sat under the C for half a second to a second. The record's band holds G9sus4 there and lets it fall only as he falls to B. *Why:* the band's chords were read half a bar at a time, so a suspension that resolves on beat 3 or 4 was read as G7 for the whole bar. *Rule:* where the singer holds a note a half step above a chord tone, read the band beat by beat and hold the suspension until the singer resolves. *Check:* `review.py SLUG --voice` (“rub”); the song's own rub check.

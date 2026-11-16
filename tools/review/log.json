@@ -8,7 +8,10 @@
   "have-your-way": "2026-11-14",
   "barquito-de-papel": "2026-11-15",
   "fly-me-to-the-moon": "2026-11-15",
-  "seria-fantastico": "2026-11-15"
+  "seria-fantastico": "2026-11-15",
+  "ya-vas-lyubil": "2026-11-16",
+  "glinka-ya-pomnyu": "2026-11-16",
+  "misty": "2026-11-16"
  },
  "nights": [
   {
@@ -41,6 +44,29 @@
     "Barquito de papel: rebuild the main guitar track from the page with today's tools, so E9 and E7♭9 sound their G♯ and D6/A its D (bars 13, 15, 17, 23, 25, 45, 47, 48, 49, 53, 55, 57, 63, 65)",
     "Key Finder, Barquito de papel, bar 39: F♯7 then F♯7♭13 (or C♯ an octave up), so the piano's C♯ doesn't sit under Serrat's D",
     "Should the 7th always sound too? Sería fantástico's C♯m7, F♯7 and E7 picking leaves it out in bars 16, 17, 23, 28, 50, 51, 57, 62"
+   ]
+  },
+  {
+   "date": "2026-11-16",
+   "site_check": "233 pages with no trouble; 54 Fret Finder and 40 Key Finder songs match their lists; 96 locked tracks open; the check now covers the Exercises too",
+   "songs": [
+    "Я вас любил (and on Key Finder)",
+    "Glinka, Я помню чудное мгновенье (and on Key Finder)",
+    "Misty (and on Key Finder)"
+   ],
+   "fixes": [
+    "Fret Finder, Misty, Intro 2 and 4, bars 6, 8, 14, 24, 30, 31: C♯ minor 9 now sounds its open E, the 3rd",
+    "Fret Finder, Misty, bars 15 and 16: each one-beat chord is struck whole, so G♯m7, F♯7♭9, C♯m7 and D♯m7 sound their 3rds",
+    "Fret Finder, Misty: the singer's track rebuilt over the same guitar take as the guitar-alone track"
+   ],
+   "not_changed": [
+    "Я вас любил: the rubs fall on notes where Hvorostovsky's vibrato is a semitone wide; two pitch readings disagree by half a semitone, so nothing was changed",
+    "Glinka: the rubs are passing notes of a quarter second (E♮ to F over B♭7, D to E♭), each counted twice",
+    "It Had to Be You: its page is in an older format the review can't read yet"
+   ],
+   "proposals": [
+    "Я вас любил, bar 31: B minor on beat 2 sits under 'мим', where the track reads C; B major then D7 over A for two beats would keep every half step out. Worth your ear first.",
+    "Sería fantástico, bar 71: the A (the 3rd of F♯m11) is left out on purpose because you sing G♯ there, but the diagram still shows it"
    ]
   }
  ]
