@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-16T03:34:27Z",
+ "generatedAt": "2026-11-16T04:12:59Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -478,6 +478,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-16T03:30:36Z"
+  },
+  {
+   "id": "moonglow",
+   "file": "songs/moonglow/",
+   "page": "songs/moonglow/",
+   "title": "Moonglow",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-16T04:03:47Z"
   }
  ]
 }
