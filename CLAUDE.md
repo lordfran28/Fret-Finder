@@ -20,6 +20,15 @@ The owner decided the automatic transcription can't produce diagrams a guitarist
 - Titles of classical pieces start with the composer: "Bach – Prelude and Fugue, BWV 867".
 - Before a page goes up, take out anything copyrighted: a record's vocal or stem in the open (also as a track choice in the page's data; locked is fine), the sung melody of a song under copyright (including the compendium's "you sing" notes), and the owner's own recordings of other people's records (those can go up locked too). Earlier-version iframes go too unless each one is checked.
 
+## Exercises (since 16 November 2026)
+
+Below the songs, the library lists **Exercises**: long entries built from the guitar books the owner owns, one entry per style (Jimmy Wyble, Van Eps, tango, Argentine folk, classical warm-ups, octaves, gypsy jazz, flamenco, Sola's harmony).
+
+- Each entry is a folder `studies/<slug>/` with the page (`index.html`), its audio and `entry.json` (title, style, files, date). Put one there with `python3 tools/import_study.py PAGE.html SLUG "Title" --style "Jimmy Wyble" --file NAME=PATH`; it adds the shelf look, `ring.js` and `speed.js`. `.github/scripts/study_index.py` writes `studies/index.json` (the *Exercise list* workflow runs it on every push that touches `studies/`).
+- An entry opens with its own **Contents**: every exercise, étude and piece on the page, linked. Then straight exercises, then études, then pieces. The contents describe the entry, not the books.
+- **The books stay off the site.** Each exercise is ours, set on the chords of one of the owner's songs. Next to it goes a short quote of the original's opening figure (a beat or two, never the whole exercise), a plain description of what the original does, and its page in the owner's copy. Public-domain works (Carcassi, Sor's notes, Broca) may go up complete, with our own fingerings where an edition's are someone else's.
+- The pages are built in `/home/claude/studies/` (`study_page.py`, one folder per entry) on a copy of the song template in which a two-line step may hold one note or two.
+
 ## What the site is for
 
 The owner sings and plays guitar at the same time. He feeds Fret Finder a song file and wants back a page he can play from: every bar in playing order, one diagram per hand position, notes numbered in the order they're played, the singing line with its chord changes over the words, and sound to check it by ear.

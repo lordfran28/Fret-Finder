@@ -126,6 +126,9 @@ button.addlink{border:0;background-color:transparent;margin:0}
 .song-main{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
 .song-title{font-family:var(--display);font-size:1.35rem;line-height:1.15;overflow-wrap:anywhere}
 .song-meta{font-size:.95rem;color:var(--muted);font-variant-numeric:lining-nums}
+.studies{margin-top:28px;display:flex;flex-direction:column;gap:10px}
+.studies-h{font-family:var(--display);font-size:1.6rem;font-weight:400;margin:0}
+.study-style{font-size:.95rem;font-weight:600;font-variant-caps:all-small-caps;letter-spacing:.07em;color:var(--muted);margin:8px 0 0}
 .status{font-size:.95rem;font-weight:600;font-variant-caps:all-small-caps;letter-spacing:.07em;padding:1px 9px 3px;border-radius:2px;white-space:nowrap;flex:0 0 auto}
 .st-warn{background:var(--warn-soft);color:var(--warn)}
 .st-plain{background:var(--well);color:var(--muted)}
@@ -293,6 +296,10 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
     <div id="empty" class="empty" hidden>
       <h3>Nothing here yet</h3>
     </div>
+    <section id="studies" class="studies" aria-labelledby="studies-h" hidden>
+      <h2 id="studies-h" class="studies-h">Exercises</h2>
+      <div id="studylist"></div>
+    </section>
 
     <footer class="foot">
       <p class="credits">Watteau, <a href="https://www.metmuseum.org/art/collection/search/437926" target="_blank" rel="noopener">Mezzetin</a> · Venetian damask, <a href="https://www.metmuseum.org/art/collection/search/216471" target="_blank" rel="noopener">The Met</a> · Guitar recordings, <a href="https://theremin.music.uiowa.edu/MISguitar.html" target="_blank" rel="noopener">University of Iowa</a> · For the trumpet, <a href="https://lordfran28.github.io/Valve-Finder/">Valve Finder</a></p>
@@ -1964,9 +1971,25 @@ function renderLibrary(){
   $("empty").hidden = list.length > 0;
   $("nomatch").hidden = !(list.length && !shown.length);
 }
+var studies = [];
+function fetchStudies(){ return fetch(siteUrl("studies/index.json"), {cache: "no-store"}).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }); }
+function renderStudies(){
+  /* The Exercises entries, grouped by style, A to Z. */
+  var box = $("studies"); if (!box) return;
+  box.hidden = !studies.length;
+  var groups = {};
+  studies.forEach(function(m){ (groups[m.style] = groups[m.style] || []).push(m); });
+  $("studylist").innerHTML = Object.keys(groups).sort(function(a, b){ return a.localeCompare(b, undefined, {sensitivity: "base"}); }).map(function(g){
+    var items = groups[g].sort(function(a, b){ return String(a.title).localeCompare(String(b.title), undefined, {sensitivity: "base"}); });
+    return '<h3 class="study-style">' + esc(g) + '</h3><ul class="songlist">' + items.map(function(m){
+      return '<li><a class="song" href="' + esc(siteUrl(m.page).replace(/\?v=\d+$/, "")) + '"><span class="song-main"><span class="song-title">' + esc(m.title) + '</span></span></a></li>';
+    }).join("") + '</ul>';
+  }).join("");
+}
 function syncLibrary(){
   /* Songs transcribed on this device before the shelf are cleared, so only the shelf shows. */
   Object.keys(cache).forEach(function(id){ delete cache[id]; Store.del(id); });
+  fetchStudies().then(function(ix){ if (ix && Array.isArray(ix.studies)) { studies = ix.studies.filter(function(m){ return m && m.page; }); renderStudies(); } });
   return fetchIndex().then(function(ix){
     if (ix) archive = (Array.isArray(ix.songs) ? ix.songs : []).filter(function(m){ return m && m.id && m.file; });
     if (!$("view-library").hidden) renderLibrary();
