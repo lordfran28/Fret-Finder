@@ -130,3 +130,7 @@ EX2.append(dict(
     bars=seqbars))
 EX2[-1]['bars'][0]['note'] = ('Our fragment: E, C, A from A minor at the 5th fret (B string, G string, high E), in the rhythm of a quarter and a half, an eighth, a quarter; the last note held through the next bar. '
                               'On E7 the same strings give E, D, B; on D minor F, D, A. Through Очи чёрные’s chords, two bars each.')
+
+sys.path.insert(0, '/home/claude/studies/tango')
+from quotes import trim as _trim_quotes   # quotes stay a beat or two
+_trim_quotes(SECTIONS)

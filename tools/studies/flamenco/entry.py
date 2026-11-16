@@ -71,3 +71,7 @@ EX[-1]['bars'][0]['note'] = ('The tremolo opening of your Я вас любил (
 EX[-1]['bars'][4]['note'] = 'Here the melody moves: C♯ (D major 7), then C for half a beat (D7) and B (G): the B comes in on the 4th of the five notes, just after the “and”; the G in the bass waits for the 3rd beat.'
 
 SECTIONS = [dict(id='flamenco', title='Flamenco right hand', part='Exercises', ex=EX)]
+
+sys.path.insert(0, '/home/claude/studies/tango')
+from quotes import trim as _trim_quotes   # quotes stay a beat or two
+_trim_quotes(SECTIONS)

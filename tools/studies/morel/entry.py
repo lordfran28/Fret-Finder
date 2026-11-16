@@ -64,3 +64,7 @@ for c in ('G', 'Cmaj7', 'D7', 'G'):
 EX[-1]['bars'][0]['note'] = 'The clave on Я вас любил’s chords, G, C major 7, D7, G, two bars each: the chord on the D, G and B strings at each stroke.'
 
 SECTIONS = [dict(id='morel', title='Rhythms of Latin America', part='Exercises', ex=EX)]
+
+sys.path.insert(0, '/home/claude/studies/tango')
+from quotes import trim as _trim_quotes   # quotes stay a beat or two
+_trim_quotes(SECTIONS)

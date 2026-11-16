@@ -64,3 +64,7 @@ for k, (title, idea) in DANCE.items():
                               items=quote, whose='The book’s own', played='Played here: that bar.'),
                    bars=bars))
 SECTIONS = [dict(id='folk', title='Argentine folk dances', part='Exercises', ex=EX)]
+
+sys.path.insert(0, '/home/claude/studies/tango')
+from quotes import trim as _trim_quotes   # quotes stay a beat or two
+_trim_quotes(SECTIONS)

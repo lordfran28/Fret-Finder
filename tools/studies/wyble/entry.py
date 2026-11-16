@@ -363,3 +363,7 @@ ET.append(dict(id='etude-moonglow', title='Étude: Moonglow’s first eight bars
                idea='Moonglow’s A section, one exercise to a bar in the order of this page: the held note on and off the beat, two against one, three against one, note against note, the rocking voice, the chromatic line, a turn-round. Play it slowly until each bar flows into the next.',
                quote=dict(where='', text='', item=None), bars=et_bars))
 SECTIONS.append(dict(id='etudes', title='Études on your songs', part='Études', ex=ET))
+
+sys.path.insert(0, '/home/claude/studies/tango')
+from quotes import trim as _trim_quotes   # quotes stay a beat or two
+_trim_quotes(SECTIONS)
