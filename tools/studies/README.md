@@ -21,6 +21,8 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
   A run's given names may carry their own label after a bar: `=E,G,F|over E7`. A run may mark short notes: `{'short': [...]}`.
 - `tango/entry6.py`: Graciano's cadences (chapter 4), kept the same way as the fills; `place` finds strings for each chord or
   pair of notes (one note per string, the stretch kept, nearest the position asked); `check6.py` proves the notes are his, moved.
+- `tango/entry7.py`: Graciano's harmony (chapter 5), on `entry6.py`'s chords and pairs (it loads that file and clears its record
+  of moves); `check7.py` checks it the same way. The ♯11 chord and the augmented 5th need the `m#5` quality in `scripts/gtr.py`.
 - `sola/`: Sola's five steps for colouring a song's chords, applied to Очи чёрные (it borrows `K` from `tango/entry.py`).
   Minor 11 chords need the `m11` quality in the song kit's chord table (`scripts/gtr.py`).
 - `morel/`: Morel's dance patterns (malambo, samba, clave) on Очи чёрные and Я вас любил.
