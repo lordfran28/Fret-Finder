@@ -1008,12 +1008,13 @@ const SRC = __SRC__;
       else if (it[0] === 'K') {
         const f = it[2], idx = f.map((x, i) => x >= 0 ? i : -1).filter(i => i >= 0);
         const pick = m => Array.isArray(m) ? m.map(s => 6 - s) : m === 'b' ? [idx[0]] : m === 't' ? idx.slice(1) : m === 'h' ? idx.slice(-3) : m === 'a' ? idx : [];
+        const mk = (it.length > 4 && it[4] && it[4].marks) || null;          // a mark under each stroke: the finger and the direction
         it[3].forEach(([d, m], j) => {
           const c = blank();
-          if (m === '-') { cols.push({ c, h: j === 0 ? disp(it[1]) : '', d, ds: '(' + (DUR[d] || String(d)) + ')' }); return; }
+          if (m === '-') { cols.push({ c, h: j === 0 ? disp(it[1]) : '', d, ds: '(' + (DUR[d] || String(d)) + ')', mk: '' }); return; }
           pick(m).forEach(i => { c[i] = String(f[i]); });
           if (j === 0) takeX(c);
-          cols.push({ c, h: j === 0 ? disp(it[1]) : '', d });
+          cols.push({ c, h: j === 0 ? disp(it[1]) : '', d, mk: mk ? (mk[j] || '') : undefined });
         });
       }
       else if (it[0] === 'T') {
@@ -1030,19 +1031,21 @@ const SRC = __SRC__;
       }
     });
     const rows = SN.slice().reverse().map(x => x + '|');
-    let head = '  ', dur = '  ';
+    let head = '  ', dur = '  ', mks = '  ';
+    const anyMk = cols.some(col => col.mk);
     cols.forEach(col => {
       const fd = d => { const w = Math.floor(d + 1e-6), r = d - w, fr = [[1/9,'1/9'],[1/8,'⅛'],[1/7,'1/7'],[1/6,'⅙'],[1/5,'⅕'],[1/4,'¼'],[1/3,'⅓'],[3/8,'⅜'],[1/2,'½'],[5/8,'⅝'],[2/3,'⅔'],[3/4,'¾'],[7/8,'⅞']].find(x => Math.abs(x[0] - r) < 0.01); return r < 0.02 ? String(w) : (w ? w : '') + (fr ? fr[1] : (+d.toFixed(2)).toString()); };
       const ds = col.ds !== undefined ? col.ds : (DUR[col.d] || fd(col.d));
-      const w = Math.max(3, ...col.c.map(x => x.length + 2), col.h.length + 1, ds.length + 1);
+      const w = Math.max(3, ...col.c.map(x => x.length + 2), col.h.length + 1, ds.length + 1, (col.mk || '').length + 1);
       for (let r = 0; r < 6; r++) {
         if (col.trem !== undefined && 5 - r === col.trem) rows[r] += (col.c[5 - r] ? '-' + col.c[5 - r] : '~').padEnd(w, '~');
         else rows[r] += ('-' + col.c[5 - r]).padEnd(w, '-');
       }
-      head += col.h.padEnd(w, ' '); dur += ds.padEnd(w, ' ');
+      head += col.h.padEnd(w, ' '); dur += ds.padEnd(w, ' '); mks += (col.mk || '').padEnd(w, ' ');
     });
     const h = head.replace(/\s+$/, '');
-    return (h.trim() ? `<span class="hd">${esc(h)}</span>\n` : '') + rows.map(r => r + '-|').join('\n') + `\n<span class="dur">${esc(dur.replace(/\s+$/, ''))}</span>`;
+    return (h.trim() ? `<span class="hd">${esc(h)}</span>\n` : '') + rows.map(r => r + '-|').join('\n') + `\n<span class="dur">${esc(dur.replace(/\s+$/, ''))}</span>`
+      + (anyMk ? `\n<span class="dur">${esc(mks.replace(/\s+$/, ''))}</span>` : '');
   }
   const NOTE_NAMES = USE_SHARPS ? ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] : ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
   function itemsToSteps(items) {

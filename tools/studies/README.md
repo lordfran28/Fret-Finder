@@ -67,6 +67,10 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
   the strokes with a table read from his pages and the chords with your Очи чёрные page; `build_hand.py` (46 a minute).
 - `page/template_study.html`: note lengths of a seventh or a ninth of a beat are written 1/7 and 1/9.
 - `flamenco/`: Graf-Martinez's arpeggio exercises I–IV (right hand kept, on Очи чёрные's open chords) and the five-note tremolo on Я вас любил's tremolo opening.
+- `flamenco/rasgueado.py`: Serrano's rasgueado (Basic Techniques pp. 21–29): the preparatory study, three exercises and five
+  studies, his strokes and fingers on Очи чёрные's chords; `check_ras.py` compares every stroke with his bars as transcribed and
+  the chords with your Очи чёрные page; `build_ras.py`. Rhythm items may now carry `{'up': [...], 'marks': [...]}`: upstrokes in the
+  sound, and a finger and arrow under each strum in the tab (`study_page.py`, `page/template_study.html`).
 - `vaneps/`: Van Eps's scale in first-inversion triads, worked out for F major (string sets and positions chosen by least movement).
 - `vaneps/entry2.py`: more of Van Eps's mechanisms (open triads in three spreads, triads through the cycle of fifths, two lines of triads in contrary
   motion) in E♭ and C harmonic minor, added to `entry.py`'s page; `check2.py` checks every voicing. `build.py` builds the page from `entry2`.

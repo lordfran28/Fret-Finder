@@ -80,6 +80,12 @@ def render(bars, starts, spb, out_mp3):
             pinfo = None
             if it[0] == 'P' and len(it) > 4 and isinstance(it[4], dict):   # {'hold': [strings]}: those notes ring until
                 pinfo = it[4]; it = it[:4]                          # struck again; every other note ends at its own end
+            ups = []                                                # upstrokes: the strum runs from the high string down
+            if it[0] == 'K' and hold and hold.get('up'):
+                y = 0.0
+                for k, h in enumerate(it[3]):
+                    if k in hold['up']: ups.append(y)
+                    y += h[0]
             if it[0] == 'K' and any(len(h) > 2 for h in it[3]):
                 y = 0.0
                 for h in it[3]:
@@ -109,6 +115,10 @@ def render(bars, starts, spb, out_mp3):
                     if -0.02 <= yb - y <= 0.14: q['vel'] += v
                 for y, d in shorts:
                     if abs((q['t'] - t0) / spb - y) < 0.02: q['short_end'] = q['t'] + 0.45 * d * spb
+            for y in ups:
+                grp = [q for q in e if q.get('midi') is not None and -0.02 <= (q['t'] - t0) / spb - x - y <= 0.14]
+                ts = sorted(q['t'] for q in grp)
+                for q, t in zip(sorted(grp, key=lambda q: q['string']), ts): q['t'] = t; q['vel'] -= 0.04
             ev += e; x += item_len(it)
     notes = damp(ev, staccato=0.05)
     # two lines: each voice rings until its string is played again (legato), as the lines are written
