@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-14T20:08:57Z",
+ "generatedAt": "2026-11-16T03:34:27Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -469,6 +469,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-14T20:08:41Z"
+  },
+  {
+   "id": "someone-to-watch-over-me",
+   "file": "songs/someone-to-watch-over-me/",
+   "page": "songs/someone-to-watch-over-me/",
+   "title": "Someone to Watch Over Me",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-16T03:30:36Z"
   }
  ]
 }
