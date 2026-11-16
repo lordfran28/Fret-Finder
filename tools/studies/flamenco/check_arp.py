@@ -21,7 +21,7 @@ m = re.search(r'"title": "The plain chart".*?"chords": (\[\[.*?\]\]), "tab"', h,
 changes = [b[0]['c'] for b in json.loads(m.group(1))][0::2]
 OPENS = [40, 45, 50, 55, 59, 64]
 EXS = {ex['id']: ex for ex in A.SECTION['ex']}
-if set(EXS) != set(HIS): P(f'exercises {sorted(EXS)}')
+if set(EXS) != set(HIS) | {'thumb'}: P(f'exercises {sorted(EXS)}')
 for exid, beats in HIS.items():
     ex = EXS.get(exid)
     if not ex: continue
@@ -47,6 +47,28 @@ for exid, beats in HIS.items():
     # the quote: his first beat on E
     q = ex['quote']['items'][0]
     if q[2] != [0, 2, 2, 1, 0, 0] or [h_[1][0] for h_ in q[3]] != [int(t[1:]) for t in beats[0].split()]: P(f'{exid}: quote')
+# the thumb study: his contour (p. 41) in A harmonic minor: up in pairs a step apart, upper note first, A to F; G♯ over E;
+# down in pairs a third apart, F to A; then the note a step above the last
+sc = [m for m in range(30, 80) if m % 12 in {9, 11, 0, 2, 4, 5, 8}]
+i_a, i_f = sc.index(45), sc.index(65)
+want = [x for k in range(i_a, i_f + 1) for x in (sc[k], sc[k - 1])] + [sc[i_f + 1], sc[i_f - 1]] + [x for k in range(i_f, i_a - 1, -1) for x in (sc[k], sc[k - 2])] + [sc[i_a - 1]]
+if len(want) != 55: P('thumb: his study has 55 notes')
+ex = EXS.get('thumb')
+if not ex: P('thumb study missing')
+else:
+    got, durs = [], []
+    for B in ex['bars']:
+        it = B['items'][0]
+        if it[0] != 'R': P('thumb: not a run'); continue
+        for (st, f), d in zip(it[1], it[2]):
+            if not 0 <= f <= 4: P(f'thumb: fret {f} outside the first position')
+            got.append(OPENS[6 - st] + f); durs.append(d)
+        if abs(sum(it[2]) - 4) > 1e-9: P('thumb: a bar is not four beats')
+        names = it[3][1:].split('|')[0].split(',')
+        NMS = {'A': 9, 'B': 11, 'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G♯': 8}
+        if [NMS.get(n) for n in names] != [(OPENS[6 - st] + f) % 12 for st, f in it[1]]: P('thumb: the names do not match the notes')
+    if got != want: P(f'thumb: the notes differ from his contour at {next((k for k, (a, b) in enumerate(zip(got, want)) if a != b), len(got))}')
+    if durs[:-1] != [0.5] * (len(durs) - 1) or durs[-1] != 1.0: P('thumb: not eighths ending on a quarter')
 print('patterns checked:', len(HIS), '· changes:', ' '.join(changes))
 print('\n'.join(probs) if probs else 'all good')
 sys.exit(1 if probs else 0)

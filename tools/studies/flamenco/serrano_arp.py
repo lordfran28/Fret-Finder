@@ -74,5 +74,54 @@ for exid, title, make, p, what in INFO:
         quote=dict(where=f'{BOOK}, p. {p}', text=f'his first beat on E: {" ".join(f for f, s in first)}.',
                    items=[K('E', [0, 2, 2, 1, 0, 0], [(1 / len(first), [s], ACC.get(f, 0)) for f, s in first])], whose='Serrano’s own', played='Played here: that beat.'),
         bars=b))
+# ---------- the thumb study (p. 41): thumb apoyando, every note ----------
+A_HM = [9, 11, 0, 2, 4, 5, 8]                       # Очи чёрные's A harmonic minor
+OPENS = [40, 45, 50, 55, 59, 64]
+NM = {9: 'A', 11: 'B', 0: 'C', 2: 'D', 4: 'E', 5: 'F', 8: 'G♯'}
+SCALE = [m for m in range(40, 70) if m % 12 in A_HM]
+
+
+def thumb_line():
+    """his contour: pairs a step apart going up (the upper note first), from A up to F; then the 7th over the 5th
+    (his G over E); then pairs a third apart coming down, to A over F; and the note a step above to end"""
+    a2 = SCALE.index(45)
+    top = SCALE.index(65)                            # F4, as his climb stops on F
+    seq = []
+    for k in range(a2, top + 1): seq += [SCALE[k], SCALE[k - 1]]
+    seq += [SCALE[top + 1], SCALE[top - 1]]          # the turn: G♯ over E
+    for k in range(top, a2 - 1, -1): seq += [SCALE[k], SCALE[k - 2]]
+    seq.append(SCALE[a2 - 1])
+    return seq
+
+
+def first_pos(m):
+    """first position: the thinnest string with the note at the 4th fret or lower"""
+    for s in (1, 2, 3, 4, 5, 6):
+        f = m - OPENS[6 - s]
+        if 0 <= f <= 4: return [s, f]
+    raise ValueError(m)
+
+
+TL = thumb_line()
+CHECK_THUMB = TL
+tb, cur, cnt = [], [], 0
+for k, m in enumerate(TL):
+    cur.append(m)
+    if len(cur) == 8 or k == len(TL) - 1:
+        last = k == len(TL) - 1
+        durs = [0.5] * len(cur)
+        if last: durs[-1] = 4 - 0.5 * (len(cur) - 1)
+        lab = '=' + ','.join(NM[x % 12] for x in cur) + '|the thumb, apoyando'
+        tb.append(dict(chords=[], note='', items=[['R', [first_pos(x) for x in cur], durs, lab, {'vel': [0.06] * len(cur)}]]))
+        cur = []
+tb[0]['note'] = ('Every note with the thumb, apoyando (resting on the next string), in eighths: in A harmonic minor, Очи чёрные’s scale, in the first position. '
+                 'Going up in pairs a step apart, the upper note first (A G♯, B A, C B …) to F; then G♯ over E; then coming down in pairs a third apart (F D, E C …) '
+                 'to A over F; the last note a step up, G♯.')
+EX.append(dict(id='thumb', title='Serrano’s study for the thumb',
+               idea=('Serrano’s thumb study: the thumb alone plays every note, apoyando, a scale up in steps and down in thirds. The flamenco thumb is strong and even; '
+                     'keep the hand still and let the thumb fall through each string onto the next.'),
+               quote=dict(where=f'{BOOK}, p. 41', text='his scale is A natural minor (C major’s notes), from A, the same contour.', item=None, by='Serrano'),
+               bars=tb))
+
 SECTION = dict(id='flamenco-serrano', title='Serrano’s arpeggios', part='Exercises', ex=EX, mark='S')
 SECTIONS = list(F0.SECTIONS) + [SECTION]
