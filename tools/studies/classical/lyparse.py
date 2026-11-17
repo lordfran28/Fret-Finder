@@ -330,11 +330,16 @@ class Reader:
                         self.graces.append((st['t'], [m for x in tmp for m in x[2]]))
                         i = e + 1
                     else:
+                        # one grace note, or one grace chord <...> with its duration
+                        e = j + 1
+                        if toks[j][0] == 'chordopen':
+                            while toks[e - 1][0] != 'chordclose': e += 1
+                        if e < b and toks[e][0] == 'dur': e += 1
                         tmp = []; save = st['t']
-                        self._seq(toks, j, j + 1, st, tmp, vname)
+                        self._seq(toks, j, e, st, tmp, vname)
                         st['t'] = save
                         self.graces.append((st['t'], [m for x in tmp for m in x[2]]))
-                        i = j + 1
+                        i = e
                     continue
                 if v == '\\repeat':
                     kind = toks[i + 1][1]; n = int(toks[i + 2][1]); j = i + 3

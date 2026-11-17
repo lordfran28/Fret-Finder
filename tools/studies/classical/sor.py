@@ -18,8 +18,12 @@ STUDIES = {
     'XII': dict(op='Op. 6 No. 6', key='A major', time='3/8', idea='Thirds and sixths in eighths over a bass held for the whole bar, climbing high on the neck.', maxf=14),
     'XIV': dict(op='Op. 6 No. 12', key='A major', time='4/4', idea='A tune with its chords and bass, mostly in eighths: three and four voices to keep apart.'),
     'XVII': dict(op='Op. 6 No. 11', key='E minor', time='4/4', idea='Triplet arpeggios from start to end, with the tune in the top or in the bass of each group.'),
+    'XV': dict(op='Op. 35 No. 16', key='D minor', time='3/4', idea='Thirds and sixths in a dotted rhythm, an eighth, a rest, a sixteenth, each figure leaning on a grace note, over a bass that keeps time: the two-note shapes must stay clean and short.',
+               src='The source on Mutopia opens with a quarter of silence to make room for the first grace note; here the study starts on its first beat.'),
+    'XIX': dict(op='Op. 29 No. 13', key='B♭ major', time='2/4', idea='Sextuplet arpeggios in sixteenths, six to a beat, with a slow tune in the middle voice and a bass under it: the tune has to sing through the arpeggio.',
+                shift=-12, src='Mutopia’s file writes the guitar part an octave up without the small 8 under the clef; it sounds here where the guitar plays it.'),
 }
-PARTS = {'1': ['I', 'II', 'III', 'IV', 'V', 'VI'], '2': ['XI', 'XII'], '3': ['XIV', 'XVII']}
+PARTS = {'1': ['I', 'II', 'III', 'IV', 'V', 'VI'], '2': ['XI', 'XII'], '3': ['XIV', 'XVII'], '4': ['XV', 'XIX']}
 
 
 def build(part, audio):
@@ -27,7 +31,7 @@ def build(part, audio):
     ex = []
     for k in keys:
         S = STUDIES[k]
-        bars, P = PC.piece_bars(CS.M + CS.T[k], k, fixes=S.get('fixes', ()), maxf=S.get('maxf', 12))
+        bars, P = PC.piece_bars(CS.M + CS.T[k], k, fixes=S.get('fixes', ()), maxf=S.get('maxf', 12), shift=S.get('shift', 0))
         wide = set(PC.wide_stretches(bars))
         for B in bars:
             B['note'] = ''
@@ -36,12 +40,12 @@ def build(part, audio):
             fb = [B for B in bars if B['label'] == f'{k}.27']
             if fb: fb[0]['note'] = (fb[0]['note'] + ' ' + S['fixnote']).strip()
         ex.append(dict(id=f'sor-{k.lower()}', title=f'Study {k} · {S["op"]}, {S["key"]}',
-                       idea=f'Segovia’s Study {k}, Sor’s {S["op"]}, {S["key"]}, {S["time"]}. {S["idea"]} Sor’s notes complete, every repeat written out; the fingering is ours.',
+                       idea=f'Segovia’s Study {k}, Sor’s {S["op"]}, {S["key"]}, {S["time"]}. {S["idea"]} Sor’s notes complete, every repeat written out; the fingering is ours.' + (' ' + S['src'] if S.get('src') else ''),
                        quote=dict(where='', text='', item=None), bars=bars))
     sections = [dict(id='studies', title='Sor’s studies, Segovia’s numbering', part='Études', ex=ex)]
     slug = f'sor-{part}'
     out = f'/home/claude/studies/classical/out/{slug}/'; os.makedirs(out, exist_ok=True)
-    nums = {'1': 'I–VI', '2': 'XI–XII', '3': 'XIV and XVII'}[part]
+    nums = {'1': 'I–VI', '2': 'XI–XII', '3': 'XIV and XVII', '4': 'XV and XIX'}[part]
     entry = dict(key=slug.replace('-', ''), title=f'Sor’s studies, {nums}', eyebrow='Exercises · Fernando Sor',
                  meta=[['Style', 'Classical studies'], ['From', 'Segovia’s twenty, Sor’s own notes'], ['Tempo', f'{SP.BPM} a minute, slow']],
                  lede='Sor’s studies from Segovia’s selection, complete and in playing order, each note on the string and fret shown.',

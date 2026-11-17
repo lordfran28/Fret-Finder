@@ -15,12 +15,12 @@ def where(frets):
     return f'@from the {lo}{"st" if lo == 1 else "nd" if lo == 2 else "rd" if lo == 3 else "th"} fret'
 
 
-def piece_bars(path, prefix, tuning=F.STD, fixes=(), maxf=12):
+def piece_bars(path, prefix, tuning=F.STD, fixes=(), maxf=12, shift=0):
     """fixes: (onset in beats, wrong midi, right midi) for misprints in the source, each with its reason on the page"""
     P = L.parse(path)
     n, d = P['time']; bl = Fr(n, d) * 4                     # bar length in quarter beats
     part = P['partial'] * 4
-    raw = [(t * 4, du * 4, m) for t, du, m, v in P['notes']]
+    raw = [(t * 4, du * 4, m + shift) for t, du, m, v in P['notes']]          # shift: -12 where the source writes guitar music an octave up without treble_8
     for ft, wrong, right in fixes:
         hit = [k for k, (t, du, m) in enumerate(raw) if t == ft and m == wrong]
         assert hit, ('fix not found', prefix, ft, wrong)
