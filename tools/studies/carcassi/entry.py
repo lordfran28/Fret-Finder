@@ -65,6 +65,27 @@ A[13] = dict(name='The thumb slides', how='Sixteenths: the thumb plays the bass 
              spec=lambda: [[(S, ['B1']), (S, ['W1']), (S, [3]), (S, [2])], [(S, [1]), (S, [2]), (S, [3]), (S, ['B2'])]] * 2)
 A[15] = dict(name='Two strings at once', how='Triplets: the thumb on the beat walking up the chord’s lower notes, then index and middle together on the B and high E strings, twice.',
              spec=lambda: [[(T3, ['B1']), (T3, [2, 1]), (T3, [2, 1])], [(T3, ['W1']), (T3, [2, 1]), (T3, [2, 1])], [(T3, ['W2']), (T3, [2, 1]), (T3, [2, 1])], [(T3, ['B1']), (T3, [2, 1]), (T3, [2, 1])]])
+A[12] = dict(name='Thumb on the first and seventh', how='Sixteenths, two beats to a figure: the thumb on the bass, then middle (B string), index (G), ring (high E), middle, index; the thumb again on the D string; index. The bass rings for a beat and a half.',
+             spec=lambda: [[(S, ['B1']), (S, [2]), (S, [3]), (S, [1])], [(S, [2]), (S, [3]), (S, ['B2']), (S, [3])]] * 2)
+A[14] = dict(name='The index on the D string', how='Sixteenths over a bass held for two beats: middle on the G string, index on the D string, middle, ring on the B string, middle, index, middle; then the same from the high E string.',
+             spec=lambda: [[(S, ['B1']), (S, [3]), (S, [4]), (S, [3])], [(S, [2]), (S, [3]), (S, [4]), (S, [3])], [(S, [1]), (S, [3]), (S, [4]), (S, [3])], [(S, [2]), (S, [3]), (S, [4]), (S, [3])]])
+A[16] = dict(name='Index with the thumb, then ring, middle', how='Triplets, four fingers: the thumb and the index (G string) together on the beat, then ring (high E), middle (B string). The thumb alternates the bass and the D string.',
+             spec=lambda: alt(lambda b, k: [(T3, [b, 3]), (T3, [1]), (T3, [2])], 'B1', 'B2'))
+A[17] = dict(name='Up one beat, down the next', how='Triplets: thumb and index together, middle, ring; then thumb and ring together, middle, index. The thumb alternates the bass and the D string.',
+             spec=lambda: [[(T3, ['B1', 3]), (T3, [2]), (T3, [1])], [(T3, ['B2', 1]), (T3, [2]), (T3, [3])]] * 2)
+A[18] = dict(name='The thumb slides', how='The thumb slides across the A, D and G strings in triplets, a note each, while the ring, middle, index and middle fingers take the high E string on the beats.',
+             spec=lambda: [[(T3, [5, 1]), (T3, [4]), (T3, [3])]] * 4)
+A[19] = dict(name='Index with the thumb, then middle, ring, middle', how='Sixteenths: thumb and index (G string) together on the beat, then middle (B), ring (high E), middle. The thumb alternates the bass and the D string.',
+             spec=lambda: alt(lambda b, k: [(S, [b, 3]), (S, [2]), (S, [1]), (S, [2])], 'B1', 'B2'))
+A[20] = dict(name='Ring with the thumb, the thumb inside', how='Sixteenths: thumb (bass) and ring (high E) together on the beat, middle on the G string, the thumb on the D string, index on the G string. The bass on every beat.',
+             spec=lambda: [[(S, ['B1', 1]), (S, [3]), (S, [4]), (S, [3])]] * 4)
+A[22] = dict(name='Three strings at once, two ways', how=('Index, middle and ring together on the top three strings in sixteenths. On C the thumb plays only the first and seventh of each eight (the bass, then the D string; '
+                                                       'in the second half the bass again); on G7 the thumb walks in eighths, G, B, D, B, G, D, B, G, with the chord between every two of its notes. '
+                                                       'Ours follows the same pairing: his C bar on C major 7, his G7 bar on G.'),
+             spec=lambda: [[(S, ['B1']), (S, [3, 2, 1]), (S, [3, 2, 1]), (S, [3, 2, 1])], [(S, [3, 2, 1]), (S, [3, 2, 1]), (S, ['B2']), (S, [3, 2, 1])],
+                           [(S, ['B1']), (S, [3, 2, 1]), (S, [3, 2, 1]), (S, [3, 2, 1])], [(S, [3, 2, 1]), (S, [3, 2, 1]), (S, ['B1']), (S, [3, 2, 1])]],
+             spec_g=lambda: [[(S, [6]), (S, [3, 2, 1]), (S, [5]), (S, [3, 2, 1])], [(S, [4]), (S, [3, 2, 1]), (S, [5]), (S, [3, 2, 1])],
+                             [(S, [6]), (S, [3, 2, 1]), (S, [4]), (S, [3, 2, 1])], [(S, [5]), (S, [3, 2, 1]), (S, [6]), (S, [3, 2, 1])]])
 A[21] = dict(name='Three strings at once', how='Sixteenths: the thumb on the beat, then index, middle and ring together on the top three strings three times.',
              spec=lambda: alt(lambda b, k: [(S, [b]), (S, [3, 2, 1]), (S, [3, 2, 1]), (S, [3, 2, 1])], 'B1', 'B2'))
 
@@ -75,13 +96,14 @@ def quote_bar(k):
 
 
 EX = []
-for k, a in A.items():
+for k, a in sorted(A.items()):
     sp = a['spec']()
     EX.append(dict(
         id=f'arp-{k}', title=f'Arpeggio {k}: {a["name"]}',
         idea=a['how'] + ' Repeat each many times in a row, as Carcassi asks, holding the whole chord down while you play it.',
         quote=dict(where=f'Carcassi, Método completo Op. 59, first part, p. {14 if k <= 6 else 15 if k <= 14 else 16}, No. {k}',
-                   text='His first bar, on C major; the second is the same on G7.', item=quote_bar(k), whose='Carcassi’s own', played='Played here: that bar.'),
-        bars=[dict(chords=['G'], note='On G, as Я вас любил has it in bar 8: the bass on the low E string, 3rd fret.', items=[bar(sp, 'G', G)]),
+                   text=('His first bar, on C major; on G7, his second bar, the thumb walks instead.' if k == 22 else 'His first bar, on C major; the second is the same on G7.'),
+                   item=quote_bar(k), whose='Carcassi’s own', played='Played here: that bar.'),
+        bars=[dict(chords=['G'], note='On G, as Я вас любил has it in bar 8: the bass on the low E string, 3rd fret.', items=[bar(a['spec_g']() if 'spec_g' in a else sp, 'G', G)]),
               dict(chords=['Cmaj7'], note='On C major 7, bar 9 (the tune holds B): the bass on the A string, 3rd fret; the B string open.', items=[bar(sp, 'Cmaj7', CM7)])]))
 SECTIONS = [dict(id='arpeggios', title='Right-hand arpeggios', part='Exercises', ex=EX)]

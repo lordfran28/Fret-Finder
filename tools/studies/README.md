@@ -8,7 +8,9 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
   two-line steps).
 - `wyble/`: the Wyble entry (`entry.py` holds every exercise and the rule it follows; `catalog.md` our notes on the
   books with page numbers).
-- `carcassi/`: Carcassi's right-hand arpeggios as patterns of thumb and fingers.
+- `carcassi/`: Carcassi's right-hand arpeggios as patterns of thumb and fingers. All 22 now; 12, 14, 16–20 and 22 added 16 Nov,
+  read at 300 dpi, with `check_new.py` comparing each pattern on his C and G7 grips with his printed notes. No. 22's two bars
+  differ (on G7 the thumb walks); ours puts his C bar on C major 7 and his G7 bar on G (`spec_g`).
 - `classical/`: public-domain pieces from Mutopia's LilyPond files: `lyparse.py` reads them (checked against the
   file's own bar checks), `finger.py` fingers a whole piece, `pieces.py` turns it into bars, `sor.py` builds the
   Sor entries. Mutopia's files are fetched with a sparse checkout of github.com/MutopiaProject/MutopiaProject.
