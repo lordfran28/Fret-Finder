@@ -27,7 +27,7 @@ for key, (page, sysno) in C.WHERE.items():
 # 2. ours = his moved by one interval, starting on the named chord's two tones
 NM = {'C': 0, 'D♭': 1, 'D': 2, 'E♭': 3, 'E': 4, 'F': 5, 'F♯': 6, 'G♭': 6, 'G': 7, 'A♭': 8, 'A': 9, 'B♭': 10, 'B': 11, 'C♭': 11, 'G♯': 8}
 EXS = {e['id']: e for e in C.EX}
-IDS = {'P1U': 'c-8-1-up', 'P1D': 'c-8-1-down', 'P2U': 'c-8-2-up', 'P2D': 'c-8-2-down', 'E9': 'c-9', 'E10U': 'c-10-up', 'E10D': 'c-10-down'}
+IDS = {'P1U': 'c-8-1-up', 'P1D': 'c-8-1-down', 'P2U': 'c-8-2-up', 'P2D': 'c-8-2-down', 'E9': 'c-9', 'E10U': 'c-10-up', 'E10D': 'c-10-down', 'E12': 'c-12', 'E19': 'c-19'}
 h = open('/home/claude/fret-finder/songs/moonglow/index.html').read()
 i = h.find('"chords": [{"name"')
 mg, _ = json.JSONDecoder().raw_decode(h[i + len('"chords": '):])
@@ -49,8 +49,9 @@ for key, (ch, tr, n, what, d, per) in C.OURS.items():
     shifts = {g[j] - (hh[j] - 12) for g, hh in zip(got, his) for j in range(len(g))} if len(got) == len(his) and all(len(a) == len(b) for a, b in zip(got, his)) else None
     if shifts != {tr}: P(f'{key}: ours is not his moved by one interval ({shifts})')
     # his rhythm, from the page: pattern 1 and 2 in quarters (4/4), exercise 9 in triplet eighths (4/4), exercise 10 in eighths (3/4)
-    RD, RB = {'P1U': 1, 'P1D': 1, 'P2U': 1, 'P2D': 1, 'E9': 1 / 3, 'E10U': 0.5, 'E10D': 0.5}[key], {'E10U': 3, 'E10D': 3}.get(key, 4)
-    if any(abs(x - RD) > 1e-9 for x in durs) or len(got) != n: P(f'{key}: rhythm')
+    RD, RB = {'P1U': 1, 'P1D': 1, 'P2U': 1, 'P2D': 1, 'E9': 1 / 3, 'E10U': 0.5, 'E10D': 0.5, 'E12': [0.5] * 6 + [1], 'E19': [0.5] * 6 + [1]}[key], {'E10U': 3, 'E10D': 3}.get(key, 4)
+    RDS = [RD] * len(durs) if not isinstance(RD, list) else (RD * len(durs))[:len(durs)]
+    if any(abs(x - y) > 1e-9 for x, y in zip(durs, RDS)) or len(got) != n: P(f'{key}: rhythm')
     if any(abs(L - RB) > 1e-6 for L in lens): P(f'{key}: bar lengths {lens}')
     names = re.findall(r'([A-G][♯♭]?) and ([A-G][♯♭]?)', what)[0]
     if {NM[x] for x in names} != {got[0][0] % 12, got[0][-1] % 12}: P(f'{key}: does not start on {names}')
