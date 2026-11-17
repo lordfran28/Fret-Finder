@@ -46,6 +46,13 @@ for site in sites:
             subprocess.run(['node', SP + 'unlock.mjs', d + l, tmp], check=True, capture_output=True)
             g = wav(d + p); m = wav(tmp); os.remove(tmp)
             n = min(len(g), len(m)); g, m = g[:n], m[:n]
+            # a mix made by another tool can sit a few milliseconds late (Bach's "Both", 5 ms): line the two up first
+            s0 = min(n // 3, 11025 * 20); seg = slice(s0, min(n, s0 + 11025 * 30))
+            from scipy.signal import correlate
+            x = correlate(m[seg], g[seg], mode='full', method='fft'); mid = len(g[seg]) - 1; w = 551
+            lag = int(np.argmax(x[mid - w:mid + w + 1])) - w
+            if lag > 0: m, g = m[lag:], g[:n - lag]
+            elif lag < 0: m, g = m[:n + lag], g[-lag:]
             a = float(np.dot(m, g) / np.dot(g, g)); left = float(np.sqrt(np.mean((m - a * g) ** 2)) / np.sqrt(np.mean(m ** 2)))
             flag = '' if a > 0.3 else ('   <-- another take' if a < 0.15 else '   (the guitar is quiet in it)')
             out.append((site, slug, p, l, round(a, 3), round(left, 2)))
