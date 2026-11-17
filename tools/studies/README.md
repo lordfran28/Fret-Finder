@@ -8,6 +8,10 @@ They also need the song kit (`/home/claude/kit`, `/home/claude/render`), which i
   two-line steps).
 - `wyble/`: the Wyble entry (`entry.py` holds every exercise and the rule it follows; `catalog.md` our notes on the
   books with page numbers).
+- `wyble/concepts2.py`: Concepts, Exercises 8 (patterns 1 and 2, up and down), 9 and 10, each Wyble's figure moved to start on two
+  chord tones of one of Moonglow's chords (bars from your Moonglow page). The book's music is vector glyphs, so `vecread.py`
+  reads every note exactly from the PDF; `check_concepts2.py` compares the transcription with it and checks ours is his
+  moved by one interval, in his rhythm.
 - `carcassi/`: Carcassi's right-hand arpeggios as patterns of thumb and fingers. All 22 now; 12, 14, 16–20 and 22 added 16 Nov,
   read at 300 dpi, with `check_new.py` comparing each pattern on his C and G7 grips with his printed notes. No. 22's two bars
   differ (on G7 the thumb walks); ours puts his C bar on C major 7 and his G7 bar on G (`spec_g`).

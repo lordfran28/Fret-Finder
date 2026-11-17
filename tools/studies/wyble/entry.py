@@ -345,6 +345,9 @@ CEX.append(dict(
     bars=vbars))
 
 SECTIONS.append(dict(id='concepts', title='Concepts: figures and permutations', part='Exercises', ex=CEX))
+sys.path.insert(0, '/home/claude/studies/wyble')
+import concepts2 as _C2                 # Exercises 8, 9, 10: the sequences
+SECTIONS.append(_C2.SECTION)
 
 
 # ======================= Études =======================
