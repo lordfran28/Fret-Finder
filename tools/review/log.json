@@ -17,7 +17,10 @@
   "you-dont-mess-around-with-jim": "2026-11-17",
   "ill-be-seeing-you": "2026-11-17",
   "but-not-for-me": "2026-11-17",
-  "there-will-never-be-another-you": "2026-11-17"
+  "there-will-never-be-another-you": "2026-11-17",
+  "i-cover-the-waterfront": "2026-11-17",
+  "i-cant-get-started": "2026-11-17",
+  "everything-happens-to-me": "2026-11-17"
  },
  "nights": [
   {
@@ -106,7 +109,10 @@
    "songs": [
     "I'll Be Seeing You (and on Key Finder)",
     "But Not for Me (and on Key Finder)",
-    "There Will Never Be Another You"
+    "There Will Never Be Another You",
+    "I Cover the Waterfront (and on Key Finder)",
+    "I Can't Get Started (and on Key Finder)",
+    "Everything Happens to Me (and on Key Finder)"
    ],
    "fixes": [
     "Fret Finder, I'll Be Seeing You, guitar and singer's tracks (intro, bars 1-9, 31, 60-61): the rolled chords no longer ring on under the next chord on the same string",
@@ -120,12 +126,16 @@
    "not_changed": [
     "E♭ minor 7 and 9 under his F, B♭ minor 7 under his C, C minor 7 under his D: the melody's own 9th over the song's chord",
     "There Will Never Be Another You, bar 13: B, C, B♭, A♭ falling over E♭7, half a second each",
-    "The Nearness of You: built the same way but no note rings over another on its string"
+    "The Nearness of You: built the same way but no note rings over another on its string",
+    "I Can't Get Started and Everything Happens to Me: the ♯9 and ♭9 rubs are the chords' own colours the page names (G♯7♯9 with Chet's B, B7♭9 with his C)",
+    "Everything Happens to Me, bar 27: Chet sings C♯ and D over G♯ half-diminished, so the page's D holds"
    ],
    "proposals": [
     "There Will Never Be Another You, bars 62 and 64: F minor 7 for the whole bar, since he stays on A♭ (F7's A sits under it for half a second)",
     "Key Finder, I'll Be Seeing You, bars 20, 22, 44: A♭7's E♭ a minor 9th over his held D for about a second; bar 32: F7's C under his held D♭ for over a second. Take the 5th out of a 7th chord where he holds the note beside it?",
-    "Still waiting: Jim's G♯; a new singer key word; whether 7ths and 6ths must always sound (C7♭9 in But Not for Me, B♭ minor 6's G)"
+    "Still waiting: Jim's G♯; a new singer key word; whether 7ths and 6ths must always sound (C7♭9 in But Not for Me, B♭ minor 6's G)",
+    "I Cover the Waterfront, bars 22-23 (and I Can't Get Started bar 18): where he holds a chord's 13th (D♯ over F♯7, A♯ over C♯7), the grip's 7th sits a half step above him for up to 1.4 s. Leave the 7th out there, or put it below him?",
+    "Key Finder, all songs: the left hand's shell puts the 7th right where a baritone sings (Emaj7's D♯ under Chet's E for about five seconds in Everything Happens to Me). Root and 5th in the left hand where the shell's 7th is a half step from him?"
    ]
   }
  ]
