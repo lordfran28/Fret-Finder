@@ -29,7 +29,10 @@
   "somos-novios": "2026-11-17",
   "isnt-it-romantic": "2026-11-17",
   "dormir-contigo": "2026-11-17",
-  "no-me-platiques-mas": "2026-11-17"
+  "no-me-platiques-mas": "2026-11-17",
+  "for-all-we-know": "2026-11-17",
+  "what-a-difference-a-day-made": "2026-11-17",
+  "ive-never-been-in-love-before": "2026-11-17"
  },
  "nights": [
   {
@@ -163,6 +166,27 @@
     "The Christmas Song: C minor 6 has four grips, C13 and D minor three each, often in the same part. One grip each?",
     "Key Finder, every song: where the beginner chord's 5th sits a half step from a note he holds (A♭7's E♭ under D in I'll Be Seeing You; G7's D under his E♭ in bars 13–14 of The Christmas Song), leave the 5th out. The others are 7ths and roots against his notes, which the left-hand question covers in part",
     "Isn't It Romantic, bars 5 and 13: Rod holds C♯ against the open D of D major 7 for half a second to a second as he moves on. Your Where or When rule says take the root out there (F♯ minor 7). Do it?"
+   ]
+  },
+  {
+   "date": "2026-11-17 (evening, continued)",
+   "songs": [
+    "For All We Know (and on Key Finder)",
+    "What a Difference a Day Made (and on Key Finder)",
+    "I've Never Been in Love Before (and on Key Finder)"
+   ],
+   "fixes": [
+    "The review tool reads chord names written maj7(6)"
+   ],
+   "not_changed": [
+    "For All We Know and What a Difference a Day Made: no grip, track or name wrong; the rubs are under a second, or his note slides between two",
+    "I've Never Been in Love Before, bar 55: the B under C minor 6 is his C, scooped from below (it climbs from 40 cents flat to C before he leaps to G)",
+    "I've Never Been in Love Before, bar 2: A♭ major 7's G under his held A♭ is the record's falling line on the D string (A♭, G, F, E, E♭), so it stays"
+   ],
+   "proposals": [
+    "I've Never Been in Love Before, bar 4: the E9 has no G♯, its 3rd (0x2x32). A finger on the G string's 1st fret gives it (0x2132) and keeps the falling line's E. The track was made in conversation and its build isn't kept here, so like Barquito it waits for your yes",
+    "I've Never Been in Love Before, bars 17 and 101: the same A♭ major 7 puts G under his A♭ for 1.1 s in bar 17. A♭6 (4x354x, already among the page's other ways) there, keeping bar 2's line?",
+    "Key Finder, I've Never Been in Love Before: the 5th beside a note he holds, D7's A over his A♭ for 2.3 s (bars 32, 80) and D♭7's A♭ over his G for 2.6 s (bar 92); and the 7th over his 13th, E7's D over his D♭ for 2.7-3.0 s (bars 59, 107), E♭7's D♭ over his C (bar 36), D♭7's B over his B♭ (bar 44). Both wait on the two Key Finder questions already asked"
    ]
   }
  ]

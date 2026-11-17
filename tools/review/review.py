@@ -17,7 +17,7 @@ import numpy as np
 import checks  # noqa: F401  (adds the chord qualities the pages use)
 import gtr, theory as T
 # qualities some pages use that the kit lacks (17 Nov): minor-major 7th, 7♭9 suspended
-for _q, _v in {'mmaj7': ({3, 11}, {0, 7}), '7b9sus4': ({5, 10, 1}, {0, 7}), 'm(maj7)': ({3, 11}, {0, 7})}.items(): gtr.QUAL.setdefault(_q, _v)
+for _q, _v in {'mmaj7': ({3, 11}, {0, 7}), '7b9sus4': ({5, 10, 1}, {0, 7}), 'm(maj7)': ({3, 11}, {0, 7}), 'maj7(6)': ({4, 11, 9}, {0, 7})}.items(): gtr.QUAL.setdefault(_q, _v)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SP = '/tmp/claude-0/-home-claude/32eff81e-a259-5caa-a171-2530c104e7b0/scratchpad/'
