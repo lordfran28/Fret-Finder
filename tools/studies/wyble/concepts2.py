@@ -36,9 +36,13 @@ HIS = {
             'F♯4+D5 B♭4 D4+B♭4 F♯4 B♭3+F♯4 D4 G♯3+C5'),
     'E19': ('F♯4+C6 A4 E5 F♯5 E5 A4 F♯4+C6 E4+B♭5 G4 D5 E5 D5 G4 E4+B♭5 '
             'D4+G♯5 F4 C5 D5 C5 F4 D4+G♯5 C4+F♯5 E♭4 B♭4 C5 B♭4 E♭4 C4+F♯5'),
+    'E16': 'E♭4+C5 F♯3 A3+F♯4 G♯4 C4+A4 B4 E♭4+C5 D5 F♯4+E♭5 F5 A4+F♯5 G♯5 C5+A5',
+    'E18': ('F♯3+A4 C4+E♭5 E♭4+C5 B3+D5 F♯4+E♭5 D4+F5 A3+C5 E♭4+F♯5 F♯4+E♭5 D4+F5 A4+F♯5 F4+G♯5 '
+            'C4+E♭5 F♯4+A5 A4+F♯5 F4+G♯5 C5+A5 G♯4+B5 E♭4+F♯5 A4+C6 C5+A5 G♯4+B5 E♭5+C6 B4+D6'),
+    'E20': ('D4+G♯5 F♯4 C5 D5 C5 F♯4 D4+G♯5 C4+F♯5 E4 B♭4 C5 B♭4 E4 C4+F♯5 B♭3+E5 D4 G♯4 B♭4 G♯4 D4 B♭3+E5'),
 }
-WHERE = {'P1U': (11, 7), 'P1D': (11, 8), 'P2U': (12, 1), 'P2D': (12, 2), 'E9': (14, 1), 'E10U': (15, 1), 'E10D': (15, 2), 'E12': (25, 1), 'E19': (29, 1)}   # PDF page, system
-BOOKP = {'P1U': 9, 'P1D': 9, 'P2U': 10, 'P2D': 10, 'E9': 12, 'E10U': 13, 'E10D': 13, 'E12': 23, 'E19': 27}
+WHERE = {'P1U': (11, 7), 'P1D': (11, 8), 'P2U': (12, 1), 'P2D': (12, 2), 'E9': (14, 1), 'E10U': (15, 1), 'E10D': (15, 2), 'E12': (25, 1), 'E19': (29, 1), 'E16': (28, 1), 'E18': (28, 6), 'E20': (29, 3)}   # PDF page, system
+BOOKP = {'P1U': 9, 'P1D': 9, 'P2U': 10, 'P2D': 10, 'E9': 12, 'E10U': 13, 'E10D': 13, 'E12': 23, 'E19': 27, 'E16': 26, 'E18': 26, 'E20': 27}
 
 
 def events(key):
@@ -56,6 +60,9 @@ OURS = {
     'E10D': ('Eb9', 1, 12, 'G and D♭, the 3rd and 7th', 0.5, 6),
     'E12': ('Db9#5', 1, 14, 'F and D♭, the 3rd and root', [0.5] * 6 + [1.0], 7),
     'E19': ('Eb9', 1, 14, 'G and D♭, the 3rd and 7th', [0.5] * 6 + [1.0], 7),
+    'E16': ('Abdim7', -1, 13, 'D and B', [0.5] * 12 + [1.0], 8),
+    'E18': ('Abdim7', 2, 12, 'A♭ and B', 1 / 3, 12),
+    'E20': ('Eb9', -1, 14, 'D♭ and G, the 7th and 3rd', [0.5] * 6 + [1.0], 7),
 }
 
 
@@ -72,8 +79,11 @@ def bars_of(key):
         seq = []
         for j, e in enumerate(ev[b:b + per]):
             lo, up = (e[0], e[1]) if len(e) == 2 else ((e[0], None) if e[0] < 55 else (None, e[0]))
-            seq.append((lo, up, d[j] if isinstance(d, list) else d))
-        out.append(two_lines(place_lines(seq, lo_strings=(6, 5, 4, 3), up_strings=(1, 2, 3, 4), maxf=15), over=ch if b == 0 else ''))
+            seq.append((lo, up, d[b + j] if isinstance(d, list) and len(d) > per else (d[j] if isinstance(d, list) else d)))
+        it = two_lines(place_lines(seq, lo_strings=(6, 5, 4, 3), up_strings=(1, 2, 3, 4), maxf=15), over=ch if b == 0 else '')
+        L = sum(x[2] for x in seq)
+        full = 3 if key.startswith('E10') else 4
+        out.append([it] + ([['W', full - L]] if L < full - 1e-9 else []))      # a rest where his figure ends before the bar does
     return out
 
 
@@ -90,8 +100,8 @@ def ex(key, id_, title, idea, his_text, first_note, more_note):
     ch, tr, n, what, d, per = OURS[key]
     bs = bars_of(key)
     ev = ours_events(key)
-    bars = [dict(chords=[ch] if i == 0 else [], note='', items=[b]) for i, b in enumerate(bs)]
-    bars[0]['note'] = first_note.format(ch=ch.replace('b', '♭', 1).replace('#', '♯'), what=what, a=nm(ev[0][0]), b=nm(ev[0][-1]))
+    bars = [dict(chords=[ch] if i == 0 else [], note='', items=b) for i, b in enumerate(bs)]
+    bars[0]['note'] = first_note.format(ch=ch.replace('b', '♭', 1).replace('#', '♯').replace('dim7', '°7'), what=what, a=nm(ev[0][0]), b=nm(ev[0][-1]))
     if len(bars) > 1: bars[1]['note'] = more_note
     p = BOOKP[key]
     return dict(id=id_, title=title, idea=idea,
@@ -153,5 +163,25 @@ EX += [
        'from F♯ with C above, D9, then C9, B♭9, A♭9.',
        'From {what} of Moonglow’s {ch} (bar 1): its 3rd and 7th, then B♭, F, G, F, B♭ in eighths, and G with D♭ again.',
        'A whole step lower: D♭9, Moonglow’s own second chord (bar 2).'),
+]
+EX += [
+    ex('E16', 'c-16', 'Exercise 16: the diminished chord climbing by minor thirds',
+       ('Two notes of a diminished seventh chord together, then one note alone a half step below the top of the next pair; every pair a minor third higher than the last, '
+        'in eighths, up to a held pair at the top. Wyble starts on E♭ and C.'),
+       'from E♭ with C above (the diminished chord E♭, F♯, A, C), thirteen shapes, each pair a minor third higher, the strings and fingers marked.',
+       'From {what} of Moonglow’s {ch} (bar 44): D and B together, F alone, then pairs a minor third apart up the neck, each with the note a half step below the next top note.',
+       'The last pairs and the held top: two notes of the same chord, an octave and a minor third higher.'),
+    ex('E18', 'c-18', 'Exercise 18: the diminished chord in triplets',
+       ('Two-note shapes from a diminished seventh chord in triplets, six to a figure, the figure a minor third higher each time; '
+        'the top and bottom move against each other inside the chord. Wyble starts on F♯ and A.'),
+       'from F♯ with A above, triplets, twenty-four shapes over two bars.',
+       'From {what} of Moonglow’s {ch} (bar 44): one bar, two figures of six, the second a minor third higher.',
+       ''),
+    ex('E20', 'c-20', 'Exercise 20: a seventh chord with its 9th and ♭13, a whole step lower each bar',
+       ('Like Exercise 19 on another chord: the 7th and 3rd together, then the 9th, the ♭13, the 7th, the ♭13 and the 9th in eighths, and the 7th and 3rd again; '
+        'the next bar a whole step lower. Wyble starts on D and G♯, the 7th and 3rd of E7.'),
+       'from D with G♯ above, E7, then D7 and C7.',
+       'From {what} of Moonglow’s E♭9 (bar 1): D♭ and G, then F, B, D♭, B, F in eighths, and D♭ with G again.',
+       'A whole step lower: D♭, as Moonglow’s bar 2.'),
 ]
 SECTION = dict(id='concepts-2', title='Concepts: sequences', part='Exercises', ex=EX)
