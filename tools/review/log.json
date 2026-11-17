@@ -23,7 +23,10 @@
   "everything-happens-to-me": "2026-11-17",
   "thats-all": "2026-11-17",
   "youll-never-know": "2026-11-17",
-  "the-christmas-song": "2026-11-17"
+  "the-christmas-song": "2026-11-17",
+  "so-i-could-find-my-way": "2026-11-17",
+  "in-over-my-head": "2026-11-17",
+  "somos-novios": "2026-11-17"
  },
  "nights": [
   {
@@ -118,7 +121,10 @@
     "Everything Happens to Me (and on Key Finder)",
     "That's All (and on Key Finder)",
     "You'll Never Know (and on Key Finder)",
-    "The Christmas Song (and on Key Finder)"
+    "The Christmas Song (and on Key Finder)",
+    "So I Could Find My Way (and on Key Finder)",
+    "In Over My Head (and on Key Finder)",
+    "Somos novios (and on Key Finder)"
    ],
    "fixes": [
     "Fret Finder, I'll Be Seeing You, guitar and singer's tracks (intro, bars 1-9, 31, 60-61): the rolled chords no longer ring on under the next chord on the same string",
@@ -127,7 +133,8 @@
     "Fret Finder, But Not for Me, bars 39 and 57: A7 over C♯ now sounds its A",
     "Fret Finder, There Will Never Be Another You, bars 15 and 47: the falling line on the G string and the G♭ sound; bar 31: the F to E on the B string sounds; bar 62: the note no longer says his voice goes to A",
     "Fret Finder, Dormir contigo, Don't Get Around Much Anymore, Isn't It Romantic, Misty, 1897 Rag, Moonglow, Something Stupid, Someone to Watch Over Me, You'll Never Know: notes no longer ring on under a new note on the same string (all in the last bars; You'll Never Know also in bars 4-9)",
-    "The review tool reads chord names written with ° and ø, and the frets of harmonics and runs in a bar's note"
+    "The review tool reads chord names written with ° and ø, and the frets of harmonics and runs in a bar's note",
+    "Fret Finder, So I Could Find My Way: C♯7 over G♯ sounds its E♯ (bars 25, 29, 49, 53), B minor 7 its D (23, 47), F♯ minor add 9 its A (56); the guitar and singer's tracks played again"
    ],
    "not_changed": [
     "E♭ minor 7 and 9 under his F, B♭ minor 7 under his C, C minor 7 under his D: the melody's own 9th over the song's chord",
@@ -136,7 +143,8 @@
     "I Can't Get Started and Everything Happens to Me: the ♯9 and ♭9 rubs are the chords' own colours the page names (G♯7♯9 with Chet's B, B7♭9 with his C)",
     "Everything Happens to Me, bar 27: Chet sings C♯ and D over G♯ half-diminished, so the page's D holds",
     "That's All, bar 14: the jump to B minor 7 at the 9th fret was the build's way round a rub with Hartman's G♯; kept",
-    "You'll Never Know, bar 18: Haymes sings G over E7 for under a second; the record's band reads both G and G♯, so it stays"
+    "You'll Never Know, bar 18: Haymes sings G over E7 for under a second; the record's band reads both G and G♯, so it stays",
+    "In Over My Head and Somos novios: nothing wrong on the guitar; Somos novios' C over E minor is a quarter-second lean into B"
    ],
    "proposals": [
     "There Will Never Be Another You, bars 62 and 64: F minor 7 for the whole bar, since he stays on A♭ (F7's A sits under it for half a second)",

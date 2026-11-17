@@ -164,7 +164,10 @@ def plays_report(D):
                             gg = groups[-1][1]
                             hit = {s for s, f in it[1] if 0 < s < 7 and gg[6 - s] == f}
                             groups[-1][2] |= hit; groups[-1][3] |= hit
-                    elif it[0] == 'P': ringing.update({s: f for pr in it[1] for s, f in pr})
+                    elif it[0] == 'P':
+                        ringing.update({s: f for pr in it[1] for s, f in pr})
+                        # a fill in thirds down the chord it follows sounds that chord's notes (Somos novios, 17 Nov)
+                        if groups: groups[-1][4] |= {(gtr.OPEN[6 - s] + f) % 12 for pr in it[1] for s, f in pr}; groups[-1][3] |= {0}
                     continue
                 g = it[2]; idx = [6 - i for i, f in enumerate(g) if f >= 0]       # strings low to high
                 masks = {'a': idx, 'b': idx[:1], 't': idx[1:], 'h': idx[-3:], '-': []}
