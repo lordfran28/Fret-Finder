@@ -113,7 +113,9 @@
     "Fret Finder, I'll Be Seeing You, bar 42: F to F7 (the grip of bar 18); he sings F then E♭, not E natural",
     "Fret Finder, I'll Be Seeing You, bars 26 and 50: the one-beat F7 is struck whole, so its A sounds; bar 12's E♭ minor 7 too",
     "Fret Finder, But Not for Me, bars 39 and 57: A7 over C♯ now sounds its A",
-    "Fret Finder, There Will Never Be Another You, bars 15 and 47: the falling line on the G string and the G♭ sound; bar 31: the F to E on the B string sounds; bar 62: the note no longer says his voice goes to A"
+    "Fret Finder, There Will Never Be Another You, bars 15 and 47: the falling line on the G string and the G♭ sound; bar 31: the F to E on the B string sounds; bar 62: the note no longer says his voice goes to A",
+    "Fret Finder, Dormir contigo, Don't Get Around Much Anymore, Isn't It Romantic, Misty, 1897 Rag, Moonglow, Something Stupid, Someone to Watch Over Me, You'll Never Know: notes no longer ring on under a new note on the same string (all in the last bars; You'll Never Know also in bars 4-9)",
+    "The review tool reads chord names written with ° and ø, and the frets of harmonics and runs in a bar's note"
    ],
    "not_changed": [
     "E♭ minor 7 and 9 under his F, B♭ minor 7 under his C, C minor 7 under his D: the melody's own 9th over the song's chord",

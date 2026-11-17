@@ -16,6 +16,8 @@ sys.path.insert(0, '/home/claude/kit'); sys.path.insert(0, '/home/claude/scripts
 import numpy as np
 import checks  # noqa: F401  (adds the chord qualities the pages use)
 import gtr, theory as T
+# qualities some pages use that the kit lacks (17 Nov): minor-major 7th, 7♭9 suspended
+for _q, _v in {'mmaj7': ({3, 11}, {0, 7}), '7b9sus4': ({5, 10, 1}, {0, 7}), 'm(maj7)': ({3, 11}, {0, 7})}.items(): gtr.QUAL.setdefault(_q, _v)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SP = '/tmp/claude-0/-home-claude/32eff81e-a259-5caa-a171-2530c104e7b0/scratchpad/'
@@ -97,7 +99,7 @@ def grips_report(D):
         sp = spans(tr); used = collections.defaultdict(list); prev = None; prevlab = None
         for lab, it, t0, t1 in sp:
             if it[0] not in ('K', 'C', 'T'): continue
-            name, g = it[1], it[2]
+            name, g = ascii_name(it[1]), it[2]          # 17 Nov: the pages also write °7 and ø7 (I Can't Get Started)
             try: p = gtr.check_grip(g, name, 5 if min([x for x in g if x > 0] or [0]) >= 7 else 4)
             except Exception as e: p = [f'chord name not read ({e})']
             if p: rep.append((tr['key'], lab, 'grip', f"{T.disp(name)} {gtr_str(g)}: " + '; '.join(p)))
@@ -132,6 +134,8 @@ def notes_report(D):
         for b in tr['bars']:
             note = b.get('note') or ''
             gs = [it[2] for it in b['items'] if it[0] in ('K', 'C', 'T')]
+            # harmonics and runs put the hand at their own frets (bar 61 of I Can't Get Started: harmonics at the 12th)
+            gs += [[f if 6 - s_ == i else -1 for i in range(6)] for it in b['items'] if it[0] in ('H', 'R', 'X') for s_, f in it[1]]
             if not gs or 'open' in note.lower(): continue
             for m in re.finditer(r'at the (\d+)(?:st|nd|rd|th)(?:[–-](\d+)(?:st|nd|rd|th))? fret', note):
                 lo = int(m.group(1)); hi = int(m.group(2) or lo)
