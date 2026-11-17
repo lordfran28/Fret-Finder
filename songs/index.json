@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-16T04:12:59Z",
+ "generatedAt": "2026-11-17T01:19:33Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -487,6 +487,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-16T04:03:47Z"
+  },
+  {
+   "id": "something-stupid",
+   "file": "songs/something-stupid/",
+   "page": "songs/something-stupid/",
+   "title": "Something Stupid",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-17T01:16:36Z"
   }
  ]
 }
