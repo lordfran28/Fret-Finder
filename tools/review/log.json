@@ -14,7 +14,10 @@
   "misty": "2026-11-16",
   "ive-got-a-crush-on-you": "2026-11-17",
   "my-one-and-only-love": "2026-11-17",
-  "you-dont-mess-around-with-jim": "2026-11-17"
+  "you-dont-mess-around-with-jim": "2026-11-17",
+  "ill-be-seeing-you": "2026-11-17",
+  "but-not-for-me": "2026-11-17",
+  "there-will-never-be-another-you": "2026-11-17"
  },
  "nights": [
   {
@@ -95,6 +98,32 @@
    "proposals": [
     "Jim, every E bar: the picking leaves out the G♯ (the 3rd) because Croce sings G and A over E; play it once a beat on the G string, or keep it out?",
     "A new singer key word, never written anywhere, and every locked track locked to it again (the old word is in the public history)"
+   ]
+  },
+  {
+   "date": "2026-11-17 (evening, on request)",
+   "site_check": "264 pages with no trouble; the song lists match; 97 locked tracks open; every singer's track holds its guitar take; the key word is in no file",
+   "songs": [
+    "I'll Be Seeing You (and on Key Finder)",
+    "But Not for Me (and on Key Finder)",
+    "There Will Never Be Another You"
+   ],
+   "fixes": [
+    "Fret Finder, I'll Be Seeing You, guitar and singer's tracks (intro, bars 1-9, 31, 60-61): the rolled chords no longer ring on under the next chord on the same string",
+    "Fret Finder, I'll Be Seeing You, bar 42: F to F7 (the grip of bar 18); he sings F then E♭, not E natural",
+    "Fret Finder, I'll Be Seeing You, bars 26 and 50: the one-beat F7 is struck whole, so its A sounds; bar 12's E♭ minor 7 too",
+    "Fret Finder, But Not for Me, bars 39 and 57: A7 over C♯ now sounds its A",
+    "Fret Finder, There Will Never Be Another You, bars 15 and 47: the falling line on the G string and the G♭ sound; bar 31: the F to E on the B string sounds; bar 62: the note no longer says his voice goes to A"
+   ],
+   "not_changed": [
+    "E♭ minor 7 and 9 under his F, B♭ minor 7 under his C, C minor 7 under his D: the melody's own 9th over the song's chord",
+    "There Will Never Be Another You, bar 13: B, C, B♭, A♭ falling over E♭7, half a second each",
+    "The Nearness of You: built the same way but no note rings over another on its string"
+   ],
+   "proposals": [
+    "There Will Never Be Another You, bars 62 and 64: F minor 7 for the whole bar, since he stays on A♭ (F7's A sits under it for half a second)",
+    "Key Finder, I'll Be Seeing You, bars 20, 22, 44: A♭7's E♭ a minor 9th over his held D for about a second; bar 32: F7's C under his held D♭ for over a second. Take the 5th out of a 7th chord where he holds the note beside it?",
+    "Still waiting: Jim's G♯; a new singer key word; whether 7ths and 6ths must always sound (C7♭9 in But Not for Me, B♭ minor 6's G)"
    ]
   }
  ]
