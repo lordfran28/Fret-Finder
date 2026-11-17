@@ -23,7 +23,9 @@ const J = only ? jobs.filter(j => j[1].includes(only)) : jobs;
     while (i < J.length) {
       const [site, url, kind] = J[i++];
       const ctx = await b.newContext({ viewport: { width: 390, height: 860 }, serviceWorkers: 'block' });
-      if (kind === 'withkey') await ctx.addInitScript(() => { try { localStorage.setItem('ff.voicekey', 'fran'); } catch (e) {} });
+      // the key comes from the scratchpad, never from this file
+      if (kind === 'withkey') await ctx.addInitScript(k => { try { localStorage.setItem('ff.voicekey', k); } catch (e) {} },
+        fs.readFileSync(SITE + '../voicekey/singer-key.txt', 'utf8').trim());
       const p = await ctx.newPage(); const errs = [], fails = [], cons = [];
       p.on('pageerror', e => errs.push(String(e.message).slice(0, 140)));
       p.on('console', m => { if (m.type() === 'error') cons.push(m.text().slice(0, 140)); });

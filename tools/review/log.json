@@ -11,7 +11,10 @@
   "seria-fantastico": "2026-11-15",
   "ya-vas-lyubil": "2026-11-16",
   "glinka-ya-pomnyu": "2026-11-16",
-  "misty": "2026-11-16"
+  "misty": "2026-11-16",
+  "ive-got-a-crush-on-you": "2026-11-17",
+  "my-one-and-only-love": "2026-11-17",
+  "you-dont-mess-around-with-jim": "2026-11-17"
  },
  "nights": [
   {
@@ -67,6 +70,31 @@
    "proposals": [
     "Я вас любил, bar 31: B minor on beat 2 sits under 'мим', where the track reads C; B major then D7 over A for two beats would keep every half step out. Worth your ear first.",
     "Sería fantástico, bar 71: the A (the 3rd of F♯m11) is left out on purpose because you sing G♯ there, but the diagram still shows it"
+   ]
+  },
+  {
+   "date": "2026-11-17",
+   "site_check": "264 pages with no trouble; 55 Fret Finder and 40 Key Finder songs and 30 Exercises match their lists; 97 locked tracks open. New: the singer key's word was in site_pages.js (taken out) and is in two public commit messages of 13 Nov (can't be taken out without a new word). New check site_mix.py: five singer's tracks held another guitar take (rebuilt).",
+   "songs": [
+    "I've Got a Crush on You (and on Key Finder)",
+    "My One and Only Love (and on Key Finder)",
+    "You Don't Mess Around with Jim (and on Key Finder)"
+   ],
+   "fixes": [
+    "Fret Finder, I've Got a Crush on You, the guitar and singer's tracks: the rolled chords no longer ring on under the next chord (two notes on one string 187 times; 74 s of notes the diagrams don't have, most in the verse, bars 3-17)",
+    "Fret Finder, My One and Only Love, I Can't Get Started, I Cover the Waterfront, Isn't It Romantic: the singer's track rebuilt over the guitar-alone take (it held the 11 Nov guitar that was rolled back)",
+    "Fret Finder, For All We Know: the singer's track rebuilt over the guitar-alone take (it held the render from before 'runs follow their own chord')",
+    "Fret Finder, tools/review/site_pages.js: the singer key no longer written in it"
+   ],
+   "not_changed": [
+    "Crush: rubs of 0.3-0.5 s are passing or anticipated notes (bars 11, 13, 14, 40), the 7♭9's own ♭9 in the voice (31, 33, 43), or the low F's fading vibrato read as G♭ (44, 46)",
+    "Crush on Key Finder: the beginner B♭ (bar 9) and D minor 7 (bar 11) sit a minor 9th from passing sung notes for under half a second",
+    "My One and Only Love on Key Finder, bar 3: F's F4 a minor 9th over his E for half a second as he falls from F to E into the next bar",
+    "Jim: every rub is a blue note under half a second; the E pattern's missing G♯ is a proposal"
+   ],
+   "proposals": [
+    "Jim, every E bar: the picking leaves out the G♯ (the 3rd) because Croce sings G and A over E; play it once a beat on the G string, or keep it out?",
+    "A new singer key word, never written anywhere, and every locked track locked to it again (the old word is in the public history)"
    ]
   }
  ]

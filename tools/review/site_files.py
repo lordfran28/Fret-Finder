@@ -1,5 +1,6 @@
 import json, os, re, subprocess, sys
 SITE = '/tmp/claude-0/-home-claude/32eff81e-a259-5caa-a171-2530c104e7b0/scratchpad/site/'
+SP = '/tmp/claude-0/-home-claude/32eff81e-a259-5caa-a171-2530c104e7b0/scratchpad/'
 for site in ('Fret-Finder', 'Key-Finder'):
     root = SITE + site + '/songs/'
     idx = json.load(open(root + 'index.json'))
@@ -49,3 +50,15 @@ for site in ('Fret-Finder',):
                 except ValueError: probs.append(f'{d}/{m}: not playable')
         if not os.path.exists(root + d + '/entry.json'): probs.append(d + ': no entry.json')
     print('  problems:', len(probs)); [print('   ', p) for p in probs]
+
+# the singer key's word is never in a file or a commit message of the three sites (17 Nov: it was in two commit
+# messages of 13 Nov and in site_pages.js). The word is read from the scratchpad, never written here.
+WORD = SP + 'voicekey/singer-word.txt'
+if os.path.exists(WORD):
+    w = open(WORD).read().strip()
+    for site in ('Fret-Finder', 'Key-Finder', 'Valve-Finder'):
+        g = SITE + site
+        files = subprocess.run(['git', '-C', g, 'grep', '-I', '-l', '-i', '-w', '-e', w, '--', '.', ':!*.musicxml', ':!*.vf.json', ':!songs/index.json'], capture_output=True, text=True).stdout.split()
+        msgs = [l for l in subprocess.run(['git', '-C', g, 'log', '--since=2026-11-14', '--format=%h %s%n%b'], capture_output=True, text=True).stdout.splitlines()
+                if re.search(r'\b' + re.escape(w) + r'\b', l, re.I)]
+        print(site, 'singer key word: in', len(files), 'files', files, '; in', len(msgs), 'new commit messages')
