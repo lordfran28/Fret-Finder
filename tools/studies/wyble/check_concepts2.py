@@ -72,6 +72,11 @@ for key, e_id in IDS.items():
     q = EXS[e_id]['quote']['item']
     his0 = sorted(wm(x) - 12 for x in C.HIS[key].split()[0].split('+'))
     if sorted(OPEN[6 - s] + f for s, f in q[1][0]) != his0 or len(q[1]) != 1: P(f'{key}: the quote')
+# 4. the book's own sequence rule holds through every printed bar (a missed accidental would break it)
+RULE = {'E12': (7, 1), 'E19': (7, -2), 'E10U': (6, 2), 'E10D': (6, -2), 'E9': (3, 2), 'P1U': (2, 2), 'P1D': (2, -2), 'P2U': (2, 2), 'P2D': (2, -2)}
+for key, (size, step) in RULE.items():
+    e = [sorted(wm(x) for x in ev.split('+')) for ev in C.HIS[key].split()]
+    if any([m + step for m in e[i - size]] != e[i] for i in range(size, len(e))): P(f'{key}: the printed figure does not repeat {step:+d} every {size}')
 print('exercises checked:', len(C.OURS))
 print('\n'.join(probs) if probs else 'all good')
 sys.exit(1 if probs else 0)
