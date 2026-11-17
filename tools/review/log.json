@@ -26,7 +26,10 @@
   "the-christmas-song": "2026-11-17",
   "so-i-could-find-my-way": "2026-11-17",
   "in-over-my-head": "2026-11-17",
-  "somos-novios": "2026-11-17"
+  "somos-novios": "2026-11-17",
+  "isnt-it-romantic": "2026-11-17",
+  "dormir-contigo": "2026-11-17",
+  "no-me-platiques-mas": "2026-11-17"
  },
  "nights": [
   {
@@ -124,7 +127,10 @@
     "The Christmas Song (and on Key Finder)",
     "So I Could Find My Way (and on Key Finder)",
     "In Over My Head (and on Key Finder)",
-    "Somos novios (and on Key Finder)"
+    "Somos novios (and on Key Finder)",
+    "Isn't It Romantic (and on Key Finder)",
+    "Dormir contigo (and on Key Finder)",
+    "No me platiques más (and on Key Finder)"
    ],
    "fixes": [
     "Fret Finder, I'll Be Seeing You, guitar and singer's tracks (intro, bars 1-9, 31, 60-61): the rolled chords no longer ring on under the next chord on the same string",
@@ -134,7 +140,9 @@
     "Fret Finder, There Will Never Be Another You, bars 15 and 47: the falling line on the G string and the G♭ sound; bar 31: the F to E on the B string sounds; bar 62: the note no longer says his voice goes to A",
     "Fret Finder, Dormir contigo, Don't Get Around Much Anymore, Isn't It Romantic, Misty, 1897 Rag, Moonglow, Something Stupid, Someone to Watch Over Me, You'll Never Know: notes no longer ring on under a new note on the same string (all in the last bars; You'll Never Know also in bars 4-9)",
     "The review tool reads chord names written with ° and ø, and the frets of harmonics and runs in a bar's note",
-    "Fret Finder, So I Could Find My Way: C♯7 over G♯ sounds its E♯ (bars 25, 29, 49, 53), B minor 7 its D (23, 47), F♯ minor add 9 its A (56); the guitar and singer's tracks played again"
+    "Fret Finder, So I Could Find My Way: C♯7 over G♯ sounds its E♯ (bars 25, 29, 49, 53), B minor 7 its D (23, 47), F♯ minor add 9 its A (56); the guitar and singer's tracks played again",
+    "Fret Finder, Dormir contigo, bar 10: E to E suspended on beats 3-4; bars 18 and 34: E9 to E9 suspended, as the record's band plays them under his held A",
+    "Fret Finder, Dormir contigo bar 33 and No me platiques más bars 8 and 65: the one-beat chords sound whole"
    ],
    "not_changed": [
     "E♭ minor 7 and 9 under his F, B♭ minor 7 under his C, C minor 7 under his D: the melody's own 9th over the song's chord",
@@ -153,7 +161,8 @@
     "I Cover the Waterfront, bars 22-23 (and I Can't Get Started bar 18): where he holds a chord's 13th (D♯ over F♯7, A♯ over C♯7), the grip's 7th sits a half step above him for up to 1.4 s. Leave the 7th out there, or put it below him?",
     "Key Finder, all songs: the left hand's shell puts the 7th right where a baritone sings (Emaj7's D♯ under Chet's E for about five seconds in Everything Happens to Me). Root and 5th in the left hand where the shell's 7th is a half step from him?",
     "The Christmas Song: C minor 6 has four grips, C13 and D minor three each, often in the same part. One grip each?",
-    "Key Finder, every song: where the beginner chord's 5th sits a half step from a note he holds (A♭7's E♭ under D in I'll Be Seeing You; G7's D under his E♭ in bars 13–14 of The Christmas Song), leave the 5th out. The others are 7ths and roots against his notes, which the left-hand question covers in part"
+    "Key Finder, every song: where the beginner chord's 5th sits a half step from a note he holds (A♭7's E♭ under D in I'll Be Seeing You; G7's D under his E♭ in bars 13–14 of The Christmas Song), leave the 5th out. The others are 7ths and roots against his notes, which the left-hand question covers in part",
+    "Isn't It Romantic, bars 5 and 13: Rod holds C♯ against the open D of D major 7 for half a second to a second as he moves on. Your Where or When rule says take the root out there (F♯ minor 7). Do it?"
    ]
   }
  ]

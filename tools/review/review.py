@@ -197,6 +197,13 @@ def plays_report(D):
 
 
 # ---------------- the singer
+def tidy(work):
+    """the voice and its salience take 100 MB a song; only the pitch tracks are kept (17 Nov: the disk filled)"""
+    for f in ('v.f32', 'v_sal.npy'):
+        try: os.remove(work + f)
+        except FileNotFoundError: pass
+
+
 def unlock(src, out):
     subprocess.run(['node', SP + 'unlock.mjs', src, out], check=True, capture_output=True)
 
@@ -223,7 +230,7 @@ def voice_of(slug, tr, work):
     sep = work + tr['key'] + '-voc.wav'          # a voice separated from the locked track, when the track has more than guitar and voice
     if os.path.exists(sep):
         read_wav(sep).astype(np.float32).tofile(work + 'v.f32')
-        subprocess.run(['python3', '/home/claude/lafa/work/f0p.py', work + 'v.f32', work + 'v_'], check=True, capture_output=True)
+        subprocess.run(['python3', '/home/claude/lafa/work/f0p.py', work + 'v.f32', work + 'v_'], check=True, capture_output=True); tidy(work)
         return (0.0, 1.0), None
     mixp = work + 'mix.mp3'
     if lk[0][1].endswith('.locked'): unlock(d + lk[0][1], mixp)
@@ -235,7 +242,7 @@ def voice_of(slug, tr, work):
     v = mix - a * g
     left = float(np.sqrt(np.mean(v ** 2)) / np.sqrt(np.mean(mix ** 2)))
     v.astype(np.float32).tofile(work + 'v.f32')
-    subprocess.run(['python3', '/home/claude/lafa/work/f0p.py', work + 'v.f32', work + 'v_'], check=True, capture_output=True)
+    subprocess.run(['python3', '/home/claude/lafa/work/f0p.py', work + 'v.f32', work + 'v_'], check=True, capture_output=True); tidy(work)
     return (a, left), None
 
 
@@ -435,7 +442,7 @@ def kf_report(slug, voice=True):
     a = float(np.dot(mix, p) / np.dot(p, p)); v = mix - a * p
     left = float(np.sqrt(np.mean(v ** 2)) / np.sqrt(np.mean(mix ** 2)))
     v.astype(np.float32).tofile(work + 'v.f32')
-    subprocess.run(['python3', '/home/claude/lafa/work/f0p.py', work + 'v.f32', work + 'v_'], check=True, capture_output=True)
+    subprocess.run(['python3', '/home/claude/lafa/work/f0p.py', work + 'v.f32', work + 'v_'], check=True, capture_output=True); tidy(work)
     seg, off = sung_segments(work)
     rep.append(('kf', '-', 'voice', f"piano taken out at ×{a:.3f}, {left:.0%} left as voice; tuning {off:+.2f}; {len(seg)} held notes"))
     bybar = collections.defaultdict(float); ex = collections.defaultdict(list)
