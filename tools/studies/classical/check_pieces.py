@@ -16,7 +16,8 @@ for k in SR.PARTS[part]:
     want = {}
     for t, du, ms, v in P['notes']:
         want.setdefault(Fr(t) * 4, set()).add(ms + sh)
-    bars, _ = PC.piece_bars(CS.M + CS.T[k], k, fixes=S.get('fixes', ()), maxf=S.get('maxf', 12), shift=sh)
+    TUN = S.get('tuning', [40, 45, 50, 55, 59, 64])
+    bars, _ = PC.piece_bars(CS.M + CS.T[k], k, tuning=TUN, fixes=S.get('fixes', ()), maxf=S.get('maxf', 12), shift=sh)
     fixed = {(Fr(ft), w, r) for ft, w, r in S.get('fixes', ())}
     for ft, w, r in fixed:
         if ft in want and w in want[ft]: want[ft].discard(w); want[ft].add(r)
@@ -30,7 +31,7 @@ for k in SR.PARTS[part]:
                 strs = [s for s, f in g]
                 if len(strs) != len(set(strs)): probs.append(f'{B["label"]}: two notes on one string')
                 if any(not 0 <= f <= S.get('maxf', 12) for s, f in g): probs.append(f'{B["label"]}: fret out of range')
-                if g: got.setdefault(t, set()).update(OPEN[6 - s] + f for s, f in g)
+                if g: got.setdefault(t, set()).update(TUN[6 - s] + f for s, f in g)
                 t += Fr(d).limit_denominator(96)
         if abs((t - t0) - Fr(B['beats']).limit_denominator(96)) > Fr(1, 96): probs.append(f'{B["label"]}: bar length')
     if got != want:
@@ -38,7 +39,7 @@ for k in SR.PARTS[part]:
         bad = [x for x in ks if got.get(x) != want.get(x)]
         probs.append(f'{k}: {len(bad)} onsets differ from the source, first at beat {bad[0]}: {sorted(got.get(bad[0], []))} vs {sorted(want.get(bad[0], []))}')
     lo = min(m for s in want.values() for m in s)
-    if lo < 40: probs.append(f'{k}: a note below the low E ({lo})')
+    if lo < TUN[0]: probs.append(f'{k}: a note below the lowest string ({lo})')
     print(k, 'bars', len(bars), 'onsets', len(want), 'range', lo, max(m for s in want.values() for m in s))
 print('\n'.join(probs) if probs else 'all good')
 sys.exit(1 if probs else 0)

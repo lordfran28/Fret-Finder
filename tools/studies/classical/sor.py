@@ -20,10 +20,13 @@ STUDIES = {
     'XVII': dict(op='Op. 6 No. 11', key='E minor', time='4/4', idea='Triplet arpeggios from start to end, with the tune in the top or in the bass of each group.'),
     'XV': dict(op='Op. 35 No. 16', key='D minor', time='3/4', idea='Thirds and sixths in a dotted rhythm, an eighth, a rest, a sixteenth, each figure leaning on a grace note, over a bass that keeps time: the two-note shapes must stay clean and short.',
                src='The source on Mutopia opens with a quarter of silence to make room for the first grace note; here the study starts on its first beat.'),
+    'XIII': dict(op='Op. 6 No. 9', key='D minor', time='4/4', tuning=[38, 45, 50, 55, 59, 64],
+                 idea='Thirds and sixths in eighths over a bass, the low string tuned down to D so the bass can ring on the open D under the whole study: keep the two-note shapes even and let the bass hold.',
+                 src='Tune the low E string down to D (an octave below the open D string) before you play.'),
     'XIX': dict(op='Op. 29 No. 13', key='B♭ major', time='2/4', idea='Sextuplet arpeggios in sixteenths, six to a beat, with a slow tune in the middle voice and a bass under it: the tune has to sing through the arpeggio.',
                 shift=-12, src='Mutopia’s file writes the guitar part an octave up without the small 8 under the clef; it sounds here where the guitar plays it.'),
 }
-PARTS = {'1': ['I', 'II', 'III', 'IV', 'V', 'VI'], '2': ['XI', 'XII'], '3': ['XIV', 'XVII'], '4': ['XV', 'XIX']}
+PARTS = {'1': ['I', 'II', 'III', 'IV', 'V', 'VI'], '2': ['XI', 'XII'], '3': ['XIV', 'XVII'], '4': ['XV', 'XIX'], '5': ['XIII']}
 
 
 def build(part, audio):
@@ -31,7 +34,7 @@ def build(part, audio):
     ex = []
     for k in keys:
         S = STUDIES[k]
-        bars, P = PC.piece_bars(CS.M + CS.T[k], k, fixes=S.get('fixes', ()), maxf=S.get('maxf', 12), shift=S.get('shift', 0))
+        bars, P = PC.piece_bars(CS.M + CS.T[k], k, tuning=S.get('tuning', PC.F.STD), fixes=S.get('fixes', ()), maxf=S.get('maxf', 12), shift=S.get('shift', 0))
         wide = set(PC.wide_stretches(bars))
         for B in bars:
             B['note'] = ''
@@ -45,13 +48,21 @@ def build(part, audio):
     sections = [dict(id='studies', title='Sor’s studies, Segovia’s numbering', part='Études', ex=ex)]
     slug = f'sor-{part}'
     out = f'/home/claude/studies/classical/out/{slug}/'; os.makedirs(out, exist_ok=True)
-    nums = {'1': 'I–VI', '2': 'XI–XII', '3': 'XIV and XVII', '4': 'XV and XIX'}[part]
+    nums = {'1': 'I–VI', '2': 'XI–XII', '3': 'XIV and XVII', '4': 'XV and XIX', '5': 'XIII, in drop D'}[part]
     entry = dict(key=slug.replace('-', ''), title=f'Sor’s studies, {nums}', eyebrow='Exercises · Fernando Sor',
                  meta=[['Style', 'Classical studies'], ['From', 'Segovia’s twenty, Sor’s own notes'], ['Tempo', f'{SP.BPM} a minute, slow']],
                  lede='Sor’s studies from Segovia’s selection, complete and in playing order, each note on the string and fret shown.',
                  contents_intro='Every study on this page, in order. Each is complete, with its repeats written out.',
                  track_title='The studies, one after another', track_intro='Every bar in order, slowly. Tap a bar’s number to play from there; the speeds below the player slow it further.',
                  track_pattern='Sor’s notes, our fingering. Bar numbers are the study’s number, then the bar.')
+    tun = {tuple(STUDIES[k].get('tuning', PC.F.STD)) for k in keys}
+    assert len(tun) == 1, 'one tuning to a page'
+    tun = list(tun.pop())
+    if tun != PC.F.STD:
+        entry['tuning'] = tun
+        entry['tuning_names'] = ['D' if m == 38 else 'E' for m in tun[:1]] + ['A', 'D', 'G', 'B', 'e']
+        entry['meta'] = entry['meta'] + [['Tuning', 'low string down to D']]
+    SP.TUNING = tun if tun != PC.F.STD else None
     bars, toc = SP.assemble(sections)
     starts, spb = SP.times(bars)
     if audio:

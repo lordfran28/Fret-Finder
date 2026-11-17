@@ -67,7 +67,20 @@ def times(bars, gap=0.0):
     return out, spb
 
 
+TUNING = None          # the open strings, low E string first, for a page in another tuning (drop D: [38, 45, 50, 55, 59, 64])
+
+
 def render(bars, starts, spb, out_mp3):
+    import core
+    saved = core.OPEN[:]
+    if TUNING: core.OPEN[:] = TUNING
+    try:
+        return _render(bars, starts, spb, out_mp3)
+    finally:
+        core.OPEN[:] = saved
+
+
+def _render(bars, starts, spb, out_mp3):
     rng = np.random.default_rng(7)
     ev = []
     for B in bars:
@@ -185,7 +198,8 @@ def page(entry, bars, toc, starts, spb, out_html, audio_name):
     key = entry['key']
     cfg = dict(bars=bars, timing=TIM, key_pc=entry.get('key_pc', 5), key_name=entry.get('key_name', 'F'), flats=True, spb=spb, meter=4,
                song=dict(id=key, singer='', sharps=False, words=False, title=entry['title'], artist=entry['eyebrow'], key='', tonic='', meter=4, bpm=BPM,
-                         meta=entry['meta'], lede=entry['lede'], tuning_note='', lyrics_note='', map_intro='', cues=False),
+                         meta=entry['meta'], lede=entry['lede'], tuning_note='', lyrics_note='', map_intro='', cues=False,
+                         **({'tuning': entry['tuning'], 'tuning_names': entry['tuning_names']} if entry.get('tuning') else {})),
                moves=[], lessons={}, roadmap=[], src={}, track=dict(key=key, title=entry['track_title'], jump='Exercises', audio=audio_name,
                                                                     intro=entry['track_intro'], pattern=entry['track_pattern']),
                words=False, cues=False, extra_src=[], lib_notes={}, src_note='', sec_notes={}, slots=[], seqs={}, ie=[], studio=[],
