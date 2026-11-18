@@ -40,6 +40,18 @@ STUB = ('<!doctype html><html lang="en"><head><meta charset="utf-8">'
         '<script src="../../assets/locked-page.js"></script></head><body></body></html>\n')
 
 
+def tab_look(html):
+    """A tab page (<meta name="ff-page" content="tab">) plays and lights itself: it gets Fret Finder's colours and
+    type and the way back, and none of the scripts made for the arrangement pages' diagrams."""
+    shelf = '<link rel="stylesheet" href="../../assets/shelf.css">'
+    bar = ('<header class="ff-shelf"><a href="../../">&larr; Fret Finder</a>'
+           '<span class="ff-mark">Classical</span></header>')
+    html = html.replace(shelf, "").replace("</head>", shelf + "</head>", 1)
+    html = re.sub(r'<header class="ff-shelf">.*?</header>', "", html, flags=re.S)
+    m = re.search(r"<body[^>]*>", html)
+    return html[:m.end()] + bar + html[m.end():]
+
+
 def piece_id(slug):
     return hashlib.sha256(("fret-finder classical " + slug).encode()).hexdigest()[:12]
 
@@ -71,8 +83,10 @@ def write_piece(slug, html, media, meta):
         shutil.rmtree(out)
     os.makedirs(out)
     plain = [n for n in media if not n.endswith(".locked")]
-    # every track is locked, so every page needs assets/voice.js to play them (some older pages had no locked track)
-    html = lock_tracks(shelf_voice.add_voice_script(html), [n for n in plain if n.lower().endswith((".mp3", ".m4a"))])
+    # every track is locked, so every page with a track needs assets/voice.js to play them; a tab page with no track
+    # makes its own sound from the guitar recordings and needs nothing
+    if plain or not re.search(r'<meta name="ff-page" content="tab">', html):
+        html = lock_tracks(shelf_voice.add_voice_script(html), [n for n in plain if n.lower().endswith((".mp3", ".m4a"))])
     files = []
     for n, p in media.items():
         if n.endswith(".locked"):
@@ -129,7 +143,8 @@ def main():
     os.makedirs(DIR, exist_ok=True)
 
     if a.cmd == "add":
-        html = shelf_look(open(a.page, encoding="utf-8").read(), "guitar")
+        html = open(a.page, encoding="utf-8").read()
+        html = tab_look(html) if re.search(r'<meta name="ff-page" content="tab">', html) else shelf_look(html, "guitar")
         media = {}
         for spec in a.file:
             n, _, p = spec.partition("=")
