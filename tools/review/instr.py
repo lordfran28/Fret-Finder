@@ -64,9 +64,12 @@ def scan(slug):
             else: runs.append([i])
         for r in runs:
             if len(r) < 2: continue
-            nobass, held, att, static = [], [], [], []
+            nobass, held, att, static, cont = [], [], [], [], []
             for i in r:
                 b = bars[i]; x = 0.0; ev = []
+                if len(b['items']) == 1 and b['items'][0][0] == 'W' and i > 0 and (any(it[0] in ('K', 'C', 'T') for it in bars[i - 1]['items']) or bars[i - 1]['label'] in cont):
+                    # the grip carries on from the bar before: the page draws no new diagram, the track plays the pattern again
+                    cont.append(b['label']); continue
                 for it in b['items']:
                     for o, ss in hits(it): ev.append((x + o, ss))
                     x += beats(it)
@@ -78,7 +81,7 @@ def scan(slug):
                 if len(low) <= 1 and nb >= 3: static.append(b['label'])
                 att.append(len(ev) / nb)
             rep.append(dict(track=tr['key'], bars=f"{bars[r[0]]['label']}–{bars[r[-1]]['label']}", n=len(r), sec=bars[r[0]].get('sec'),
-                            nobass=nobass, held=held, static=static, att=round(sum(att) / len(att), 2)))
+                            nobass=nobass, held=held, static=static, cont=cont, att=round(sum(att) / len(att), 2) if att else 0.0))
     return rep
 
 
@@ -89,5 +92,5 @@ if __name__ == '__main__':
         except Exception as e: print(s, 'ERR', e); continue
         if rep is None: print(f'{s}: older page, not read'); continue
         for r in rep:
-            flag = ('NO BASS in %d of %d bars' % (len(r['nobass']), r['n']) if r['nobass'] else '') + ('; held only: ' + ','.join(r['held']) if r['held'] else '') + ('; one bass note a bar in %d' % len(r['static']) if r['static'] else '')
+            flag = ('NO BASS in %d of %d bars' % (len(r['nobass']), r['n']) if r['nobass'] else '') + ('; held only: ' + ','.join(r['held']) if r['held'] else '') + ('; one bass note a bar in %d' % len(r['static']) if r['static'] else '') + ('; the bar before carries on (no new diagram, the track repeats it): ' + ','.join(r['cont']) if r['cont'] else '')
             print(f"{s:34s} {r['track']:5s} {r['bars']:>12s} ({r['n']:2d} bars, {r['sec']}) {r['att']:.2f}/beat {flag}")
