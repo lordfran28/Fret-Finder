@@ -54,7 +54,11 @@
   "paul-dresser-1898-lullaby": "2026-11-17",
   "bach-prelude-and-fugue-bwv-867": "2026-11-17",
   "faure-pavane": "2026-11-17",
-  "mozart-deh-vieni-alla-finestra": "2026-11-17"
+  "mozart-deh-vieni-alla-finestra": "2026-11-17",
+  "kf:are-you-lonesome-tonight": "2026-11-17",
+  "kf:love-me-tender": "2026-11-17",
+  "kf:white-christmas": "2026-11-17",
+  "kf:apres-un-reve": "2026-11-17"
  },
  "nights": [
   {
@@ -217,7 +221,8 @@
     "1898 Lullaby",
     "Bach, Prelude and Fugue BWV 867",
     "Pavane",
-    "Deh vieni alla finestra"
+    "Deh vieni alla finestra",
+    "Key Finder only: Are You Lonesome Tonight, Love Me Tender, White Christmas, Après un rêve"
    ],
    "fixes": [
     "The review tool reads chord names written maj7(6)",
@@ -234,7 +239,8 @@
     "The review reads It Had to Be You's older page",
     "Fret Finder, Après un rêve: one-beat chords sound all four of Fauré's voices (27 bars; D half-diminished over G, bars 7 and 22, now has its D). Guitar, voice and trumpet tracks played again",
     "Fret Finder, Soave sia il vento: B minor and B minor 7 sound their D; one-beat chords that lacked their root sound it (D over A, E minor, B7 over A; bars 12, 17, 21, 24, 29, 30, 32, 34, 36). Both tracks played again",
-    "Fret Finder, 1898 Lullaby, bars 12 and 38: G7 over C sounds its B. Both tracks played again"
+    "Fret Finder, 1898 Lullaby, bars 12 and 38: G7 over C sounds its B. Both tracks played again",
+    "The review checks songs that are only on Key Finder, and Après un rêve under its Key Finder name"
    ],
    "not_changed": [
     "For All We Know and What a Difference a Day Made: no grip, track or name wrong; the rubs are under a second, or his note slides between two",
@@ -256,7 +262,8 @@
     "It Had to Be You: nothing wrong; E♭ minor 9 in the solo's bar 15 is E♭ and F alone because the trumpet plays its G♭",
     "Viva la Vida: the rubs are under a second, the cover's own E and B held over the loop",
     "1897 Rag: nothing wrong but the 7ths question (E7 in bars 39 and 59)",
-    "Bach, Pavane and Deh vieni: every note checked against its name and string; Bach's octave moves are all in the bars the page lists; Deh vieni bars 9 and 29 end on the G string's 2nd fret after the 7th position, the hand's own move into the next bar"
+    "Bach, Pavane and Deh vieni: every note checked against its name and string; Bach's octave moves are all in the bars the page lists; Deh vieni bars 9 and 29 end on the G string's 2nd fret after the 7th position, the hand's own move into the next bar",
+    "Key Finder's Are You Lonesome Tonight and Love Me Tender: their singer's track is the record itself, band and all, so the rub list can't be trusted there; every shape is in its chord. White Christmas: rubs under a second. Après un rêve on Key Finder: every shape in its chord, no singer's track"
    ],
    "proposals": [
     "I've Never Been in Love Before, bar 4: the E9 has no G♯, its 3rd (0x2x32). A finger on the G string's 1st fret gives it (0x2132) and keeps the falling line's E. The track was made in conversation and its build isn't kept here, so like Barquito it waits for your yes",

@@ -431,8 +431,11 @@ def cp_report(html):
 KF = '/home/claude/key-finder/songs/'
 
 
+KF_SLUG = {'faure-apres-un-reve': 'apres-un-reve'}      # the same song under another name on Key Finder
+
+
 def kf_load(slug):
-    h = open(KF + slug + '/index.html', encoding='utf-8').read()
+    h = open(KF + KF_SLUG.get(slug, slug) + '/index.html', encoding='utf-8').read()
     return json.loads(re.search(r'<script id="kf-data"[^>]*>(.*?)</script>', h, re.S).group(1))
 
 
@@ -463,6 +466,7 @@ def kf_report(slug, voice=True):
         if len(v) > 1: rep.append(('kf', '-', 'one shape', f"{c} has {len(v)} shapes"))
     if not voice: return rep
     work = SP + 'night/kv_' + slug + '/'; os.makedirs(work, exist_ok=True)
+    slug = KF_SLUG.get(slug, slug)
     lk = [f for f in os.listdir(KF + slug) if f.endswith('.mp3.locked')]
     pn = [f for f in os.listdir(KF + slug) if f.endswith('-piano.mp3')]
     if not lk or not pn: return rep + [('kf', '-', 'voice', 'no singer track')]
@@ -488,6 +492,11 @@ def kf_report(slug, voice=True):
 
 if __name__ == '__main__':
     slug = sys.argv[1]
+    if '--kf' in sys.argv and not os.path.exists(f'{ROOT}/songs/{slug}/index.html'):
+        # a song only on Key Finder (Love Me Tender, White Christmas, ...): its own checks alone
+        print(f'== {slug}: on Key Finder only')
+        for k, lab, kind, msg in kf_report(slug, '--voice' in sys.argv): print(f'[{kind:8s}] {k:>5s} {lab:>9s}  {msg}', flush=True)
+        sys.exit()
     D, html = load(slug)
     rep = grips_report(D) + plays_report(D) + notes_report(D) + cp_report(html)
     if '--voice' in sys.argv: rep += voice_report(D, html, slug)
