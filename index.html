@@ -126,7 +126,27 @@ button.addlink{border:0;background-color:transparent;margin:0}
 .song-main{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
 .song-title{font-family:var(--display);font-size:1.35rem;line-height:1.15;overflow-wrap:anywhere}
 .song-meta{font-size:.95rem;color:var(--muted);font-variant-numeric:lining-nums}
-.studies{margin-top:28px;display:flex;flex-direction:column;gap:10px}
+/* Categories: a row above the list on a phone, a slim column beside it on a wide screen (as on Valve Finder) */
+.shelf{display:flex;flex-direction:column;gap:12px}
+.shelf-main{display:flex;flex-direction:column;gap:10px;min-width:0}
+.cats{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 18px;margin-top:-2px}
+.cat{display:inline-flex;align-items:baseline;gap:6px;padding:3px 0 4px;border:0;border-radius:0;cursor:pointer;color:var(--ink);font:400 1.15rem/1.2 var(--display);
+  background:linear-gradient(currentColor,currentColor) left bottom/0 1px no-repeat;opacity:.7;-webkit-tap-highlight-color:transparent;
+  transition:opacity .5s ease,background-size .5s ease,color .4s ease}
+.cat:hover{opacity:1}
+.cat[aria-pressed="true"]{color:var(--accent);opacity:1;background-size:100% 1px}
+.cat .n{font:400 .88rem/1 var(--body);color:var(--muted);font-variant-numeric:lining-nums}
+@media (max-width:520px){.cat .n{display:none}}
+@media (min-width:1180px){
+  .shelf{display:grid;grid-template-columns:11rem minmax(0,1fr);grid-template-rows:auto auto;column-gap:24px;row-gap:12px;margin-left:calc(-11rem - 24px)}
+  .shelf > #searchwrap{grid-column:2;grid-row:1}
+  .shelf > .shelf-main{grid-column:2;grid-row:2}
+  .cats{grid-column:1;grid-row:1 / 3;align-self:start;position:sticky;top:18px;flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:2px;margin:0;
+    padding:10px 14px 12px;background:var(--surface);border:1px solid var(--line);border-radius:3px}
+  .cat{justify-content:space-between}
+}
+.studies{display:flex;flex-direction:column;gap:10px}
+.study-style:first-child{margin-top:0}
 .studies-h{font-family:var(--display);font-size:1.6rem;font-weight:400;margin:0}
 .study-style{font-size:.95rem;font-weight:600;font-variant-caps:all-small-caps;letter-spacing:.07em;color:var(--muted);margin:8px 0 0}
 .status{font-size:.95rem;font-weight:600;font-variant-caps:all-small-caps;letter-spacing:.07em;padding:1px 9px 3px;border-radius:2px;white-space:nowrap;flex:0 0 auto}
@@ -290,20 +310,27 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
     <input id="file" type="file" class="vh" multiple>
     <p class="syncline"><span id="syncdot" class="dot" aria-hidden="true" hidden></span><span id="synctext" hidden></span></p>
     <p id="libmsg" class="error" role="alert" hidden></p>
-    <div id="searchwrap" class="field" hidden><label for="search" class="vh">Search the songs</label><input id="search" type="search" placeholder="Search" autocomplete="off"></div>
-    <ul id="songlist" class="songlist"></ul>
-    <p id="nomatch" class="small" hidden>No songs match that search.</p>
-    <div id="empty" class="empty" hidden>
-      <h3>Nothing here yet</h3>
+    <div class="shelf">
+      <nav id="cats" class="cats" aria-label="Categories" hidden></nav>
+      <div id="searchwrap" class="field" hidden><label for="search" class="vh">Search</label><input id="search" type="search" placeholder="Search" autocomplete="off"></div>
+      <div class="shelf-main">
+        <section id="contemporary" aria-label="Contemporary">
+          <ul id="songlist" class="songlist"></ul>
+          <div id="empty" class="empty" hidden>
+            <h3>Nothing here yet</h3>
+          </div>
+        </section>
+        <section id="classical" class="studies" aria-labelledby="classical-h" hidden>
+          <h2 id="classical-h" class="vh">Classical</h2>
+          <div id="classlist"></div>
+        </section>
+        <section id="studies" class="studies" aria-labelledby="studies-h" hidden>
+          <h2 id="studies-h" class="vh">Exercises</h2>
+          <div id="studylist"></div>
+        </section>
+        <p id="nomatch" class="small" hidden>Nothing matches that search.</p>
+      </div>
     </div>
-    <section id="classical" class="studies" aria-labelledby="classical-h" hidden>
-      <h2 id="classical-h" class="studies-h">Classical</h2>
-      <div id="classlist"></div>
-    </section>
-    <section id="studies" class="studies" aria-labelledby="studies-h" hidden>
-      <h2 id="studies-h" class="studies-h">Exercises</h2>
-      <div id="studylist"></div>
-    </section>
 
     <footer class="foot">
       <p class="credits">Watteau, <a href="https://www.metmuseum.org/art/collection/search/437926" target="_blank" rel="noopener">Mezzetin</a> · Venetian damask, <a href="https://www.metmuseum.org/art/collection/search/216471" target="_blank" rel="noopener">The Met</a> · Guitar recordings, <a href="https://theremin.music.uiowa.edu/MISguitar.html" target="_blank" rel="noopener">University of Iowa</a> · For the trumpet, <a href="https://lordfran28.github.io/Valve-Finder/">Valve Finder</a></p>
@@ -1961,9 +1988,7 @@ function renderLibrary(){
   /* The shelf: only the arrangements made in conversation are listed. */
   var list = archive.filter(function(m){ return m.kind === "arrangement" && m.page; }).map(function(m){ return {meta: m}; });
   list.sort(function(a, b){ return String(a.meta.title).localeCompare(String(b.meta.title), undefined, {sensitivity: "base"}); });
-  var q = $("search").value.trim().toLowerCase();
-  $("searchwrap").hidden = list.length < 6;
-  var shown = q ? list.filter(function(x){ return String(x.meta.title).toLowerCase().indexOf(q) >= 0; }) : list;
+  var shown = list;
   $("songlist").innerHTML = shown.map(function(x){
     var bits = [];
     var d = fmtDate(x.meta.addedAt); if (d) bits.push("Added " + d);
@@ -1973,14 +1998,48 @@ function renderLibrary(){
       '</span><span class="song-meta">' + esc(bits.join(" · ")) + '</span></span></a></li>';
   }).join("");
   $("empty").hidden = list.length > 0;
-  $("nomatch").hidden = !(list.length && !shown.length);
+  renderCats();
 }
+/* Categories, as on Valve Finder: the songs he plays are Contemporary, the main list; Classical (only where the singer
+   key is) and Exercises sit beside it. The choice is kept on the device. */
+var CATS = [{id: "contemporary", label: "Contemporary", box: "contemporary"}, {id: "classical", label: "Classical", box: "classical"}, {id: "exercises", label: "Exercises", box: "studies"}];
+var libCat = (function(){ try { return localStorage.getItem("ff.cat") || "contemporary"; } catch(e){ return "contemporary"; } })();
+function renderCats(){
+  var n = {contemporary: (archive || []).filter(function(m){ return m.kind === "arrangement" && m.page; }).length, classical: (classical || []).length, exercises: (studies || []).length};
+  var cur = n[libCat] ? libCat : "contemporary";
+  var nav = $("cats");
+  var shown = CATS.filter(function(c){ return n[c.id]; });
+  nav.hidden = shown.length < 2;
+  nav.innerHTML = shown.map(function(c){
+    return '<button type="button" class="cat" data-cat="' + c.id + '" aria-pressed="' + (c.id === cur) + '">' + esc(c.label) + '<span class="n">' + n[c.id] + "</span></button>";
+  }).join("");
+  CATS.forEach(function(c){ var b = $(c.box); if (b) b.hidden = c.id !== cur || !n[c.id]; });
+  $("searchwrap").hidden = n[cur] < 6;
+  applySearch(cur);
+}
+function applySearch(cur){
+  /* the search looks through the list that is open */
+  var q = $("search").value.trim().toLowerCase(), box = $((CATS.filter(function(c){ return c.id === cur; })[0] || CATS[0]).box), hits = 0;
+  if (!box) return;
+  box.querySelectorAll("li").forEach(function(li){ var ok = !q || li.textContent.toLowerCase().indexOf(q) >= 0 || (li.getAttribute("data-k") || "").indexOf(q) >= 0; li.hidden = !ok; if (ok) hits++; });
+  box.querySelectorAll("ul.songlist").forEach(function(ul){
+    var any = Array.prototype.some.call(ul.children, function(li){ return !li.hidden; });
+    ul.hidden = !any; var h = ul.previousElementSibling; if (h && h.classList.contains("study-style")) h.hidden = !any;
+  });
+  $("nomatch").hidden = !(q && !hits);
+}
+$("cats").addEventListener("click", function(e){
+  var b = e.target.closest("[data-cat]"); if (!b) return;
+  libCat = b.getAttribute("data-cat");
+  try { localStorage.setItem("ff.cat", libCat); } catch(err){}
+  renderCats();
+  var again = $("cats").querySelector('[data-cat="' + libCat + '"]'); if (again) again.focus();
+});
 var studies = [];
 function fetchStudies(){ return fetch(siteUrl("studies/index.json"), {cache: "no-store"}).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }); }
 function renderStudies(){
   /* The Exercises entries, grouped by style, A to Z. */
   var box = $("studies"); if (!box) return;
-  box.hidden = !studies.length;
   var groups = {};
   studies.forEach(function(m){ (groups[m.style] = groups[m.style] || []).push(m); });
   $("studylist").innerHTML = Object.keys(groups).sort(function(a, b){ return a.localeCompare(b, undefined, {sensitivity: "base"}); }).map(function(g){
@@ -1989,6 +2048,7 @@ function renderStudies(){
       return '<li><a class="song" href="' + esc(siteUrl(m.page).replace(/\?v=\d+$/, "")) + '"><span class="song-main"><span class="song-title">' + esc(m.title) + '</span></span></a></li>';
     }).join("") + '</ul>';
   }).join("");
+  renderCats();
 }
 var classical = [];
 function loadClassical(){
@@ -2008,7 +2068,6 @@ function loadClassical(){
 function renderClassical(){
   /* By composer, A to Z, and each composer's pieces A to Z; the composer stands over them, not in each title. */
   var box = $("classical"); if (!box) return;
-  box.hidden = !classical.length;
   var groups = {};
   classical.forEach(function(m){ var c = m.composer || "Others"; (groups[c] = groups[c] || []).push(m); });
   $("classlist").innerHTML = Object.keys(groups).sort(function(a, b){ return a.localeCompare(b, undefined, {sensitivity: "base"}); }).map(function(g){
@@ -2018,10 +2077,11 @@ function renderClassical(){
     }).sort(function(a, b){ return a.t.localeCompare(b.t, undefined, {sensitivity: "base", numeric: true}); });
     return '<h3 class="study-style">' + esc(g) + '</h3><ul class="songlist">' + items.map(function(x){
       var bits = [x.m.what || "Guitar"]; if (x.m.arranger) bits.push("arr. " + x.m.arranger);
-      return '<li><a class="song" href="' + esc(siteUrl(x.m.page).replace(/\?v=\d+$/, "")) + '"><span class="song-main"><span class="song-title">' + esc(x.t) +
+      return '<li data-k="' + esc(String(g).toLowerCase()) + '"><a class="song" href="' + esc(siteUrl(x.m.page).replace(/\?v=\d+$/, "")) + '"><span class="song-main"><span class="song-title">' + esc(x.t) +
         '</span><span class="song-meta">' + esc(bits.join(" · ")) + '</span></span></a></li>';
     }).join("") + '</ul>';
   }).join("");
+  renderCats();
 }
 function syncLibrary(){
   /* Songs transcribed on this device before the shelf are cleared, so only the shelf shows. */
@@ -2324,7 +2384,7 @@ $("addtoggle").addEventListener("click", function(){ openDrop($("dropbox").hidde
   window.addEventListener("dragover", function(e){ if (hasFiles(e)) e.preventDefault(); });
   window.addEventListener("drop", function(e){ if (hasFiles(e)) e.preventDefault(); });
 })();
-$("search").addEventListener("input", renderLibrary);
+$("search").addEventListener("input", function(){ applySearch(libCat); });
 ["tuning","capo","oct","repeats","comp"].forEach(function(id){ $(id).addEventListener("change", function(){ render(); scheduleSave(); }); });
 $("singon").addEventListener("change", scheduleSave);
 $("roles").addEventListener("change", function(e){
