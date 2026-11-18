@@ -5,7 +5,11 @@
  "files": [
   "index.html",
   "iwals-guitar.mp3",
-  "iwals-voice.mp3.locked"
+  "iwals-voice.mp3.locked",
+  "real.html",
+  "real.html.locked",
+  "iwals-guitar-real.mp3.locked",
+  "iwals-voice-real.mp3.locked"
  ],
  "addedAt": "2026-11-18T21:22:18Z"
 }
