@@ -372,6 +372,20 @@
     "Something Stupid, bar 51; Dormir contigo, bar 61; You Don't Mess Around with Jim: the notes left out under his singing, as before",
     "Sería fantástico's 7ths: its picking was built by hand against the record's guitar; left for its own review"
    ]
+  },
+  {
+   "date": "2026-11-18",
+   "song": "Instrumentals: the bass on 1 and 3",
+   "changed": [
+    "Where or When, bars 40–50: the instrumental's octave line over a bass on 1 and 3 and on every chord change, open A where it fits; the octave notes named for their chord",
+    "There Will Never Be Another You, bars 33–48 (you rest): the thumb on 1 and 3 under the broken chords",
+    "Sería fantástico: the intro, the interlude and the ending bring the bass back on beat 3",
+    "Viva la Vida: both interludes, the bass on 1 and 3 (quarters, then eighths in the Bach-prelude way), each chord keeping its 3rd"
+   ],
+   "kept": [
+    "I'll Be Seeing You, Somos novios, In Over My Head and Just in Time are built by older engines; their instrumentals are still to do",
+    "Bars with a chord rolled and left to ring (There Will Never Be Another You bar 42, the endings) keep it"
+   ]
   }
  ],
  "leave_alone": [

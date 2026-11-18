@@ -6,6 +6,7 @@ Working tools for the nightly check. Nothing here runs on the site, and the sing
 - `peek.py SLUG TRACK BAR,BAR` prints what the guitar track plays in those bars, note by note, next to the diagram.
 - `site_pages.js`, `site_files.py` and `site_locks.mjs` are the site check: every page at 390 px, every track a playable file that the page names, every locked track opening with the key. They read copies of the live branches in the scratchpad, served by `serve.js`.
 - `build_rings.py BUILD_DIR` runs a song's build without rendering and lists every note still ringing when its string is played again (two notes on one string at once). The kit's renderer now stops them, so this is for tracks made before 17 November.
+- `instr.py` lists every stretch of two bars or more where the voice rests, with how often the guitar strikes and every bar with no bass on beat 1 or 3 (the owner, 17 November: an instrumental always carries a bass line, on 1 and 3 at least, never stiff or empty).
 - `site_mix.py` checks that every singer's track holds the same take as the plain guitar (or piano) track it goes with, so he never hears other chords under the singer than the diagrams show.
 - `LESSONS.md`: every mistake, why it happened and the rule that prevents it.
 - `log.json`: when each song was last reviewed, and what each night found.
