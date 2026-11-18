@@ -189,8 +189,6 @@
     "Still waiting: Jim's G♯; a new singer key word; whether 7ths and 6ths must always sound (C7♭9 in But Not for Me, B♭ minor 6's G)",
     "I Cover the Waterfront, bars 22-23 (and I Can't Get Started bar 18): where he holds a chord's 13th (D♯ over F♯7, A♯ over C♯7), the grip's 7th sits a half step above him for up to 1.4 s. Leave the 7th out there, or put it below him?",
     "Key Finder, all songs: the left hand's shell puts the 7th right where a baritone sings (Emaj7's D♯ under Chet's E for about five seconds in Everything Happens to Me). Root and 5th in the left hand where the shell's 7th is a half step from him?",
-    "The Christmas Song: C minor 6 has four grips, C13 and D minor three each, often in the same part. One grip each?",
-    "Key Finder, every song: where the beginner chord's 5th sits a half step from a note he holds (A♭7's E♭ under D in I'll Be Seeing You; G7's D under his E♭ in bars 13–14 of The Christmas Song), leave the 5th out. The others are 7ths and roots against his notes, which the left-hand question covers in part",
     "Isn't It Romantic, bars 5 and 13: Rod holds C♯ against the open D of D major 7 for half a second to a second as he moves on. Your Where or When rule says take the root out there (F♯ minor 7). Do it?"
    ]
   },
@@ -300,6 +298,24 @@
     "Bar 62 as B7",
     "The ending as E and C"
    ]
+  },
+  {
+   "date": "2026-11-17",
+   "song": "Viva la Vida",
+   "changed": [
+    "The guitar follows the cover's rise and fall (measured on the cover's band alone): rolled chords left to ring in verse 1, the second high part and the last chorus; quarters in the first interlude and verse 2; the broken chords in eighths from the pre-chorus to the second chorus; the whole chord on every beat with the top three strings between in the first high part and the third chorus"
+   ],
+   "kept": [
+    "The grips and the loop",
+    "The three runs where she rests",
+    "The ending"
+   ],
+   "replaced": [
+    "The guitar as it was: broken chords in eighths in every bar"
+   ]
   }
+ ],
+ "leave_alone": [
+  "the-christmas-song"
  ]
 }
