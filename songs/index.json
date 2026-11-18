@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-18T22:13:49Z",
+ "generatedAt": "2026-11-18T22:51:21Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -451,6 +451,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-18T22:13:48Z"
+  },
+  {
+   "id": "when-your-lover-has-gone",
+   "file": "songs/when-your-lover-has-gone/",
+   "page": "songs/when-your-lover-has-gone/",
+   "title": "When Your Lover Has Gone",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-18T22:51:21Z"
   }
  ]
 }

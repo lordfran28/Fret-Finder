@@ -171,7 +171,11 @@
         if (k === "X") { px = it[1]; return; }
         if (k === "W") { t += +it[1] || 0; return; }
         if (k === "H") { cb(t, col++, null, 1); return; }
-        if (k === "C") { px = null; cb(t, col++, null, it[3]); t += it[3]; return; }
+        if (k === "C") {
+          px = null;
+          var sk = (it[4] && it[4].skip) || [], idxC = it[2].map(function (x, i) { return x >= 0 && sk.indexOf(6 - i) < 0 ? i : -1; }).filter(function (i) { return i >= 0; });
+          cb(t, col++, sk.length ? idxC : null, it[3]); t += it[3]; return;
+        }
         if (k === "K") {
           px = null;
           var c = col++, f = it[2], idx = f.map(function (x, i) { return x >= 0 ? i : -1; }).filter(function (i) { return i >= 0; });
