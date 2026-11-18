@@ -2,6 +2,11 @@
 
 Each mistake, why it happened, and the rule (and check) that prevents it. Newest first.
 
+## 17 November 2026 (evening, continued)
+
+- **You'd Be So Nice to Come Home To, the C7 in bar 77 and its grips.** The page called it “the A-shape at the 3rd fret” four times, a CAGED name the owner doesn't use. *Rule:* name a position plainly, by its fret and the string with the root (“barre at the 3rd fret, root on the A string”). *Check:* the night's site check now looks for CAGED shape names on every page (`site_files.py`).
+- **The review's sound check, It Keeps You Runnin'.** Every E13 bar was reported as playing a B that isn't in the diagram. The build plays the diagram exactly; the B was the open low E's own overtone (an octave and a fifth up), which this guitar sound makes louder than the E itself. *Rule:* a note heard but not in the diagram counts only away from the diagram's own overtones. *Check:* `review.py SLUG --sound` (the false B is gone; Barquito's and You'd Be So Nice's real ones still show).
+
 ## 17 November 2026 (evening check, on request)
 
 - **Dormir contigo, bars 10, 18 and 34.** E and E9 on beats 3 and 4 put G♯ a half step under the A that Luis Miguel holds for most of a second there. The record's band leaves the G♯ out (E5 in bar 10, E9 suspended in 18 and 34). *Why:* the chords were read from the chart, which has E and E9. *Rule:* the Fly Me to the Moon rule again: where he holds the note above a chord's 3rd, read the band, and keep the suspension the record plays. *Check:* `review.py --voice` (“rub”), then the band's notes beat by beat.

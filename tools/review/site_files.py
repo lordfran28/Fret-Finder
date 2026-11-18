@@ -25,6 +25,9 @@ for site in ('Fret-Finder', 'Key-Finder'):
                 except ValueError: probs.append(f'{d}/{m}: not playable ({p.stderr.strip()[:80]})')
         sj = root + d + '/song.json'
         if not os.path.exists(sj): probs.append(d + ': no song.json')
+        # no CAGED names (17 Nov: “the A-shape at the 3rd fret” on You'd Be So Nice): positions by fret and string
+        for m in re.finditer(r'\b[CAGED][- ](?:shape|form)\b', html):
+            probs.append(f'{d}: CAGED name “{html[max(0, m.start() - 30):m.end() + 20]}”')
     print('  problems:', len(probs)); [print('   ', p) for p in probs]
 
 # the Exercises entries: every folder listed, every file a page names in its folder, every mp3 playable
@@ -49,6 +52,8 @@ for site in ('Fret-Finder',):
                     if float(p.stdout.strip()) < 5: probs.append(f'{d}/{m}: only {p.stdout.strip()} s')
                 except ValueError: probs.append(f'{d}/{m}: not playable')
         if not os.path.exists(root + d + '/entry.json'): probs.append(d + ': no entry.json')
+        for m in re.finditer(r'\b[CAGED][- ](?:shape|form)\b', html):
+            probs.append(f'{d}: CAGED name “{html[max(0, m.start() - 30):m.end() + 20]}”')
     print('  problems:', len(probs)); [print('   ', p) for p in probs]
 
 # the singer key's word is never in a file or a commit message of the three sites (17 Nov: it was in two commit

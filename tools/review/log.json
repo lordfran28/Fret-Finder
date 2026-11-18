@@ -32,7 +32,10 @@
   "no-me-platiques-mas": "2026-11-17",
   "for-all-we-know": "2026-11-17",
   "what-a-difference-a-day-made": "2026-11-17",
-  "ive-never-been-in-love-before": "2026-11-17"
+  "ive-never-been-in-love-before": "2026-11-17",
+  "youd-be-so-nice-to-come-home-to": "2026-11-17",
+  "it-keeps-you-runnin": "2026-11-17",
+  "just-in-time": "2026-11-17"
  },
  "nights": [
   {
@@ -173,20 +176,32 @@
    "songs": [
     "For All We Know (and on Key Finder)",
     "What a Difference a Day Made (and on Key Finder)",
-    "I've Never Been in Love Before (and on Key Finder)"
+    "I've Never Been in Love Before (and on Key Finder)",
+    "You'd Be So Nice to Come Home To (and on Key Finder)",
+    "It Keeps You Runnin' (and on Key Finder)",
+    "Just in Time"
    ],
    "fixes": [
-    "The review tool reads chord names written maj7(6)"
+    "The review tool reads chord names written maj7(6)",
+    "Fret Finder, You'd Be So Nice to Come Home To: “the A-shape at the 3rd fret” (bar 77, the C7 grips and the ending's note) now reads “barre at the 3rd fret, root on the A string”",
+    "The night's site check looks for CAGED shape names on every page",
+    "The review's sound check no longer takes a note's own overtone for a wrong note (It Keeps You Runnin's E13 seemed to play a B in 30 bars)"
    ],
    "not_changed": [
     "For All We Know and What a Difference a Day Made: no grip, track or name wrong; the rubs are under a second, or his note slides between two",
     "I've Never Been in Love Before, bar 55: the B under C minor 6 is his C, scooped from below (it climbs from 40 cents flat to C before he leaps to G)",
-    "I've Never Been in Love Before, bar 2: A♭ major 7's G under his held A♭ is the record's falling line on the D string (A♭, G, F, E, E♭), so it stays"
+    "I've Never Been in Love Before, bar 2: A♭ major 7's G under his held A♭ is the record's falling line on the D string (A♭, G, F, E, E♭), so it stays",
+    "It Keeps You Runnin': the track plays every E13 as the diagram shows; the B was the low E's overtone",
+    "Just in Time: F minor 7 at the 1st fret before B♭7 at the 6th is a jump for the low F in the bass; bar S7's second F9 has no bass because the hand has gone up to the 8th fret for the fill, and the bass was struck on beat 1",
+    "You'd Be So Nice to Come Home To: Em7, Am, C7 and C each have a second grip, all in the octave passage (bars 40-43) or the coda's one position at the 8th fret"
    ],
    "proposals": [
     "I've Never Been in Love Before, bar 4: the E9 has no G♯, its 3rd (0x2x32). A finger on the G string's 1st fret gives it (0x2132) and keeps the falling line's E. The track was made in conversation and its build isn't kept here, so like Barquito it waits for your yes",
     "I've Never Been in Love Before, bars 17 and 101: the same A♭ major 7 puts G under his A♭ for 1.1 s in bar 17. A♭6 (4x354x, already among the page's other ways) there, keeping bar 2's line?",
-    "Key Finder, I've Never Been in Love Before: the 5th beside a note he holds, D7's A over his A♭ for 2.3 s (bars 32, 80) and D♭7's A♭ over his G for 2.6 s (bar 92); and the 7th over his 13th, E7's D over his D♭ for 2.7-3.0 s (bars 59, 107), E♭7's D♭ over his C (bar 36), D♭7's B over his B♭ (bar 44). Both wait on the two Key Finder questions already asked"
+    "Key Finder, I've Never Been in Love Before: the 5th beside a note he holds, D7's A over his A♭ for 2.3 s (bars 32, 80) and D♭7's A♭ over his G for 2.6 s (bar 92); and the 7th over his 13th, E7's D over his D♭ for 2.7-3.0 s (bars 59, 107), E♭7's D♭ over his C (bar 36), D♭7's B over his B♭ (bar 44). Both wait on the two Key Finder questions already asked",
+    "You'd Be So Nice to Come Home To, bars 18 (and 26, 72): the track lets the previous chord's A-string note ring under a grip that leaves the A string out (E under the climbing diminished chords, which the note calls E7♭9; C under F6 and G♯ diminished). The track was made in conversation, so rebuilding it waits for your yes; or show the held bass in the diagrams",
+    "Key Finder, You'd Be So Nice to Come Home To, bar 71: G7's D under his long E♭ for 3.6 s (bars 34 and 72 too). The guitar page plays G7♯5 there, the song's chord for that note. G7♯5 on Key Finder, or G7 without its 5th?",
+    "Key Finder, It Keeps You Runnin': B♭7's F against his E (bars 56-65, 175-183) and G♭7's D♭ against his C (bars 18, 26, 74, 82, up to 1.5 s): the 5th beside a note he holds, as asked before"
    ]
   }
  ]

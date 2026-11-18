@@ -359,7 +359,14 @@ def sound_report(D, slug):
             c = C[:, s].mean(1); c = c / (c.max() + 1e-9)
             e = expected(gtr.notes(it[2])); e = e / (e.max() + 1e-9)
             want = {m % 12 for m in gtr.notes(it[2])}
-            extra = [NM[p] for p in range(12) if p not in want and c[p] > 0.4 and c[p] - e[p] > 0.3]
+            # a note "not in the diagram" counts only away from the diagram's own overtones: the open low E's 3rd
+            # harmonic is a B an octave and a fifth up, and in It Keeps You Runnin's E13 it rang louder than the E (17 Nov)
+            hm = np.ones(len(f), bool)
+            for m in set(gtr.notes(it[2])):
+                for h in (3, 5, 6):
+                    hm &= np.abs(midi - (m + 12 * np.log2(h))) > 0.3
+            cx = (pcmap * hm) @ M[:, s].mean(1); cx = cx / (C[:, s].mean(1).max() + 1e-9)
+            extra = [NM[p] for p in range(12) if p not in want and c[p] > 0.4 and cx[p] > 0.4 and c[p] - e[p] > 0.3]
             missing = [NM[p] for p in want if c[p] < 0.08]
             # the root and the 3rd, by their own fundamentals (a pitch class can hide in another note's overtones:
             # Barquito's E9 kept E but never played its G♯, 15 Nov)
