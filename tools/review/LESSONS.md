@@ -4,6 +4,8 @@ Each mistake, why it happened, and the rule (and check) that prevents it. Newest
 
 ## 17 November 2026 (evening, continued)
 
+- **The Nearness of You, bars 15 and 53.** The one-beat G7 was broken into G and D only, never its B and F; the beat-and-a-half E7 into E, B and D, never its G♯. *Why:* the song's broken chords climb one string an eighth, and a short chord ends before the climb reaches the 3rd; the build was made on 8 November, before the root-and-3rd rule. *Rule:* as There Will Never Be Another You: a chord shorter than two beats plays the bass, then the rest of it together. *Check:* `review.py SLUG` (“plays”).
+
 - **Long Ago and Far Away, bars 39, 55 and 60 (the second chorus).** The thumb-on-1-and-3 pattern gave a one-beat chord only half of itself: E°7 on beat 4 lost its E, A♭ minor 7 on beat 3 played only its A♭, D♭9 on beat 4 lost its D♭. *Why:* the song's own two-beat pattern was written on 13 November, the day before the Where or When rule, and nobody went back to it. *Rule:* as Where or When: a chord shorter than two beats is struck whole. When a rule is made, look for every build with its own copy of the pattern it fixes. *Check:* `review.py SLUG` (“plays”).
 - **Long Ago and Far Away, bar 4.** The note called B♭7♭9's flat 9th “B”. *Rule:* notes are spelled for the key and the chord: the ♭9 of B♭ is C♭.
 

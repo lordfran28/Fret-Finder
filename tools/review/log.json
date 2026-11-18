@@ -38,7 +38,10 @@
   "just-in-time": "2026-11-17",
   "long-ago-and-far-away": "2026-11-17",
   "moonglow": "2026-11-17",
-  "someone-to-watch-over-me": "2026-11-17"
+  "someone-to-watch-over-me": "2026-11-17",
+  "something-stupid": "2026-11-17",
+  "the-nearness-of-you": "2026-11-17",
+  "dont-get-around-much-anymore": "2026-11-17"
  },
  "nights": [
   {
@@ -185,7 +188,10 @@
     "Just in Time",
     "Long Ago and Far Away",
     "Moonglow",
-    "Someone to Watch Over Me"
+    "Someone to Watch Over Me",
+    "Something Stupid",
+    "The Nearness of You",
+    "Don't Get Around Much Anymore"
    ],
    "fixes": [
     "The review tool reads chord names written maj7(6)",
@@ -193,7 +199,8 @@
     "The night's site check looks for CAGED shape names on every page",
     "The review's sound check no longer takes a note's own overtone for a wrong note (It Keeps You Runnin's E13 seemed to play a B in 30 bars)",
     "Fret Finder, Long Ago and Far Away, bars 39, 55 and 60: the one-beat E°7, A♭ minor 7 and D♭9 of the second chorus are struck whole (E°7 had lost its E, A♭ minor 7 everything but its A♭, D♭9 its D♭); the guitar and singers' tracks played again (the same take up to bar 39, a touch quieter)",
-    "Fret Finder, Long Ago and Far Away, bar 4: B♭7♭9's flat 9th is called C♭, not B"
+    "Fret Finder, Long Ago and Far Away, bar 4: B♭7♭9's flat 9th is called C♭, not B",
+    "Fret Finder, The Nearness of You, bar 15: the one-beat G7 sounds its B and F (it was G and D only); bar 53: the short E7 sounds its G♯. The guitar and singer's tracks played again: the same take up to bar 15"
    ],
    "not_changed": [
     "For All We Know and What a Difference a Day Made: no grip, track or name wrong; the rubs are under a second, or his note slides between two",
@@ -204,7 +211,11 @@
     "You'd Be So Nice to Come Home To: Em7, Am, C7 and C each have a second grip, all in the octave passage (bars 40-43) or the coda's one position at the 8th fret",
     "Moonglow, bar 45: the second B7♭5 grip (at the 6th-8th fret) keeps the tune's F on top in the instrumental",
     "Someone to Watch Over Me: nothing wrong; the notes that seemed to describe his singing describe the guitar's falling lines",
-    "The other builds with their own two-beat pattern (Fly Me to the Moon, I Wish You Love, Just in Time, I Wonder Who's Kissing Her Now): no short chord loses its root or 3rd"
+    "The other builds with their own two-beat pattern (Fly Me to the Moon, I Wish You Love, Just in Time, I Wonder Who's Kissing Her Now): no short chord loses its root or 3rd",
+    "Something Stupid's ending: his D♯ under the E barre's E is under a second each time, the record's major 7th",
+    "Something Stupid's intro: the hum's D♯ and G♯ over the E and A figure are the record's own colours",
+    "Don't Get Around Much Anymore, the last bar: the run is all there; it is slower than even beats, as the record slows",
+    "The Nearness of You, bar 45 and others: the jumps to the 10th-12th fret are the page's chosen G7 and G minor 7 positions, kept from bar to bar"
    ],
    "proposals": [
     "I've Never Been in Love Before, bar 4: the E9 has no G♯, its 3rd (0x2x32). A finger on the G string's 1st fret gives it (0x2132) and keeps the falling line's E. The track was made in conversation and its build isn't kept here, so like Barquito it waits for your yes",
@@ -213,7 +224,9 @@
     "You'd Be So Nice to Come Home To, bars 18 (and 26, 72): the track lets the previous chord's A-string note ring under a grip that leaves the A string out (E under the climbing diminished chords, which the note calls E7♭9; C under F6 and G♯ diminished). The track was made in conversation, so rebuilding it waits for your yes; or show the held bass in the diagrams",
     "Key Finder, You'd Be So Nice to Come Home To, bar 71: G7's D under his long E♭ for 3.6 s (bars 34 and 72 too). The guitar page plays G7♯5 there, the song's chord for that note. G7♯5 on Key Finder, or G7 without its 5th?",
     "Key Finder, It Keeps You Runnin': B♭7's F against his E (bars 56-65, 175-183) and G♭7's D♭ against his C (bars 18, 26, 74, 82, up to 1.5 s): the 5th beside a note he holds, as asked before",
-    "Long Ago and Far Away, bars 4 and 20 (and the intro's C7♭9): the eighths never reach the D string, so B♭7♭9 never sounds its A♭ and C7♭9 its B♭. Part of the question already asked: must every 7th sound?"
+    "Long Ago and Far Away, bars 4 and 20 (and the intro's C7♭9): the eighths never reach the D string, so B♭7♭9 never sounds its A♭ and C7♭9 its B♭. Part of the question already asked: must every 7th sound?",
+    "The 7ths and colours that the picking never reaches, for the question already asked: Something Stupid's B7 never sounds its A in 35 bars (the thumb plays B and F♯, the fingers the top three strings, so the D string is never played); The Nearness of You's B7♭9 and A7♭9 never sound their ♭9 (bars 5, 6, 29, 30, 33, 50, 51); Don't Get Around Much Anymore's A6 never its F♯ (bars 20, 23, 39), G♯7♭9 never its A (26, 42)",
+    "The Nearness of You, bar 40: he holds B for 1.4 s over F major 7 and F7, with the guitar's two Cs right above him. Leave the C out there (F7♯11), or the minor iv the song often has there?"
    ]
   }
  ]
