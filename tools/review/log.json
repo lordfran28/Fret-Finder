@@ -41,7 +41,10 @@
   "someone-to-watch-over-me": "2026-11-17",
   "something-stupid": "2026-11-17",
   "the-nearness-of-you": "2026-11-17",
-  "dont-get-around-much-anymore": "2026-11-17"
+  "dont-get-around-much-anymore": "2026-11-17",
+  "ill-get-by": "2026-11-17",
+  "cloudy": "2026-11-17",
+  "if-i-ever-lose-this-heaven": "2026-11-17"
  },
  "nights": [
   {
@@ -191,7 +194,10 @@
     "Someone to Watch Over Me",
     "Something Stupid",
     "The Nearness of You",
-    "Don't Get Around Much Anymore"
+    "Don't Get Around Much Anymore",
+    "I'll Get By",
+    "Cloudy (and on Key Finder)",
+    "If I Ever Lose This Heaven"
    ],
    "fixes": [
     "The review tool reads chord names written maj7(6)",
@@ -200,7 +206,9 @@
     "The review's sound check no longer takes a note's own overtone for a wrong note (It Keeps You Runnin's E13 seemed to play a B in 30 bars)",
     "Fret Finder, Long Ago and Far Away, bars 39, 55 and 60: the one-beat E°7, A♭ minor 7 and D♭9 of the second chorus are struck whole (E°7 had lost its E, A♭ minor 7 everything but its A♭, D♭9 its D♭); the guitar and singers' tracks played again (the same take up to bar 39, a touch quieter)",
     "Fret Finder, Long Ago and Far Away, bar 4: B♭7♭9's flat 9th is called C♭, not B",
-    "Fret Finder, The Nearness of You, bar 15: the one-beat G7 sounds its B and F (it was G and D only); bar 53: the short E7 sounds its G♯. The guitar and singer's tracks played again: the same take up to bar 15"
+    "Fret Finder, The Nearness of You, bar 15: the one-beat G7 sounds its B and F (it was G and D only); bar 53: the short E7 sounds its G♯. The guitar and singer's tracks played again: the same take up to bar 15",
+    "Key Finder, Cloudy, bars 18, 34, 56 and 64: plain D minor and E♭ minor where he holds their major 7th (C♯, D); the minor 7ths' C and D♭ sat a half step from him. The piano and singer's tracks played again; only those bars change",
+    "The review reads If I Ever Lose This Heaven's older page and its tracks, the names D6/9sus and G(add9), and knows a track named as the record's voice is the record's singer"
    ],
    "not_changed": [
     "For All We Know and What a Difference a Day Made: no grip, track or name wrong; the rubs are under a second, or his note slides between two",
@@ -215,7 +223,10 @@
     "Something Stupid's ending: his D♯ under the E barre's E is under a second each time, the record's major 7th",
     "Something Stupid's intro: the hum's D♯ and G♯ over the E and A figure are the record's own colours",
     "Don't Get Around Much Anymore, the last bar: the run is all there; it is slower than even beats, as the record slows",
-    "The Nearness of You, the jumps up to the 10th-12th fret (bars 3, 7, 9, 11, 27, 34, 37, 48, 52): G7, G13 and G minor 7 keep one grip each there all song, a matter of taste"
+    "The Nearness of You, the jumps up to the 10th-12th fret (bars 3, 7, 9, 11, 27, 34, 37, 48, 52): G7, G13 and G minor 7 keep one grip each there all song, a matter of taste",
+    "I'll Get By: nothing wrong; the guide voice never rubs",
+    "Cloudy: the rubs are under a second; the notes that seemed to describe his singing describe the guitar's inner voice",
+    "If I Ever Lose This Heaven: the jumps and second grips are this version's travelling hand, as its opening says; Bø7's B in bar 25 is held from the B minor 7 before it"
    ],
    "proposals": [
     "I've Never Been in Love Before, bar 4: the E9 has no G♯, its 3rd (0x2x32). A finger on the G string's 1st fret gives it (0x2132) and keeps the falling line's E. The track was made in conversation and its build isn't kept here, so like Barquito it waits for your yes",
@@ -226,7 +237,8 @@
     "Key Finder, It Keeps You Runnin': B♭7's F against his E (bars 56-65, 175-183) and G♭7's D♭ against his C (bars 18, 26, 74, 82, up to 1.5 s): the 5th beside a note he holds, as asked before",
     "Long Ago and Far Away, bars 4 and 20 (and the intro's C7♭9): the eighths never reach the D string, so B♭7♭9 never sounds its A♭ and C7♭9 its B♭. Part of the question already asked: must every 7th sound?",
     "The 7ths and colours that the picking never reaches, for the question already asked: Something Stupid's B7 never sounds its A in 35 bars (the thumb plays B and F♯, the fingers the top three strings, so the D string is never played); The Nearness of You's B7♭9 and A7♭9 never sound their ♭9 (bars 5, 6, 29, 30, 33, 50, 51); Don't Get Around Much Anymore's A6 never its F♯ (bars 20, 23, 39), G♯7♭9 never its A (26, 42)",
-    "The Nearness of You, bar 40: he holds B for 1.4 s over F major 7 and F7, with the guitar's two Cs right above him. Leave the C out there (F7♯11), or the minor iv the song often has there?"
+    "The Nearness of You, bar 40: he holds B for 1.4 s over F major 7 and F7, with the guitar's two Cs right above him. Leave the C out there (F7♯11), or the minor iv the song often has there?",
+    "If I Ever Lose This Heaven: the track follows the page's tabs, which leave out notes the diagrams show (D7♭9's E♭ in bars 22, 30, 38, 60, 68, 76; A♯°7's E in 12 and 50; A minor 11's D). The track was made in conversation; rebuilding it waits for your yes. Also D6/9sus (x55x55) has no B, its 6th: call it D9sus4 without the 7th?"
    ]
   }
  ]

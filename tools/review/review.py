@@ -17,7 +17,8 @@ import numpy as np
 import checks  # noqa: F401  (adds the chord qualities the pages use)
 import gtr, theory as T
 # qualities some pages use that the kit lacks (17 Nov): minor-major 7th, 7♭9 suspended
-for _q, _v in {'mmaj7': ({3, 11}, {0, 7}), '7b9sus4': ({5, 10, 1}, {0, 7}), 'm(maj7)': ({3, 11}, {0, 7}), 'maj7(6)': ({4, 11, 9}, {0, 7})}.items(): gtr.QUAL.setdefault(_q, _v)
+for _q, _v in {'mmaj7': ({3, 11}, {0, 7}), '7b9sus4': ({5, 10, 1}, {0, 7}), 'm(maj7)': ({3, 11}, {0, 7}), 'maj7(6)': ({4, 11, 9}, {0, 7}), '6/9sus': ({5, 9, 2}, {0, 7})}.items(): gtr.QUAL.setdefault(_q, _v)
+gtr.QUAL.setdefault('(add9)', gtr.QUAL['add9'])      # Cloudy writes G(add9)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SP = '/tmp/claude-0/-home-claude/32eff81e-a259-5caa-a171-2530c104e7b0/scratchpad/'
@@ -65,11 +66,16 @@ def load(slug):
     # an older page (Barquito de papel): <script id="data"> with bars[].segs[] (chord, grip f, beats) and bar times t
     m = re.search(r'<script id="data"[^>]*>(.*?)</script>', s, re.S)
     d = json.loads(m.group(1)) if m else None
+    if isinstance(d, dict) and not d.get('bars') and isinstance(d.get('sections'), list):
+        # the same older form with its bars inside sections (If I Ever Lose This Heaven, 17 Nov)
+        d = dict(d, bars=[b for sec in d['sections'] for b in sec.get('bars', []) if b.get('segs')])
     if not (isinstance(d, dict) and isinstance(d.get('bars'), list) and d['bars'] and 'segs' in d['bars'][0]):
         raise SystemExit(f'{slug}: no DATA (an older page in a form the review does not read)')
     bars = [dict(label=str(b['n']), start=b.get('t'), note=b.get('badge') or '',
-                 items=[['K', ascii_name(g['c']), g['f'], [[g.get('beats', 4), 'a']]] for g in b['segs']]) for b in d['bars']]
+                 items=[['K', ascii_name(g['c']), g['f'], [[g.get('beats', 4), 'a']]] if isinstance(g.get('f'), list) and len(g['f']) == 6 else ['W', g.get('beats', 4)] for g in b['segs']]) for b in d['bars']]
     vers = [(lab, src) for src, lab in re.findall(r'data-src="([^"$]+)"[^>]*>([^<]+)<', s)]
+    if not vers and isinstance(d.get('audio'), list):             # Heaven names its tracks in its data: [file, label]
+        vers = [(a[1], a[0]) for a in d['audio'] if isinstance(a, list) and len(a) >= 2]
     vers.sort(key=lambda v: 0 if re.search(r'alone', v[0], re.I) else 1)   # the guitar alone first, for taking it out of the singer's track
     return dict(tracks=[dict(key='main', bars=bars, versions=vers, old=True)]), s     # old=True: no picking pattern in the data
 
@@ -109,9 +115,10 @@ def grips_report(D):
             if prev is not None:
                 jump = abs(pos(g) - pos(prev[1]))
                 if jump >= 5:
-                    near = [f for f in T.find_grips(name, lo=max(1, int(pos(prev[1])) - 3), hi=int(pos(prev[1])) + 4, maxspan=4, min_notes=4, max_notes=6)
+                    try: near = [f for f in T.find_grips(name, lo=max(1, int(pos(prev[1])) - 3), hi=int(pos(prev[1])) + 4, maxspan=4, min_notes=4, max_notes=6)
                             if 0 not in f and abs(pos(f) - pos(prev[1])) <= 3 and min(gtr.notes(f)) <= min(gtr.notes(g))
                             and gtr.notes(f)[0] % 12 == gtr.notes(g)[0] % 12]
+                    except ValueError: near = []           # a chord name the grip finder doesn't know
                     if near:
                         best = min(near, key=lambda f: abs(pos(f) - pos(prev[1])))
                         rep.append((tr['key'], lab, 'jump', f"{T.disp(prev[0])} at fret {pos(prev[1]):.0f} → {T.disp(name)} at fret {pos(g):.0f}; the same chord sits at {gtr_str(best)} (fret {pos(best):.0f}), same bass"))
@@ -285,7 +292,10 @@ def voice_report(D, html, slug):
         rep.append((tr['key'], '-', 'voice', f"singer tuning {off:+.2f} semitones; guitar taken out at ×{info[0]:.3f}, {info[1]:.0%} of the track left as voice; {len(seg)} held notes"))
         sp = spans(tr); bybar = collections.defaultdict(float); ex = collections.defaultdict(list)
         sung_in = collections.defaultdict(collections.Counter)
-        if info[0] < 0.2:
+        rec = any(re.search(r"the record\b|record.s (own )?voice", v[0], re.I) for v in versions(tr) if v[1].endswith('.locked'))
+        if info[0] < 0.2 and rec:      # 17 Nov: Cloudy's "With the record's voice" is the record's own singer, no guitar in it
+            rep.append((tr['key'], '-', 'voice', f"the singer's track is the record's own voice (×{info[0]:.3f} of the guitar in it), as its name says"))
+        elif info[0] < 0.2:
             rep.append((tr['key'], '-', 'voice', f"the singer's track holds almost none of the guitar-alone track (×{info[0]:.3f}): its guitar is another take, so what he hears with the singer is not what the diagrams show"))
         wide = collections.defaultdict(float)
         for lab, it, t0, t1 in sp:
