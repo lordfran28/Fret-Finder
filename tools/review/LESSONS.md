@@ -4,6 +4,9 @@ Each mistake, why it happened, and the rule (and check) that prevents it. Newest
 
 ## 17 November 2026 (evening, continued)
 
+- **Long Ago and Far Away, bars 39, 55 and 60 (the second chorus).** The thumb-on-1-and-3 pattern gave a one-beat chord only half of itself: E°7 on beat 4 lost its E, A♭ minor 7 on beat 3 played only its A♭, D♭9 on beat 4 lost its D♭. *Why:* the song's own two-beat pattern was written on 13 November, the day before the Where or When rule, and nobody went back to it. *Rule:* as Where or When: a chord shorter than two beats is struck whole. When a rule is made, look for every build with its own copy of the pattern it fixes. *Check:* `review.py SLUG` (“plays”).
+- **Long Ago and Far Away, bar 4.** The note called B♭7♭9's flat 9th “B”. *Rule:* notes are spelled for the key and the chord: the ♭9 of B♭ is C♭.
+
 - **You'd Be So Nice to Come Home To, the C7 in bar 77 and its grips.** The page called it “the A-shape at the 3rd fret” four times, a CAGED name the owner doesn't use. *Rule:* name a position plainly, by its fret and the string with the root (“barre at the 3rd fret, root on the A string”). *Check:* the night's site check now looks for CAGED shape names on every page (`site_files.py`).
 - **The review's sound check, It Keeps You Runnin'.** Every E13 bar was reported as playing a B that isn't in the diagram. The build plays the diagram exactly; the B was the open low E's own overtone (an octave and a fifth up), which this guitar sound makes louder than the E itself. *Rule:* a note heard but not in the diagram counts only away from the diagram's own overtones. *Check:* `review.py SLUG --sound` (the false B is gone; Barquito's and You'd Be So Nice's real ones still show).
 
