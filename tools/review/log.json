@@ -44,7 +44,10 @@
   "dont-get-around-much-anymore": "2026-11-17",
   "ill-get-by": "2026-11-17",
   "cloudy": "2026-11-17",
-  "if-i-ever-lose-this-heaven": "2026-11-17"
+  "if-i-ever-lose-this-heaven": "2026-11-17",
+  "viva-la-vida": "2026-11-17",
+  "it-had-to-be-you": "2026-11-17",
+  "ochi-chyornye": "2026-11-17"
  },
  "nights": [
   {
@@ -197,7 +200,10 @@
     "Don't Get Around Much Anymore",
     "I'll Get By",
     "Cloudy (and on Key Finder)",
-    "If I Ever Lose This Heaven"
+    "If I Ever Lose This Heaven",
+    "Viva la Vida (and on Key Finder)",
+    "It Had to Be You",
+    "Ochi chyornye (and on Key Finder)"
    ],
    "fixes": [
     "The review tool reads chord names written maj7(6)",
@@ -208,7 +214,10 @@
     "Fret Finder, Long Ago and Far Away, bar 4: B♭7♭9's flat 9th is called C♭, not B",
     "Fret Finder, The Nearness of You, bar 15: the one-beat G7 sounds its B and F (it was G and D only); bar 53: the short E7 sounds its G♯. The guitar and singer's tracks played again: the same take up to bar 15",
     "Key Finder, Cloudy, bars 18, 34, 56 and 64: plain D minor and E♭ minor where he holds their major 7th (C♯, D); the minor 7ths' C and D♭ sat a half step from him. The piano and singer's tracks played again; only those bars change",
-    "The review reads If I Ever Lose This Heaven's older page and its tracks, the names D6/9sus and G(add9), and knows a track named as the record's voice is the record's singer"
+    "The review reads If I Ever Lose This Heaven's older page and its tracks, the names D6/9sus and G(add9), and knows a track named as the record's voice is the record's singer",
+    "Fret Finder, Viva la Vida, bar 133: C♯ minor 7 over G♯ sounds its C♯ (it was G♯, B, B, E). The guitar, trumpet and singer's tracks played again: the same up to the short run of bar 87, where three notes no longer ring a tenth of a second over the next on their string",
+    "Fret Finder, Ochi chyornye: the short broken chords sound their 3rds (B7's D♯ in bars 23 and 33, A minor's C in 29, 33, 37, D minor's F in 36, F major 7's A in 75), and one-beat chords on the first beat of the waltz and vigorous bars are struck whole, not bass alone (20 bars, among them 21 and 108, where A minor was only its A). All four tracks played again",
+    "The review reads It Had to Be You's older page"
    ],
    "not_changed": [
     "For All We Know and What a Difference a Day Made: no grip, track or name wrong; the rubs are under a second, or his note slides between two",
@@ -226,7 +235,9 @@
     "The Nearness of You, the jumps up to the 10th-12th fret (bars 3, 7, 9, 11, 27, 34, 37, 48, 52): G7, G13 and G minor 7 keep one grip each there all song, a matter of taste",
     "I'll Get By: nothing wrong; the guide voice never rubs",
     "Cloudy: the rubs are under a second; the notes that seemed to describe his singing describe the guitar's inner voice",
-    "If I Ever Lose This Heaven: the jumps and second grips are this version's travelling hand, as its opening says; Bø7's B in bar 25 is held from the B minor 7 before it"
+    "If I Ever Lose This Heaven: the jumps and second grips are this version's travelling hand, as its opening says; Bø7's B in bar 25 is held from the B minor 7 before it",
+    "It Had to Be You: nothing wrong; E♭ minor 9 in the solo's bar 15 is E♭ and F alone because the trumpet plays its G♭",
+    "Viva la Vida: the rubs are under a second, the cover's own E and B held over the loop"
    ],
    "proposals": [
     "I've Never Been in Love Before, bar 4: the E9 has no G♯, its 3rd (0x2x32). A finger on the G string's 1st fret gives it (0x2132) and keeps the falling line's E. The track was made in conversation and its build isn't kept here, so like Barquito it waits for your yes",
@@ -238,7 +249,9 @@
     "Long Ago and Far Away, bars 4 and 20 (and the intro's C7♭9): the eighths never reach the D string, so B♭7♭9 never sounds its A♭ and C7♭9 its B♭. Part of the question already asked: must every 7th sound?",
     "The 7ths and colours that the picking never reaches, for the question already asked: Something Stupid's B7 never sounds its A in 35 bars (the thumb plays B and F♯, the fingers the top three strings, so the D string is never played); The Nearness of You's B7♭9 and A7♭9 never sound their ♭9 (bars 5, 6, 29, 30, 33, 50, 51); Don't Get Around Much Anymore's A6 never its F♯ (bars 20, 23, 39), G♯7♭9 never its A (26, 42)",
     "The Nearness of You, bar 40: he holds B for 1.4 s over F major 7 and F7, with the guitar's two Cs right above him. Leave the C out there (F7♯11), or the minor iv the song often has there?",
-    "If I Ever Lose This Heaven: the track follows the page's tabs, which leave out notes the diagrams show (D7♭9's E♭ in bars 22, 30, 38, 60, 68, 76; A♯°7's E in 12 and 50; A minor 11's D). The track was made in conversation; rebuilding it waits for your yes. Also D6/9sus (x55x55) has no B, its 6th: call it D9sus4 without the 7th?"
+    "If I Ever Lose This Heaven: the track follows the page's tabs, which leave out notes the diagrams show (D7♭9's E♭ in bars 22, 30, 38, 60, 68, 76; A♯°7's E in 12 and 50; A minor 11's D). The track was made in conversation; rebuilding it waits for your yes. Also D6/9sus (x55x55) has no B, its 6th: call it D9sus4 without the 7th?",
+    "Key Finder, Viva la Vida: the A chord's top A sits just over his held G♯ for up to 2.4 s, again and again (bars 1, 42, 55, 139-151). The guitar page keeps A low (A add 9). A shape for A without the high A in this song?",
+    "Ochi chyornye: E7 never sounds its D in verse 1 (bars 23-35, 79), for the question about 7ths"
    ]
   }
  ]

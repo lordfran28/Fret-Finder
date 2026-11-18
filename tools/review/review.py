@@ -69,6 +69,18 @@ def load(slug):
     if isinstance(d, dict) and not d.get('bars') and isinstance(d.get('sections'), list):
         # the same older form with its bars inside sections (If I Ever Lose This Heaven, 17 Nov)
         d = dict(d, bars=[b for sec in d['sections'] for b in sec.get('bars', []) if b.get('segs')])
+    pt = re.search(r'<script id="pt-data"[^>]*>(.*?)</script>', s, re.S)
+    if isinstance(d, dict) and not d.get('bars') and pt:
+        # It Had to Be You (1 Nov): the playing order in pt-data, even beats from t0, grips written "x43544" or with (10)
+        P = json.loads(pt.group(1)); spb = 60.0 / P['bpm']; x = P.get('t0', 0.0); bl = []
+        def fr(f):
+            if isinstance(f, list): return f
+            return [-1 if q == 'x' else int(q.strip('()')) for q in re.findall(r'x|\(\d+\)|\d', f or '')]
+        for i, b in enumerate(P['bars']):
+            segs = [dict(g, f=fr(g.get('f'))) for g in b['segs']]
+            bl.append(dict(n=b.get('sub') or str(i + 1), t=b.get('start', round(x, 3)), segs=segs, badge=b.get('badge')))
+            x += sum(g.get('beats', 4) for g in b['segs']) * spb
+        d = dict(d, bars=bl)
     if not (isinstance(d, dict) and isinstance(d.get('bars'), list) and d['bars'] and 'segs' in d['bars'][0]):
         raise SystemExit(f'{slug}: no DATA (an older page in a form the review does not read)')
     bars = [dict(label=str(b['n']), start=b.get('t'), note=b.get('badge') or '',
