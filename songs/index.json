@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-18T04:39:25Z",
+ "generatedAt": "2026-11-18T21:22:25Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -433,6 +433,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-17T01:16:36Z"
+  },
+  {
+   "id": "it-was-almost-like-a-song",
+   "file": "songs/it-was-almost-like-a-song/",
+   "page": "songs/it-was-almost-like-a-song/",
+   "title": "It Was Almost Like a Song",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-18T21:22:18Z"
   }
  ]
 }

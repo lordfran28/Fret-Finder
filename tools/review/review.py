@@ -105,9 +105,15 @@ def spans(track):
             prev = [(starts[j + 1] - starts[j]) / (sum(beats_of(it) for it in bars[j]['items']) or 4) for j in range(max(0, i - 4), i) if starts[j] is not None and starts[j + 1] is not None]
             t1 = t0 + nb * (float(np.median(prev)) if prev else 0.5)
         spb = (t1 - t0) / nb; x = 0.0
+        BT = b.get('bt')                       # a song sung freely: the bar's own beat times
+        def at(y):
+            if BT and len(BT) > 1:
+                u = y * (len(BT) - 1) / nb; k = min(int(u), len(BT) - 2)
+                return BT[k] + (u - k) * (BT[k + 1] - BT[k])
+            return t0 + y * spb
         for it in b['items']:
             bt = beats_of(it)
-            out.append((b['label'], it, t0 + x * spb, t0 + (x + bt) * spb if bt else t1)); x += bt
+            out.append((b['label'], it, at(x), at(x + bt) if bt else t1)); x += bt
     return out
 
 

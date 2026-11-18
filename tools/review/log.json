@@ -58,7 +58,8 @@
   "kf:are-you-lonesome-tonight": "2026-11-17",
   "kf:love-me-tender": "2026-11-17",
   "kf:white-christmas": "2026-11-17",
-  "kf:apres-un-reve": "2026-11-17"
+  "kf:apres-un-reve": "2026-11-17",
+  "it-was-almost-like-a-song": "2026-11-18"
  },
  "nights": [
   {
@@ -398,6 +399,20 @@
     "Something Stupid's intro brings the bass in on beat 3 only from bar 19, as the record builds; bars 1–2 keep the bass on 1. Don't Get Around Much Anymore's intro run has no bass under it and has a locked faithful copy: a proposal, not changed",
     "Somos novios: review.py --voice flags B against his sung C in bars 9, 13, 14, 17, 25, 30, 35, 36, 54 (and two more), unchanged by today's work; a song for a night review",
     "You'll Never Know's verse (V1–V3) is sung free on the record with no instruments; its rolled chords follow him and stay"
+   ]
+  },
+  {
+   "date": "2026-11-18",
+   "song": "It Was Almost Like a Song (new)",
+   "changed": [
+    "New arrangement on Johnny Hartman’s record (1980) in B, raised 43 cents to standard pitch: a rubato duo of guitar and bass, so each bar carries its own beat times and the page lights the diagrams on them",
+    "Kept from the record: the passing G° between F♯7 and B, IV to the minor iv over a turning bass, the half-step walk-down into the bridge, the ending on C♯7 and C♯ minor 7; the bass an octave up where it went under the guitar",
+    "Where the bass carries (intro, bar 16, the rests): a moving line, C♯ G♯ B A G into F♯; C♯ B A♯ G♯ into F♯7; G A♯ B"
+   ],
+   "kept": [
+    "Bars 5 and 25: G2 in the bass under his F♯2 for about half a second, the record’s own passing bass; check by ear",
+    "Bars 21 and 30: the chord’s minor third an octave above the 9th he sings (E4 over D♯3, B3 over A♯2), as the record’s guitar has it",
+    "The rub check reads some of his notes a half step low (C♯3 sung flat reads C3); those are left alone"
    ]
   }
  ],
