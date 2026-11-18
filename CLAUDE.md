@@ -91,6 +91,7 @@ These come from his own corrections over many arrangements. They outrank anythin
 - Never stuffed. Add a scale, an octave, counterpoint or an extra chord only where it's truly beautiful.
 - The record's orchestration (keyboards, synths, strings, horns) goes into the guitar for the whole song, under the singing too, not only where the voice rests: inner lines, octaves, counterpoint, tremolo, harmonics, the record's chord colours. Still never stuffed, and always playable while singing.
 - He always plays alone, so the bass never drops out: in an instrumental, keep it going under the line (on 1 and 3 at least), and runs or variations that stand in for a riff keep the riff's bass and its rhythm.
+- Where the bass carries a lot (solos and instrumentals, intros and endings, the long rests between sung phrases), give it a real bass line: a walking bass, or a moving line with passing and approach notes, not only the root and the fifth. His rule, 18 November 2026, for every contemporary arrangement.
 - Never simplify. Don't drop or thin a part on the assumption it's too hard. Write the real part.
 - It must be easy to play while singing. When two choices are equal, take the one with more notes or the nicer sound that's also easier to play.
 - Follow the song's real chord changes. Keep the harmony sparse but good, and change a chord only for a reason.
