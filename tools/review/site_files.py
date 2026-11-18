@@ -56,6 +56,34 @@ for site in ('Fret-Finder',):
             probs.append(f'{d}: CAGED name “{html[max(0, m.start() - 30):m.end() + 20]}”')
     print('  problems:', len(probs)); [print('   ', p) for p in probs]
 
+# the Classical section (locked whole): every folder listed, a stub page, the page, its card and its tracks all locked;
+# with the key at hand, every file the unlocked page names is in its folder
+for site in ('Fret-Finder',):
+    root = SITE + site + '/classical/'
+    if not os.path.isdir(root): continue
+    listed = {p['id'] for p in json.load(open(root + 'index.json')).get('pieces', [])}
+    folders = {d for d in os.listdir(root) if os.path.isdir(root + d)}
+    print(site, 'classical:', len(folders), 'folders,', len(listed), 'listed; missing from index', sorted(folders - listed), 'listed without folder', sorted(listed - folders))
+    probs = []
+    unlock = SP + 'unlock.mjs'
+    for d in sorted(folders):
+        f = root + d + '/'
+        stub = open(f + 'index.html', encoding='utf-8').read() if os.path.exists(f + 'index.html') else ''
+        if 'ff-locked-file' not in stub or 'ff-locked-back' not in stub: probs.append(d + ': the stub page is missing or wrong')
+        for m in os.listdir(f):
+            if m == 'index.html': continue
+            if not m.endswith('.locked'): probs.append(f'{d}/{m}: open file in the locked section'); continue
+            if open(f + m, 'rb').read(4) != b'FFV1': probs.append(f'{d}/{m}: not locked')
+        if os.path.exists(unlock) and os.path.exists(WORD_FILE := SP + 'voicekey/singer-word.txt') and os.path.exists(f + 'page.html.locked'):
+            out = SP + 'night/_page.html'
+            if subprocess.run(['node', unlock, f + 'page.html.locked', out], capture_output=True).returncode == 0:
+                html = open(out, encoding='utf-8').read(); os.remove(out)
+                for r in set(re.findall(r'["\'(/]([\w.%() -]+\.mp3(?:\.locked)?)["\')]', html)):
+                    if not os.path.exists(f + r): probs.append(f'{d}: page names {r}, not in folder')
+                    elif not r.endswith('.locked'): probs.append(f'{d}: page names the open file {r}')
+            else: probs.append(d + ': the page would not open with the key')
+    print('  problems:', len(probs)); [print('   ', p) for p in probs]
+
 # the singer key's word is never in a file or a commit message of the three sites (17 Nov: it was in two commit
 # messages of 13 Nov and in site_pages.js). The word is read from the scratchpad, never written here.
 WORD = SP + 'voicekey/singer-word.txt'

@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-17T01:19:33Z",
+ "generatedAt": "2026-11-18T04:39:25Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -28,42 +28,6 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-01T04:03:10Z"
-  },
-  {
-   "id": "bach-prelude-and-fugue-bwv-867",
-   "file": "songs/bach-prelude-and-fugue-bwv-867/",
-   "page": "songs/bach-prelude-and-fugue-bwv-867/",
-   "title": "Bach – Prelude and Fugue, BWV 867",
-   "kind": "arrangement",
-   "instrument": "guitar",
-   "addedAt": "2026-11-01T04:03:11Z"
-  },
-  {
-   "id": "balfe-marble-halls",
-   "file": "songs/balfe-marble-halls/",
-   "page": "songs/balfe-marble-halls/",
-   "title": "Balfe – I Dreamt I Dwelt in Marble Halls (The Bohemian Girl)",
-   "kind": "arrangement",
-   "instrument": "guitar",
-   "addedAt": "2026-11-01T12:00:00Z"
-  },
-  {
-   "id": "faure-pavane",
-   "file": "songs/faure-pavane/",
-   "page": "songs/faure-pavane/",
-   "title": "Fauré – Pavane, Op. 50 (guitar part)",
-   "kind": "arrangement",
-   "instrument": "guitar",
-   "addedAt": "2026-11-01T12:00:00Z"
-  },
-  {
-   "id": "glinka-ya-pomnyu",
-   "file": "songs/glinka-ya-pomnyu/",
-   "page": "songs/glinka-ya-pomnyu/",
-   "title": "Glinka – Я помню чудное мгновенье",
-   "kind": "arrangement",
-   "instrument": "guitar",
-   "addedAt": "2026-11-01T12:00:00Z"
   },
   {
    "id": "it-had-to-be-you",
@@ -97,15 +61,6 @@
    "file": "songs/misty/",
    "page": "songs/misty/",
    "title": "Misty",
-   "kind": "arrangement",
-   "instrument": "guitar",
-   "addedAt": "2026-11-01T12:00:00Z"
-  },
-  {
-   "id": "mozart-deh-vieni-alla-finestra",
-   "file": "songs/mozart-deh-vieni-alla-finestra/",
-   "page": "songs/mozart-deh-vieni-alla-finestra/",
-   "title": "Mozart – Deh vieni alla finestra (Don Giovanni)",
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-01T12:00:00Z"
@@ -406,24 +361,6 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-08T07:17:46Z"
-  },
-  {
-   "id": "mozart-soave-sia-il-vento",
-   "file": "songs/mozart-soave-sia-il-vento/",
-   "page": "songs/mozart-soave-sia-il-vento/",
-   "title": "Mozart – Soave sia il vento (Così fan tutte)",
-   "kind": "arrangement",
-   "instrument": "guitar",
-   "addedAt": "2026-11-13T04:19:11Z"
-  },
-  {
-   "id": "faure-apres-un-reve",
-   "file": "songs/faure-apres-un-reve/",
-   "page": "songs/faure-apres-un-reve/",
-   "title": "Fauré – Après un rêve",
-   "kind": "arrangement",
-   "instrument": "guitar",
-   "addedAt": "2026-11-13T05:00:02Z"
   },
   {
    "id": "ill-get-by",

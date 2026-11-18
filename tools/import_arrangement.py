@@ -23,33 +23,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, ".."))
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("page")
-    ap.add_argument("slug")
-    ap.add_argument("title")
-    ap.add_argument("--file", action="append", default=[], help="NAME=PATH of a file the page uses")
-    ap.add_argument("--drop-alt", action="store_true")
-    ap.add_argument("--locked", action="append", default=[], help="NAME.mp3.locked=PATH of a singer's track")
-    ap.add_argument("--instrument", default="guitar")
-    ap.add_argument("--source", default="")
-    ap.add_argument("--added", default="")
-    a = ap.parse_args()
-
-    if not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,79}", a.slug):
-        sys.exit("The slug must be lower-case letters, digits and dashes.")
-    out = os.path.join(ROOT, "songs", a.slug)
-    os.makedirs(out, exist_ok=True)
-
-    html = open(a.page, encoding="utf-8").read()
-    if a.drop_alt:
-        html, n = re.subn(r'"audio_alt"\s*:\s*"[^"]*"', '"audio_alt":""', html)
-        print("Second audio track removed from %d place(s)." % n)
-
+def shelf_look(html, instrument="guitar", back="../../"):
+    """Fret Finder's look, the way back, the singer's track, the ringing dots, the speeds and the grip arrows."""
     # Fret Finder's look goes in the head; a way back to the songs goes at the top of the body.
     shelf = '<link rel="stylesheet" href="../../assets/shelf.css">'
-    bar = ('<header class="ff-shelf"><a href="../../">&larr; Fret Finder</a>'
-           '<span class="ff-mark">%s</span></header>' % a.instrument.capitalize())
+    bar = ('<header class="ff-shelf"><a href="%s">&larr; Fret Finder</a>'
+           '<span class="ff-mark">%s</span></header>' % (back, instrument.capitalize()))
     html = re.sub(r'<link rel="stylesheet" href="\.\./\.\./assets/shelf\.css">', "", html)
     html = re.sub(r'<header class="ff-shelf">.*?</header>', "", html, flags=re.S)
     if "</head>" in html:
@@ -75,6 +54,33 @@ def main():
     grips = '<script src="../../assets/grips.js" defer></script>'
     html = html.replace(grips, "")
     html = html.replace("</body>", grips + "</body>", 1) if "</body>" in html else html + grips
+    return html
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("page")
+    ap.add_argument("slug")
+    ap.add_argument("title")
+    ap.add_argument("--file", action="append", default=[], help="NAME=PATH of a file the page uses")
+    ap.add_argument("--drop-alt", action="store_true")
+    ap.add_argument("--locked", action="append", default=[], help="NAME.mp3.locked=PATH of a singer's track")
+    ap.add_argument("--instrument", default="guitar")
+    ap.add_argument("--source", default="")
+    ap.add_argument("--added", default="")
+    a = ap.parse_args()
+
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,79}", a.slug):
+        sys.exit("The slug must be lower-case letters, digits and dashes.")
+    out = os.path.join(ROOT, "songs", a.slug)
+    os.makedirs(out, exist_ok=True)
+
+    html = open(a.page, encoding="utf-8").read()
+    if a.drop_alt:
+        html, n = re.subn(r'"audio_alt"\s*:\s*"[^"]*"', '"audio_alt":""', html)
+        print("Second audio track removed from %d place(s)." % n)
+
+    html = shelf_look(html, a.instrument)
     with open(os.path.join(out, "index.html"), "w", encoding="utf-8") as f:
         f.write(html)
 

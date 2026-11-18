@@ -5,7 +5,9 @@
      the singer key goes there; everyone else stays on the open page.
    - On the copy's address (a small stub page), <meta name="ff-locked-file" content="real.html.locked"> names the file.
      This script opens it with the key and writes it in as the page. If it can't, it goes back to the open page and
-     stays there for the rest of the visit. */
+     stays there for the rest of the visit.
+   - A page of the Classical section is locked whole: its stub also names <meta name="ff-locked-back" content="../../">,
+     where a device without the key goes instead. */
 (function () {
   "use strict";
   var KEY = "ff.voicekey", S = window.crypto && window.crypto.subtle;
@@ -20,7 +22,9 @@
   }
   var file = document.querySelector('meta[name="ff-locked-file"]');
   if (!file) return;
-  function back() { plain(true); location.replace("./" + location.hash); }
+  /* A page of the locked Classical section has no open page: without the key it goes back to the library. */
+  var away = document.querySelector('meta[name="ff-locked-back"]');
+  function back() { if (away) return location.replace(away.getAttribute("content")); plain(true); location.replace("./" + location.hash); }
   if (!key() || !S) return back();
   var base; try { base = new URL("../../assets/", location.href).href; } catch (e) { base = "../../assets/"; }
   var INFO = new TextEncoder().encode("fret-finder voice");

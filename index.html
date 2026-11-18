@@ -296,6 +296,10 @@ svg.box,svg.strip{display:block;overflow:visible;font-family:var(--body)}
     <div id="empty" class="empty" hidden>
       <h3>Nothing here yet</h3>
     </div>
+    <section id="classical" class="studies" aria-labelledby="classical-h" hidden>
+      <h2 id="classical-h" class="studies-h">Classical</h2>
+      <div id="classlist"></div>
+    </section>
     <section id="studies" class="studies" aria-labelledby="studies-h" hidden>
       <h2 id="studies-h" class="studies-h">Exercises</h2>
       <div id="studylist"></div>
@@ -1986,9 +1990,43 @@ function renderStudies(){
     }).join("") + '</ul>';
   }).join("");
 }
+var classical = [];
+function loadClassical(){
+  /* The Classical section is locked whole: only a device with the singer key lists it, each title read from the
+     piece's locked card. Anywhere else the section isn't there. */
+  if (!$("classical")) return Promise.resolve();
+  if (!(window.ffVoice && ffVoice.has())) { classical = []; renderClassical(); return Promise.resolve(); }
+  return fetch(siteUrl("classical/index.json"), {cache: "no-store"}).then(function(r){ return r.ok ? r.json() : null; }).then(function(ix){
+    var ids = ix && Array.isArray(ix.pieces) ? ix.pieces : [];
+    return Promise.all(ids.map(function(p){
+      var id = String(p && p.id || p);
+      return ffVoice.unlock("classical/" + id + "/piece.locked").then(function(u){ return fetch(u); }).then(function(r){ return r.json(); })
+        .then(function(m){ m.page = "classical/" + id + "/"; return m; }, function(){ return null; });
+    }));
+  }).then(function(ms){ classical = (ms || []).filter(function(m){ return m && m.title; }); renderClassical(); }, function(){});
+}
+function renderClassical(){
+  /* By composer, A to Z, and each composer's pieces A to Z; the composer stands over them, not in each title. */
+  var box = $("classical"); if (!box) return;
+  box.hidden = !classical.length;
+  var groups = {};
+  classical.forEach(function(m){ var c = m.composer || "Others"; (groups[c] = groups[c] || []).push(m); });
+  $("classlist").innerHTML = Object.keys(groups).sort(function(a, b){ return a.localeCompare(b, undefined, {sensitivity: "base"}); }).map(function(g){
+    var items = groups[g].map(function(m){
+      var t = String(m.title), cut = t.match(/^\s*[^–—]+?\s+[–—]\s+/);
+      return {m: m, t: cut && m.composer && t.indexOf(m.composer) === 0 ? t.slice(cut[0].length) : t};
+    }).sort(function(a, b){ return a.t.localeCompare(b.t, undefined, {sensitivity: "base", numeric: true}); });
+    return '<h3 class="study-style">' + esc(g) + '</h3><ul class="songlist">' + items.map(function(x){
+      var bits = [x.m.what || "Guitar"]; if (x.m.arranger) bits.push("arr. " + x.m.arranger);
+      return '<li><a class="song" href="' + esc(siteUrl(x.m.page).replace(/\?v=\d+$/, "")) + '"><span class="song-main"><span class="song-title">' + esc(x.t) +
+        '</span><span class="song-meta">' + esc(bits.join(" · ")) + '</span></span></a></li>';
+    }).join("") + '</ul>';
+  }).join("");
+}
 function syncLibrary(){
   /* Songs transcribed on this device before the shelf are cleared, so only the shelf shows. */
   Object.keys(cache).forEach(function(id){ delete cache[id]; Store.del(id); });
+  loadClassical();
   fetchStudies().then(function(ix){ if (ix && Array.isArray(ix.studies)) { studies = ix.studies.filter(function(m){ return m && m.page; }); renderStudies(); } });
   return fetchIndex().then(function(ix){
     if (ix) archive = (Array.isArray(ix.songs) ? ix.songs : []).filter(function(m){ return m && m.id && m.file; });
@@ -2184,7 +2222,7 @@ function renderVoice(){
   var v = !!voiceKey();
   $("voiceform").hidden = v;
   $("voicedone").hidden = !v;
-  $("voicestate").textContent = v ? "The songs' tracks with the singer play on this device." : "With the singer key, the songs' tracks with the singer play on this device. Nobody else can play them.";
+  $("voicestate").textContent = v ? "The songs' tracks with the singer play on this device." : "With the singer key, the songs' tracks with the singer play on this device, and the Classical pieces open here. Nobody else can play or open them.";
 }
 function b64url(str){ return btoa(unescape(encodeURIComponent(str))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }
 function unb64url(s){ s = s.replace(/-/g, "+").replace(/_/g, "/"); while (s.length % 4) s += "="; return decodeURIComponent(escape(atob(s))); }
@@ -2375,13 +2413,13 @@ $("voicesave").addEventListener("click", function(){
   (window.ffVoice ? window.ffVoice.test(k) : Promise.resolve(false)).then(function(ok){
     if (!ok){ ghMsg("That key doesn't open the singers' tracks. Check it and try again.", true); return; }
     storeVoiceKey(k); $("voicekeyin").value = "";
-    ghMsg("Saved. The singers' tracks play on this device now.");
-    renderVoice();
+    ghMsg("Saved. The singers' tracks play on this device now, and the Classical pieces open here.");
+    renderVoice(); loadClassical();
   }).then(function(){ btn.disabled = false; });
 });
 $("voiceoff").addEventListener("click", function(){
-  storeVoiceKey(null); renderVoice();
-  ghMsg("The singers' tracks are off on this device.");
+  storeVoiceKey(null); renderVoice(); loadClassical();
+  ghMsg("The singers' tracks and the Classical pieces are off on this device.");
 });
 $("ghoff").addEventListener("click", function(){
   Owner.store(null); $("pairbox").hidden = true; $("qr").innerHTML = "";
