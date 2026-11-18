@@ -2,6 +2,13 @@
 
 Each mistake, why it happened, and the rule (and check) that prevents it. Newest first.
 
+## 18 November 2026 (night)
+
+- **I Wonder Who's Kissing Her Now, the full version's tracks (43 bars).** A string the next grip marks x went on sounding: the G2 of G minor 7 rang 2.4 s under C7 x323xx and C9 (bars 1.7, 1.8, 2.23), so the bass stayed on G where the diagram has C; B♭2 rang under A♭ minor 6 (bar 1.19); the low B♭ of B♭7 rang seven seconds into the E♭ bars. *Why:* the old renderer (`/home/claude/render/perform.py`) stopped such strings at a chord change only when a note had no ring length yet, and every note already had one. The short version's build and Я вас любил's, written later that day, carried their own corrected copy; the full version's build kept the old one. *Rule:* at a chord change, a string the new grip doesn't use, or frets elsewhere, stops, however long it was told to ring. When a rule is fixed in one build, fix every copy (the old renderer now has it). *Check:* `review.py SLUG --sound` (“track has G not in the diagram”); both tracks were played again, the same take apart from those stops.
+- **How Deep Is the Ocean, bar 4.** The note said “Perry holds E”; he rises to F for half a second, then falls to E. *Why:* the review only checked page lines with “sings”, “voice” or “melody”. *Rule:* any line about the singer's note is checked, whatever the verb. *Check:* `review.py SLUG --voice` now lists “Perry holds…” and “you hold…” lines too.
+- **The review on a separated voice.** Where the singer's track also holds a trumpet or band and the voice is separated first, the report said the singer's track held “another take” of the guitar. It was only the report's way of saying the voice came from the separated file. Now it says so.
+- **Not a mistake: Dean's tag.** The separated voice in I Wonder's tag reads B♭, F and E♭ an octave up: the record's high line leaking into Dean's stem, while Dean holds his E♭ (the record's own transcription, and the stem's spectrum, show it). *Rule:* before calling a rub on a voice separated from a record, look at the stem's spectrum for the singer's own note.
+
 ## 17 November 2026 (musical review, the first song: Something Stupid)
 
 - **B7 for 35 bars without its 7th.** The thumb played B and F♯, the fingers the three top strings, so the A on the D string never sounded and the V chord was a plain B major. *Rule:* the dominant sounds its 7th, unless he holds the note a half step under it (bar 51, his G♯). *Check:* `review.py SLUG` (“plays 7”).

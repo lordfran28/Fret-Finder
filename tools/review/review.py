@@ -250,7 +250,7 @@ def voice_of(slug, tr, work):
     if os.path.exists(sep):
         read_wav(sep).astype(np.float32).tofile(work + 'v.f32')
         subprocess.run(['python3', '/home/claude/lafa/work/f0p.py', work + 'v.f32', work + 'v_'], check=True, capture_output=True); tidy(work)
-        return (0.0, 1.0), None
+        return (None, 1.0), None       # 18 Nov: was (0.0, 1.0), which the report read as 'its guitar is another take'
     mixp = work + 'mix.mp3'
     if lk[0][1].endswith('.locked'): unlock(d + lk[0][1], mixp)
     else: mixp = d + lk[0][1]
@@ -297,15 +297,21 @@ def sung_segments(work):
 
 def voice_report(D, html, slug):
     rep = []; work = SP + 'night/rv_' + slug + '/'; os.makedirs(work, exist_ok=True)
+    m = re.search(r'"singer":\s*"([^"]+)"', html); singer = m.group(1) if m else ''
     for tr in D['tracks']:
         info, why = voice_of(slug, tr, work)
         if why: rep.append((tr['key'], '-', 'voice', why)); continue
         seg, off = sung_segments(work)
-        rep.append((tr['key'], '-', 'voice', f"singer tuning {off:+.2f} semitones; guitar taken out at ×{info[0]:.3f}, {info[1]:.0%} of the track left as voice; {len(seg)} held notes"))
+        if info[0] is None:
+            rep.append((tr['key'], '-', 'voice', f"singer tuning {off:+.2f} semitones; the voice separated from the singer's track ({tr['key']}-voc.wav); {len(seg)} held notes"))
+        else:
+            rep.append((tr['key'], '-', 'voice', f"singer tuning {off:+.2f} semitones; guitar taken out at ×{info[0]:.3f}, {info[1]:.0%} of the track left as voice; {len(seg)} held notes"))
         sp = spans(tr); bybar = collections.defaultdict(float); ex = collections.defaultdict(list)
         sung_in = collections.defaultdict(collections.Counter)
         rec = any(re.search(r"the record\b|record.s (own )?voice", v[0], re.I) for v in versions(tr) if v[1].endswith('.locked'))
-        if info[0] < 0.2 and rec:      # 17 Nov: Cloudy's "With the record's voice" is the record's own singer, no guitar in it
+        if info[0] is None:
+            pass
+        elif info[0] < 0.2 and rec:      # 17 Nov: Cloudy's "With the record's voice" is the record's own singer, no guitar in it
             rep.append((tr['key'], '-', 'voice', f"the singer's track is the record's own voice (×{info[0]:.3f} of the guitar in it), as its name says"))
         elif info[0] < 0.2:
             rep.append((tr['key'], '-', 'voice', f"the singer's track holds almost none of the guitar-alone track (×{info[0]:.3f}): its guitar is another take, so what he hears with the singer is not what the diagrams show"))
@@ -330,7 +336,9 @@ def voice_report(D, html, slug):
             texts = [b.get('note') or ''] + [str(o.get('lab', '')) for it in b['items'] if isinstance(it[-1], dict) for o in [it[-1]]]
             for tx in texts:
                 for sent in re.split(r'(?<=[.;:])\s', tx):
-                    if re.search(r'\bsings?\b|\bsung\b|\bmelody\b|\bvoice\b', sent) and re.search(r'\b[A-G][♭♯b#]?\b', sent):
+                    # 18 Nov: "Perry holds E" (How Deep, bar 4) said what he sings without the word "sings"; he sings F, then E
+                    holds = singer and re.search(r'\b(?:' + re.escape(singer) + r'|[Yy]ou|[Hh]e)\b[^.;:]*\bholds?\b', sent)
+                    if (re.search(r'\bsings?\b|\bsung\b|\bmelody\b|\bvoice\b', sent) or holds) and re.search(r'\b[A-G][♭♯b#]?\b', sent):
                         top = ', '.join(f"{k} {v:.1f}s" for k, v in sung_in[b['label']].most_common(4))
                         rep.append((tr['key'], b['label'], 'says', f"“{sent.strip()[:150]}” · track: {top or 'no held note'}"))
     return rep

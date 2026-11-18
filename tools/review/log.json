@@ -1,9 +1,9 @@
 {
  "reviewed": {
-  "how-deep-is-the-ocean": "2026-11-14",
-  "i-wonder-whos-kissing-her-now": "2026-11-14",
+  "how-deep-is-the-ocean": "2026-11-18",
+  "i-wonder-whos-kissing-her-now": "2026-11-18",
   "balfe-marble-halls": "2026-11-14",
-  "i-wish-you-love": "2026-11-14",
+  "i-wish-you-love": "2026-11-18",
   "where-or-when": "2026-11-14",
   "have-your-way": "2026-11-14",
   "barquito-de-papel": "2026-11-15",
@@ -277,6 +277,31 @@
     "Key Finder, Viva la Vida: the A chord's top A sits just over his held G♯ for up to 2.4 s, again and again (bars 1, 42, 55, 139-151). The guitar page keeps A low (A add 9). A shape for A without the high A in this song?",
     "Ochi chyornye: E7 never sounds its D in verse 1 (bars 23-35, 79), for the question about 7ths",
     "Soave sia il vento: A7 never sounds its G in bars 6, 7, 9 and 20 (the 7ths question)"
+   ]
+  },
+  {
+   "date": "2026-11-18",
+   "site_check": "Fret Finder, Key Finder and Valve Finder from their live branches: 324 pages at 390 px with no trouble; every track the pages name is there and plays; the song, exercise and Classical lists match their folders; all 283 locked files open",
+   "songs": [
+    "How Deep Is the Ocean (and on Key Finder)",
+    "I Wonder Who's Kissing Her Now (and on Key Finder)",
+    "I Wish You Love (and on Key Finder)"
+   ],
+   "fixes": [
+    "Fret Finder, I Wonder Who's Kissing Her Now, the full version: the guitar and Dean's tracks stop each string the next grip doesn't use (43 bars; G2 had rung under C7 and C9 in bars 1.7, 1.8 and 2.23, B♭2 under A♭ minor 6 in 1.19). The same take otherwise",
+    "Fret Finder, How Deep Is the Ocean, bar 4: the note says Perry rises to F and falls to E (it said he holds E)",
+    "The review checks page lines that say the singer holds a note, and no longer calls a separated voice another take"
+   ],
+   "not_changed": [
+    "How Deep: the jumps into bars 1 and 33 (the line cliché down the low E string needs the barre there); A7♭9 and D/A's two grips each sit in different keys and sections",
+    "I Wonder: the rubs the review lists are Dean singing flat (his C reads as B, his G as G♭) and, in the tag, the record's high line leaking into his stem; Dean holds E♭ there as the page says",
+    "I Wish You Love: the 7th a half step over Rod's 13th (A♭7's G♭ over his F) is as on the record; the jump into bars 38 and 63 sets the hand for the E♭ minor line"
+   ],
+   "proposals": [
+    "How Deep, bar 4: as in bar 20, G minor 7♭5 under Perry's F, then C7♭9 as he falls to E (G°7's E sits under his F for half a second now)",
+    "I Wish You Love, bar 20: the record plays A♭7♭9 (A on top), the bass moving to C on beat 3; the page's A♭7♯5 has an E under Rod's F",
+    "I Wish You Love, bar 41: the record moves to A13 on beat 3 as Rod slides from B♭ to A, then A♭13sus4",
+    "Key Finder, I Wonder: B♭7's A♭3 sits a half step over Dean's G for up to a second (bars 1.2, 1.16, 2.2, 2.16): the left hand an octave lower there?"
    ]
   }
  ],
