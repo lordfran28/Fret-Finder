@@ -59,7 +59,9 @@
   "kf:love-me-tender": "2026-11-17",
   "kf:white-christmas": "2026-11-17",
   "kf:apres-un-reve": "2026-11-17",
-  "it-was-almost-like-a-song": "2026-11-18"
+  "it-was-almost-like-a-song": "2026-11-18",
+  "i-fall-in-love-too-easily": "2026-11-18",
+  "when-your-lover-has-gone": "2026-11-18"
  },
  "nights": [
   {
@@ -427,6 +429,28 @@
    "kept": [
     "Emaj7 has two grips in bars 14 and 19: the suspension resolves on the open B, then the chord moves up to Gafa’s voicing away from the A♯ he sings",
     "Rubs left: his flat-sung notes (C♯3 read as C3), and the record’s own minor 9ths in bars 21 and 30"
+   ]
+  },
+  {
+   "date": "2026-11-18",
+   "song": "I Fall In Love Too Easily (new)",
+   "changed": [
+    "Hartman’s record in B♭: the piano’s opening, the first half sung freely (R1–R7), the whole song in time, the second half again, the tag and the trumpet’s closing line",
+    "The tag reads A♭13 (the piano plays G♭ over A♭), then G♭ major 7, then B♭ major 7",
+    "Bar 15 reads D7 then G13 (the bass walks G, A, B up to C9), not C major 9",
+    "Where he holds C or D against the guitar’s bass, the bass stays; upper notes leave instead; C minor 6 voiced with E♭ above his D",
+    "Locked copy: the trumpet’s closing line note for note with valves"
+   ]
+  },
+  {
+   "date": "2026-11-18",
+   "song": "When Your Lover Has Gone (new)",
+   "changed": [
+    "Hartman’s record with Howard McGhee (Songs from the Heart, 1955) in D♭: piano intro, the song once, the trumpet’s ten bars over a walking bass, the end sung freely",
+    "Harmony read beat by beat from the piano and bass stems; the record’s bass steps between chords kept as single bass notes",
+    "Where he holds C under D♭ (bars 1, 3, 17, 19), the bass moves to A♭ after beat 1; bar 30’s D bass left out (it would sit on his D♭)",
+    "Locked copy: McGhee’s answers, solo and last line, note for note with valves",
+    "Open question to him: cut the trumpet’s ten bars, as his rule on long instrumental choruses says?"
    ]
   }
  ],
