@@ -281,5 +281,25 @@
     "Soave sia il vento: A7 never sounds its G in bars 6, 7, 9 and 20 (the 7ths question)"
    ]
   }
+ ],
+ "musical": [
+  {
+   "date": "2026-11-17",
+   "song": "Something Stupid",
+   "changed": [
+    "B7 sounds its 7th (35 bars; not bar 51, under his G♯)",
+    "Bar 62: B7♯5, as the record's piano plays it into the verse",
+    "Ending, bars 139-145: E major 7 on the open low E under his D♯, voice-led into C"
+   ],
+   "kept": [
+    "The intro figure and its length (the record's 34 bars)",
+    "The verse eighths over the bass (the record's guitar and bass)",
+    "The strings' falling line, the interlude's line, the rolled bridge, the break"
+   ],
+   "replaced": [
+    "Bar 62 as B7",
+    "The ending as E and C"
+   ]
+  }
  ]
 }

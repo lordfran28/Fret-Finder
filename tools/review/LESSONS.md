@@ -2,6 +2,12 @@
 
 Each mistake, why it happened, and the rule (and check) that prevents it. Newest first.
 
+## 17 November 2026 (musical review, the first song: Something Stupid)
+
+- **B7 for 35 bars without its 7th.** The thumb played B and F♯, the fingers the three top strings, so the A on the D string never sounded and the V chord was a plain B major. *Rule:* the dominant sounds its 7th, unless he holds the note a half step under it (bar 51, his G♯). *Check:* `review.py SLUG` (“plays 7”).
+- **Bar 62, the turn into the sung verse.** The record's piano plays B7♯5 there (its G is clear on the piano's own track); the page had plain B7. *Rule:* at every turn into a new section, read what the record's piano, keys and strings do on their own tracks, not only the mix.
+- **The ending, E under his D♯.** He ends his lines on D♯ over the E and C vamp; the E barre's E sat a half step above him. E major 7 on the open low E has his D♯ in it and keeps the voice leading into C (B up to C, D♯ up to E, G♯ down to G). *Rule:* as Where or When: where he holds a note a half step under the chord's root, the root goes out of his octave.
+
 ## 17 November 2026 (evening, continued)
 
 - **Après un rêve, Soave sia il vento, the 1898 lullaby: one-beat chords.** Each song's figure gives a beat three or four strokes and saves one voice for the second beat, so a chord that lasts one beat never sounded it: Fauré's inner voice (D half-diminished over G without D, G7 over B without G, C7♭9 without E, in 27 bars), Mozart's bass-or-inner (D over A without D, E minor without E, B7 over A without B), the lullaby's G7 over C without B. Soave's B minor and B minor 7 had no D among their four strings at all. *Why:* the figures were written for chords of two beats or more, before the root-and-3rd rule. *Rule:* a one-beat chord plays its bass and inner voice together, then the rest of the figure; a figure's strings always include the root and the 3rd. *Check:* `review.py SLUG` (“plays”).
