@@ -395,7 +395,9 @@
     "Bars with a chord rolled and left to ring (There Will Never Be Another You bar 42, the endings) keep it",
     "Just in Time's intro bars i3, i4 and i7 show as held on the page because the grip carries on from the bar before; the track plays the bass on 1 and 3 there",
     "Rolled endings and tags (That's All T3–T4, Have Your Way 82–87, the last bars of several songs) keep their rolls: a last chord left to ring. Have Your Way's ending re-rolls B♭ every bar under the trumpet; the page shows it once",
-    "Something Stupid's intro brings the bass in on beat 3 only from bar 19, as the record builds; bars 1–2 keep the bass on 1. Don't Get Around Much Anymore's intro run has no bass under it and has a locked faithful copy: a proposal, not changed"
+    "Something Stupid's intro brings the bass in on beat 3 only from bar 19, as the record builds; bars 1–2 keep the bass on 1. Don't Get Around Much Anymore's intro run has no bass under it and has a locked faithful copy: a proposal, not changed",
+    "Somos novios: review.py --voice flags B against his sung C in bars 9, 13, 14, 17, 25, 30, 35, 36, 54 (and two more), unchanged by today's work; a song for a night review",
+    "You'll Never Know's verse (V1–V3) is sung free on the record with no instruments; its rolled chords follow him and stay"
    ]
   }
  ],
