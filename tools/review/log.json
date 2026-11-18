@@ -328,6 +328,25 @@
    "replaced": [
     "Bar 40 as F major 7, F7"
    ]
+  },
+  {
+   "date": "2026-11-17",
+   "song": "7ths and colours across the shelf",
+   "changed": [
+    "Ochi chyornye: E7's D in verse 1 (bars 22-35, 79)",
+    "Soave sia il vento: A7's G in one-beat chords (6, 7, 9, 17, 20)",
+    "1898 Lullaby: one-beat C7, A minor 7, B♭ major 7 sound their 7ths (10 bars)",
+    "Long Ago and Far Away: B♭7♭9, C7♭9, B♭13 sound their 7ths (4, 20, 32, the intro)",
+    "But Not for Me: C7♭9's B♭ (27, 33, 50, 59)",
+    "1897 Rag: one-beat E7's D (39, 59)",
+    "Misty: bar 21's one-beat C♯ minor 9 whole after the bass"
+   ],
+   "kept": [
+    "Isn't It Romantic, bar 87: A7♭9's G stays out; he sings F♯ just under it there (tried, heard against his line, put back)",
+    "Fly Me to the Moon, bar 59: E minor 7's D comes in the bass on beat 3, as E minor 7 over D",
+    "Something Stupid, bar 51; Dormir contigo, bar 61; You Don't Mess Around with Jim: the notes left out under his singing, as before",
+    "Sería fantástico's 7ths: its picking was built by hand against the record's guitar; left for its own review"
+   ]
   }
  ],
  "leave_alone": [
