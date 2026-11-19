@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-18T22:51:21Z",
+ "generatedAt": "2026-11-19T00:30:34Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -460,6 +460,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-18T22:51:21Z"
+  },
+  {
+   "id": "ive-been-there",
+   "file": "songs/ive-been-there/",
+   "page": "songs/ive-been-there/",
+   "title": "I’ve Been There",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-19T00:30:29Z"
   }
  ]
 }
