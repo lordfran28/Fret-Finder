@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-19T00:30:34Z",
+ "generatedAt": "2026-11-19T08:11:42Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -469,6 +469,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-19T00:30:29Z"
+  },
+  {
+   "id": "till-there-was-you",
+   "file": "songs/till-there-was-you/",
+   "page": "songs/till-there-was-you/",
+   "title": "Till There Was You",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-19T08:11:42Z"
   }
  ]
 }
