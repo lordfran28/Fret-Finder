@@ -61,7 +61,10 @@
   "kf:apres-un-reve": "2026-11-17",
   "it-was-almost-like-a-song": "2026-11-18",
   "i-fall-in-love-too-easily": "2026-11-18",
-  "when-your-lover-has-gone": "2026-11-18"
+  "when-your-lover-has-gone": "2026-11-18",
+  "ive-been-there": "2026-11-19",
+  "i-only-have-eyes-for-you": "2026-11-19",
+  "that-old-feeling": "2026-11-19"
  },
  "nights": [
   {
@@ -305,6 +308,28 @@
     "I Wish You Love, bar 20: the record plays A♭7♭9 (A on top), the bass moving to C on beat 3; the page's A♭7♯5 has an E under Rod's F",
     "I Wish You Love, bar 41: the record moves to A13 on beat 3 as Rod slides from B♭ to A, then A♭13sus4",
     "Key Finder, I Wonder: B♭7's A♭3 sits a half step over Dean's G for up to a second (bars 1.2, 1.16, 2.2, 2.16): the left hand an octave lower there?"
+   ]
+  },
+  {
+   "date": "2026-11-19",
+   "site_check": "Fret Finder, Key Finder and Valve Finder from their live branches: 467 pages at 390 px with no trouble; every track the pages name is there and plays; the song, exercise and Classical lists match their folders; all 290 locked files open. Run in the morning: the shift came while a batch of new songs was being built",
+   "songs": [
+    "I've Been There",
+    "I Only Have Eyes for You",
+    "That Old Feeling (none of the three is on Key Finder)"
+   ],
+   "fixes": [
+    "I Only Have Eyes for You and That Old Feeling: the figure now sounds every chord's 3rd (or its root over another bass); a one-beat chord is struck whole",
+    "I Only Have Eyes for You and That Old Feeling: one grip per chord (42 grips for 42 chords, 63 for 63; there were 87 and 89), chosen with the neighbouring chords",
+    "That Old Feeling, bar 10: F♯ minor 7 where D major 7's D sat a half step over Rod's held C♯",
+    "Both tracks and both locked copies rebuilt and locked again; the old versions under Replaced"
+   ],
+   "not_changed": [
+    "I've Been There: the review's other rubs come from the voice taken out of the singer's track; against the separated voice from the record only bar 6 holds (see proposals). The page note in bar 1 (the G he holds) is right: 0.64 s",
+    "I Only Have Eyes for You, bars 23, 30, 62 and That Old Feeling, bar 28: short rubs where Rod moves or swings by more than a half step"
+   ],
+   "proposals": [
+    "I've Been There, bar 6: B♭ minor 7's D♭ (B string) sits a half step over the C he holds for most of a beat; the record's guitar voicing has it. B♭ minor 7 without the B string there would remove it"
    ]
   }
  ],
