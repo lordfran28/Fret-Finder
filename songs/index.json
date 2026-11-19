@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-19T08:11:42Z",
+ "generatedAt": "2026-11-19T12:04:43Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -478,6 +478,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-19T08:11:42Z"
+  },
+  {
+   "id": "i-only-have-eyes-for-you",
+   "file": "songs/i-only-have-eyes-for-you/",
+   "page": "songs/i-only-have-eyes-for-you/",
+   "title": "I Only Have Eyes for You",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-19T12:04:43Z"
   }
  ]
 }
