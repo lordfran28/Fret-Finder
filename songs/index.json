@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-19T12:43:54Z",
+ "generatedAt": "2026-11-19T13:01:57Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -505,6 +505,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-19T12:43:54Z"
+  },
+  {
+   "id": "im-in-the-mood-for-love",
+   "file": "songs/im-in-the-mood-for-love/",
+   "page": "songs/im-in-the-mood-for-love/",
+   "title": "I'm in the Mood for Love",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-19T13:01:57Z"
   }
  ]
 }
