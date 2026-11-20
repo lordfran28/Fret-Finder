@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-20T20:31:29Z",
+ "generatedAt": "2026-11-20T23:04:15Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -541,6 +541,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-20T20:26:38Z"
+  },
+  {
+   "id": "ya-vas-lyubil-e",
+   "file": "songs/ya-vas-lyubil-e/",
+   "page": "songs/ya-vas-lyubil-e/",
+   "title": "Я вас любил (in E)",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-20T22:54:56Z"
   }
  ]
 }
