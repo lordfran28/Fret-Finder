@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-20T23:24:55Z",
+ "generatedAt": "2026-11-20T23:38:25Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -559,6 +559,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-20T23:21:13Z"
+  },
+  {
+   "id": "gorod-vlyublyonnyh-lyudey",
+   "file": "songs/gorod-vlyublyonnyh-lyudey/",
+   "page": "songs/gorod-vlyublyonnyh-lyudey/",
+   "title": "Город влюблённых людей",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-20T23:35:20Z"
   }
  ]
 }
