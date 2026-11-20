@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-20T18:31:55Z",
+ "generatedAt": "2026-11-20T20:31:29Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -532,6 +532,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-20T18:31:55Z"
+  },
+  {
+   "id": "sleep-walk",
+   "file": "songs/sleep-walk/",
+   "page": "songs/sleep-walk/",
+   "title": "Sleep Walk",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-20T20:26:38Z"
   }
  ]
 }
