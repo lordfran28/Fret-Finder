@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-20T23:04:15Z",
+ "generatedAt": "2026-11-20T23:24:55Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -550,6 +550,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-20T22:54:56Z"
+  },
+  {
+   "id": "ty-mama",
+   "file": "songs/ty-mama/",
+   "page": "songs/ty-mama/",
+   "title": "Ты мама",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-20T23:21:13Z"
   }
  ]
 }
