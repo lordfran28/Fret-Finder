@@ -4,9 +4,9 @@
   "i-wonder-whos-kissing-her-now": "2026-11-18",
   "balfe-marble-halls": "2026-11-14",
   "i-wish-you-love": "2026-11-18",
-  "where-or-when": "2026-11-14",
-  "have-your-way": "2026-11-14",
-  "barquito-de-papel": "2026-11-15",
+  "where-or-when": "2026-11-20",
+  "have-your-way": "2026-11-20",
+  "barquito-de-papel": "2026-11-20",
   "fly-me-to-the-moon": "2026-11-15",
   "seria-fantastico": "2026-11-15",
   "ya-vas-lyubil": "2026-11-16",
@@ -64,7 +64,9 @@
   "when-your-lover-has-gone": "2026-11-18",
   "ive-been-there": "2026-11-19",
   "i-only-have-eyes-for-you": "2026-11-19",
-  "that-old-feeling": "2026-11-19"
+  "that-old-feeling": "2026-11-19",
+  "kf:where-or-when": "2026-11-20",
+  "kf:barquito-de-papel": "2026-11-20"
  },
  "nights": [
   {
@@ -330,6 +332,28 @@
    ],
    "proposals": [
     "I've Been There, bar 6: B♭ minor 7's D♭ (B string) sits a half step over the C he holds for most of a beat; the record's guitar voicing has it. B♭ minor 7 without the B string there would remove it"
+   ]
+  },
+  {
+   "date": "2026-11-20",
+   "site_check": "Fret Finder, Key Finder and Valve Finder from their live branches: 523 pages at 390 px with no trouble; every track the pages name is there and plays; the song, exercise and Classical lists match their folders; all 342 locked files open",
+   "songs": [
+    "Where or When (and Key Finder)",
+    "Have Your Way (not on Key Finder)",
+    "Barquito de papel (and Key Finder)",
+    "Marble Halls skipped: it is a Classical page now, which the review does not read"
+   ],
+   "fixes": [
+    "Where or When, bars 33 and 63: G7 to G major 7 (the record's band plays F♯, not F; G7's F sat a half step over the E he sings). Both tracks rebuilt, the singer's track locked again; the old G7 under Replaced"
+   ],
+   "not_changed": [
+    "Where or When: the other rubs are under half a second; bar 12's page note (the C♯ he sings into bar 13) is right; Bm7 at the 7th fret is the same notes as at the 2nd and keeps one grip",
+    "Have Your Way: bars 13, 37, 53, 57 (he moves from B♭ to A as the chord changes), bar 73 (he sings G, not E), bar 63 (the D is played, once)",
+    "Barquito de papel: bar 43's move from the 9th fret to C♯7 at the 3rd keeps one grip for C♯7 and comes on a held bar; the missing-note flags are open strings heard an octave up",
+    "Key Finder: Where or When and Barquito, short rubs where the singer's note swings"
+   ],
+   "proposals": [
+    "Barquito de papel: where E9 or E7♭9 lasts two beats (bars 15, 17, 23, 25, 45, 47, 55, 57, 63, 65), the rolling figure never reaches the D string, so the chord's 3rd (G♯) isn't heard; the track would need rebuilding from the record, which isn't in the workspace any more"
    ]
   }
  ],
