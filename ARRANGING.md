@@ -24,6 +24,45 @@
 4. **Keep a bass.** Where the record drops its bass (the piano's left hand stops, the band leaves), the guitar still plays one, chosen to lead to the next chord.
 5. **Pilot first.** A new song goes up first as its opening (intro, a verse, a chorus) beside the page it replaces, for the owner to hear. The rest follows when he says it is right.
 
+## What the good pages do that the bad ones don't
+
+Measured on every arrangement on the shelf (`/home/claude/study/metrics.py`), 20 November 2026. The owner holds up
+*I Wonder Who's Kissing Her Now* as good; the four made by program that day (Maria, Город влюблённых людей, Ты мама,
+Я вас любил in E) as the worst.
+
+| | I Wonder | other hand-made pages | the four bad ones |
+|---|---|---|---|
+| notes struck per beat | 2.3 | 2.1–2.9 | 3.8–7.2 |
+| average hand position (fret) | 5.0 | 2.8–5.2 | 1.6–2.0 |
+| changes placed up the neck (7th fret+) | 32% | 0–22% | 0% |
+| colour chords (6, 9, 13, altered, dim) | 45% | 16–70% | 3–15% |
+| bars with a named move | 42 of 63 | 8–44 | 8–10 |
+| bars with a note on how to play it | 42 of 63 | 13–72 | none in three of them |
+| runs or fills | yes, where the voice rests | yes | none |
+
+What the numbers mean:
+- The good pages strike a chord once (rolled from the bass) and let it ring, with a soft inner note on 2 and 4. The
+  colour comes from *which* chord, not from busy fingers. The bad ones pluck four to seven times a beat in random
+  string sets: noise, not accompaniment.
+- The good pages move up and down the neck for the sound (a high grip for a held note, low and heavy for the borrowed
+  chords). The bad ones never leave the first position.
+- The good pages choose each chord against the sung note (the 9th under "now", the ♯5 that keeps Dean's E♭). The bad
+  ones use the plain triad.
+- In the good pages every change is a known move with a name and a reason: a passing chord, an inner line, a
+  suspension, a diminished shape, a bass walk, a fill in the gap. The bad ones carry a few names and, in three of them,
+  not one note on how to play a bar.
+- The good pages already play the bass where it matters: Cloudy's four quick notes on beat 4 into the next chord,
+  Я вас любил's bass sinking a half step a beat under held chords, How Deep's walk down the low E string.
+
+## The owner's two rules of 20 November
+
+- **High first, low as the other option.** The arrangement keeps its high version, the beautiful arpeggios, as the
+  main. Every high progression also gets its low version, given in the bar's data (`bar.low`), which the arrows under
+  each diagram show second as "Low option" and switch for the whole progression at once (`assets/grips.js`).
+- **Play the bass.** Every now and again, where the voice holds or rests, a few quick notes on the bass strings
+  leading into the next chord, and under the voice a bass that moves by step. Built by the rules in
+  `techniques/bass.md` (Friedland, Graciano, Tracy Kim), not by copying one player. Not every bar.
+
 ## Before it goes up
 
 `tools/arrange/checks.py` prints most of this; the rest is looking and listening.

@@ -1,7 +1,10 @@
 /* Fret Finder: arrows under each chord diagram of an arrangement step through other ways to play it there.
    First the same notes in other places on the neck, the nearest to the chords around it first; then the other
    chords the page itself suggests for that bar. A tap draws the new grip in place, sounds it, and is remembered
-   on this device for that spot. Pages that don't draw their diagrams this way are left as they are. */
+   on this device for that spot. Pages that don't draw their diagrams this way are left as they are.
+   A bar of a page's track may carry a whole other version of its progression, lower on the neck:
+   bar.low = {g: group, grips: [[name, frets] or null, one per chord diagram], why}. It comes second in every
+   diagram's list, and choosing it on one diagram switches every diagram of its group together. */
 (function () {
   "use strict";
   var OPEN = [40, 45, 50, 55, 59, 64];
@@ -15,7 +18,9 @@
     ".ffg button:focus-visible{outline:2px solid var(--accent,#a0281e);outline-offset:1px}",
     ".ffg .ffg-n{min-width:2.6em;text-align:center;font-variant-numeric:tabular-nums}",
     ".step.ff-alt .sn{color:var(--accent,#a0281e)}",
-    ".ffg-why{display:block;max-width:12em;margin:1px auto 0;font:italic 11px/1.25 var(--serif,Georgia,serif);color:var(--muted,#777);text-align:center}"
+    ".ffg-why{display:block;max-width:12em;margin:1px auto 0;font:italic 11px/1.25 var(--serif,Georgia,serif);color:var(--muted,#777);text-align:center}",
+    ".ffg-why.low{font-style:normal;font-weight:700;color:var(--accent,#a0281e)}",
+    ".step.ff-low{box-shadow:0 0 0 2px var(--accent,#a0281e) inset}"
   ].join("\n");
 
   function parse(svg) {
@@ -188,6 +193,17 @@
     return out;
   }
 
+  /* the low version of the whole progression, when the page gives one */
+  function lowOption(step, k) {
+    if (!D || !D.tracks) return null;
+    var m = /^fs-(.+)-(\d+)-(\d+)$/.exec(step.getAttribute("data-mark") || "");
+    if (!m) return null;
+    var T = D.tracks.filter(function (t) { return (t.key || "full") === m[1]; })[0];
+    var B = T && T.bars && T.bars[+m[2]];
+    if (!B || !B.low || !B.low.grips || !B.low.grips[k]) return null;
+    return { name: plain(B.low.grips[k][0]), f: B.low.grips[k][1], why: B.low.why || "Low option: the whole progression lower on the neck", low: m[1] + ":" + B.low.g };
+  }
+
   /* a soft plucked strum, so the new grip can be heard at once */
   var AC = null;
   function strum(f) {
@@ -223,7 +239,7 @@
     });
     if (!steps.length) return false;
     var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
-    var saved = load();
+    var saved = load(), groups = {};
     // which chord of its bar each diagram is: the n-th chord diagram among the bar's steps
     var perBar = {};
     steps.forEach(function (s) {
@@ -251,7 +267,8 @@
         if (nx) near.push([pos(nx.f), 0.6]);
         near.push([pos(g0.f), 0.25]);
         var nChords = step.__ffBar ? perBar[step.__ffBar] : 1;
-        list = [{ name: null, f: g0.f, why: "" }].concat(sameChord(g0.f, near), pageOptions(step, step.__ffK, nChords));
+        var lo = lowOption(step, step.__ffK);
+        list = [{ name: null, f: g0.f, why: "" }].concat(lo ? [lo] : [], sameChord(g0.f, near), pageOptions(step, step.__ffK, nChords));
         return list;
       }
       var box = document.createElement("div");
@@ -271,13 +288,24 @@
         if (sn) sn.textContent = o.name ? disp(o.name) : name0;
         if (sub) sub.textContent = idx === 0 ? sub0 : fstr(o.f);
         step.classList.toggle("ff-alt", idx > 0);
+        step.classList.toggle("ff-low", !!o.low);
+        why.classList.toggle("low", !!o.low);
         if (idx > 0) step.setAttribute("data-ff-alt", "1"); else step.removeAttribute("data-ff-alt");
         num.textContent = (idx + 1) + "/" + list.length;
-        why.textContent = idx === 0 ? "" : (o.name ? "Another chord: " + o.why : o.why);
+        why.textContent = idx === 0 ? "" : o.low ? o.why : (o.name ? "Another chord: " + o.why : o.why);
         if (sound) strum(o.f);
       }
-      box.querySelectorAll("button")[0].addEventListener("click", function (e) { e.stopPropagation(); show(idx - 1, true); remember(); });
-      box.querySelectorAll("button")[1].addEventListener("click", function (e) { e.stopPropagation(); show(idx + 1, true); remember(); });
+      // the low option belongs to a whole progression: the other diagrams of its group follow
+      function follow(was) {
+        var now = list[idx].low || "", before = was || "";
+        if (now) (groups[now] || []).forEach(function (h) { if (h.self !== step) h.set(true); });
+        else if (before) (groups[before] || []).forEach(function (h) { if (h.self !== step) h.set(false); });
+      }
+      function pick(i) { var was = list && list[idx] ? list[idx].low : ""; show(i, true); remember(); follow(was); }
+      box.querySelectorAll("button")[0].addEventListener("click", function (e) { e.stopPropagation(); pick(idx - 1); });
+      box.querySelectorAll("button")[1].addEventListener("click", function (e) { e.stopPropagation(); pick(idx + 1); });
+      var lo0 = lowOption(step, step.__ffK);
+      if (lo0) (groups[lo0.low] = groups[lo0.low] || []).push({ self: step, set: function (on) { build(); var j = on ? 1 : 0; if (on ? !list[idx].low : list[idx].low) { show(j, false); remember(); } } });
       function remember() { var o = load(); if (idx) o[mark] = fstr(list[idx].f) + "|" + (list[idx].name || ""); else delete o[mark]; save(o); }
       if (saved[mark]) {
         build();
