@@ -5,7 +5,10 @@
  "files": [
   "index.html",
   "sw-chords.mp3",
-  "sw-naudo.mp3.locked"
+  "sw-naudo.mp3.locked",
+  "real.html",
+  "real.html.locked",
+  "sw-guitar.mp3.locked"
  ],
  "addedAt": "2026-11-20T20:26:38Z"
 }
