@@ -20,7 +20,7 @@
    - it keeps the notes it shares with the chord before it, so the hand moves only as far as the music does;
    - it is a closed grip around the 5th–6th fret unless the bass or the record puts it somewhere else; open strings only where they ring as part of the music;
    - it has the piano's number of voices, usually four or five, not a full barre.
-3. **Play it the way the record's player plays it.** A chord where he strikes one, broken where he breaks it, held where he holds it, rolled from the bass up like a pianist's chord. Softer under the voice, fuller where it rests. His runs and fills go in note for note where the guitar can play them (an octave lower where the piano is too high) and show as numbered dots.
+3. **Play it the way the record's player plays it.** A chord where he strikes one, broken where he breaks it, held where he holds it, rolled from the bass up like a pianist's chord. Softer under the voice, fuller where it rests. His runs and fills go in note for note where the guitar can play them (an octave lower where the piano is too high) and show as numbered dots. Where the record has a line against the voice (strings, a horn answering him), the guitar plays it as a second line out of the grip, by `techniques/counterpoint.md` (Wyble's two books): held under the words, moving where he holds or breathes.
 4. **Keep a bass.** Where the record drops its bass (the piano's left hand stops, the band leaves), the guitar still plays one, chosen to lead to the next chord.
 5. **Pilot first.** A new song goes up first as its opening (intro, a verse, a chorus) beside the page it replaces, for the owner to hear. The rest follows when he says it is right.
 
