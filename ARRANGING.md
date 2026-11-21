@@ -14,7 +14,7 @@
 ## The steps
 
 1. **Read the record before writing a note.** For the instrument that carries the accompaniment, write a reduction bar by bar: where it strikes, its bass, its top note, the chord, and every run or fill where the voice rests. The separated track and the note readings help, but every bar is decided by hand. It is a new chord only if the bass, the other notes and the tune agree; a note that lasts a fraction of a beat is a passing note. Where the song repeats, read every repeat and keep what they agree on. Take the pulse and the bars from the music itself (the strikes, the tune, where phrases start), not from a beat tracker alone; a free intro or a two-beat bar stays free or short.
-2. **Plan the guitar.** The key he asks for. Where each part sits on the neck. One grip per chord, chosen so that:
+2. **Plan the guitar.** The key he asks for. Where each part sits on the neck. A chord coloured or added beyond the record's follows `techniques/harmony.md` (Diego Sola): only for a reason, never a half step from the tune. One grip per chord, chosen so that:
    - its lowest note is the record's bass (an octave lower is fine);
    - its top note is the record's top note, and where the piano doubles the tune, so does the guitar;
    - it keeps the notes it shares with the chord before it, so the hand moves only as far as the music does;
