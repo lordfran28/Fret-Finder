@@ -61,7 +61,7 @@ What the numbers mean:
   each diagram show second as "Low option" and switch for the whole progression at once (`assets/grips.js`).
 - **Play the bass.** Every now and again, where the voice holds or rests, a few quick notes on the bass strings
   leading into the next chord, and under the voice a bass that moves by step. Built by the rules in
-  `techniques/bass.md` (Friedland, Graciano, Tracy Kim), not by copying one player. Not every bar.
+  `techniques/bass.md` (Friedland's two books, Ron Carter, Graciano, Tracy Kim), not by copying one player. Not every bar.
 
 ## Before it goes up
 
