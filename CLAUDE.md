@@ -71,6 +71,8 @@ Each item below is a check that runs on every song in the test set. A change tha
 
 These come from his own corrections over many arrangements. They outrank anything an algorithm prefers.
 
+How an arrangement is made, step by step, and the checks it must pass before it goes up: `ARRANGING.md` (20 November 2026, after he rejected four pages made by a program).
+
 **Layout**
 - The full arrangement goes at the top, bar 1, bar 2 and on, in playing order, with no repeats or jumps left for the player to follow. Explanations and alternatives go at the bottom.
 - The singing goes on top of each bar. Every chord change sits against the word it falls on.
