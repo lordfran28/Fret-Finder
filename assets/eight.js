@@ -16,7 +16,7 @@
   if (on() && eightTo) return go(eightTo.getAttribute("content"));
   if (!on() && sixTo) return go(sixTo.getAttribute("content"));
 
-  var PIC = "../../assets/eight-headstock.jpg";
+  var PIC = null;      /* "../../assets/eight-headstock.jpg" once the real photo or drawing is in; until then no picture is asked for */
   var css = ".ff-eight{display:inline-flex;align-items:center;gap:7px;margin-left:auto;font:inherit;font-size:.95em;cursor:pointer;" +
     "white-space:nowrap;user-select:none}.ff-eight input{width:1.05em;height:1.05em;margin:0;accent-color:currentColor;cursor:pointer}" +
     ".ff-eight img{height:2.1em;width:auto;display:block;border-radius:2px}.ff-eight small{opacity:.7;font-style:italic;white-space:normal}" +
@@ -28,11 +28,11 @@
     var lab = document.createElement("label"); lab.className = "ff-eight";
     var box = document.createElement("input"); box.type = "checkbox"; box.checked = on();
     box.setAttribute("aria-describedby", "ff-eight-note");
-    var img = new Image(); img.alt = ""; img.src = PIC; img.onerror = function () { img.remove(); };
+    var img = null; if (PIC) { img = new Image(); img.alt = ""; img.src = PIC; img.onerror = function () { img.remove(); }; }
     var txt = document.createElement("span"); txt.textContent = "8 strings";
     var note = document.createElement("small"); note.id = "ff-eight-note";
     function say() { note.textContent = (box.checked && !eightTo && !sixTo) ? "no 8-string version of this song yet" : ""; }
-    lab.appendChild(box); lab.appendChild(img); lab.appendChild(txt); lab.appendChild(note); say();
+    lab.appendChild(box); if (img) lab.appendChild(img); lab.appendChild(txt); lab.appendChild(note); say();
     box.addEventListener("change", function () {
       on(box.checked); say();
       if (box.checked && eightTo) go(eightTo.getAttribute("content"));
