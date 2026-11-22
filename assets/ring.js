@@ -3,6 +3,8 @@
    - while the track plays, the dot of each note lights up and rings as that note sounds.
    It reads the page's own arrangement data and only adds classes; it changes nothing else. */
 (function () {
+  /* how many strings the page's guitar has: an 8-string page names its tuning in window.FF_TUNING */
+  var NSTR = (window.FF_TUNING || [40, 45, 50, 55, 59, 64]).length, ALLS = []; for (var q1 = 0; q1 < NSTR; q1++) ALLS.push(q1);
   "use strict";
 
   var css = [
@@ -160,7 +162,7 @@
     var TRACKS = D.tracks || [Object.assign({ key: "full" }, D.full)];
     // which strings a picking pattern plays: the same reading the page uses for its tab
     function pick(m, idx) {
-      if (Array.isArray(m)) return m.map(function (s) { return 6 - s; });
+      if (Array.isArray(m)) return m.map(function (s) { return NSTR - s; });
       return m === "b" ? [idx[0]] : m === "t" ? idx.slice(1) : m === "h" ? idx.slice(-3) : m === "a" ? idx : [];
     }
     // walks a bar's items the way the page numbers its diagrams (one number per chord, per run note, per pair)
@@ -173,7 +175,7 @@
         if (k === "H") { cb(t, col++, null, 1); return; }
         if (k === "C") {
           px = null;
-          var sk = (it[4] && it[4].skip) || [], idxC = it[2].map(function (x, i) { return x >= 0 && sk.indexOf(6 - i) < 0 ? i : -1; }).filter(function (i) { return i >= 0; });
+          var sk = (it[4] && it[4].skip) || [], idxC = it[2].map(function (x, i) { return x >= 0 && sk.indexOf(NSTR - i) < 0 ? i : -1; }).filter(function (i) { return i >= 0; });
           cb(t, col++, sk.length ? idxC : null, it[3]); t += it[3]; return;
         }
         if (k === "K") {
@@ -188,10 +190,10 @@
           (o.mel || []).forEach(function (p) { for (var q = 0; q < p[1]; q++) mel.push(p[0]); });
           for (var q = 0; q < n8; q++) {
             var th = (o.thumb || [])[q], mm = mel[q], pv = q ? mel[q - 1] : null;
-            if (th) cb(t + q * 0.5, c2, [6 - th[0]], 0.5);
+            if (th) cb(t + q * 0.5, c2, [NSTR - th[0]], 0.5);
             if (mm && (!pv || pv[0] !== mm[0] || pv[1] !== mm[1])) {
               var held = 1; while (mel[q + held] && mel[q + held][0] === mm[0] && mel[q + held][1] === mm[1]) held++;
-              cb(t + q * 0.5, c2, [6 - mm[0]], held * 0.5);
+              cb(t + q * 0.5, c2, [NSTR - mm[0]], held * 0.5);
             }
           }
           t += it[3];
@@ -208,8 +210,8 @@
     function stringDots(svg) {
       if (svg.__ffDots) return svg.__ffDots;
       var xs = Array.prototype.slice.call(svg.querySelectorAll("line.str, line.s")).map(function (l) { return num(l.getAttribute("x1")); }).sort(function (a, b) { return a - b; });
-      var out = [[], [], [], [], [], []];
-      if (xs.length === 6) Array.prototype.forEach.call(svg.querySelectorAll("circle, rect.bar"), function (el) {
+      var out = []; for (var q0 = 0; q0 < NSTR; q0++) out.push([]);
+      if (xs.length === NSTR) Array.prototype.forEach.call(svg.querySelectorAll("circle, rect.bar"), function (el) {
         if (el.classList.contains("ff-halo")) return;
         if (el.tagName.toLowerCase() === "rect") {
           var x0 = num(el.getAttribute("x")), x1 = x0 + num(el.getAttribute("width"));
@@ -230,7 +232,7 @@
         var svg = stp.querySelector("svg"); if (!svg) return;
         var byS = stringDots(svg);
         // a diagram switched to another grip lights all its dots: its strings are not the track's strings
-        (stp.hasAttribute("data-ff-alt") ? [0, 1, 2, 3, 4, 5] : (ev.s || [0, 1, 2, 3, 4, 5])).forEach(function (i) { (byS[i] || []).forEach(function (d) { if (dots.indexOf(d) < 0) dots.push(d); }); });
+        (stp.hasAttribute("data-ff-alt") ? ALLS : (ev.s || ALLS)).forEach(function (i) { (byS[i] || []).forEach(function (d) { if (dots.indexOf(d) < 0) dots.push(d); }); });
       });
       return { dots: dots, steps: steps.filter(function (x) { return !x.classList.contains("is-run"); }) };
     }

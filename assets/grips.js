@@ -7,7 +7,7 @@
    diagram's list, and choosing it on one diagram switches every diagram of its group together. */
 (function () {
   "use strict";
-  var OPEN = [40, 45, 50, 55, 59, 64];
+  var OPEN = window.FF_TUNING || [40, 45, 50, 55, 59, 64], NSTR = OPEN.length;
   var PCN = { C: 0, "C#": 1, Db: 1, D: 2, "D#": 3, Eb: 3, E: 4, F: 5, "F#": 6, Gb: 6, G: 7, "G#": 8, Ab: 8, A: 9, "A#": 10, Bb: 10, B: 11 };
   var KEY = "ff.grip:" + location.pathname;
 
@@ -27,7 +27,7 @@
     var m = /^(.*), ([x\d ]+)$/.exec(svg.getAttribute("aria-label") || "");
     if (!m) return null;
     var s = m[2].trim(), f = (s.indexOf(" ") >= 0 ? s.split(/\s+/) : s.split("")).map(function (x) { return x === "x" ? -1 : +x; });
-    return f.length === 6 && f.some(function (x) { return x >= 0; }) ? { name: m[1], f: f } : null;
+    return f.length === NSTR && f.some(function (x) { return x >= 0; }) ? { name: m[1], f: f } : null;
   }
   var plain = function (n) { return String(n).replace(/♭/g, "b").replace(/♯/g, "#"); };
   var disp = function (n) {
@@ -80,14 +80,14 @@
     var played = f.filter(function (x) { return x > 0; });
     var minF = played.length ? Math.min.apply(null, played) : 1, maxF = played.length ? Math.max.apply(null, played) : 1;
     var start = maxF <= 5 ? 1 : minF, rows = Math.max(4, maxF - start + 1);
-    var SW = 14, FH = 16, L = 12, T = 17, W = L + 5 * SW + 26, H = T + rows * FH + 17, g = "", r = rootPc(name), i, k;
-    for (i = 0; i < 6; i++) g += '<line class="str" x1="' + (L + i * SW) + '" y1="' + T + '" x2="' + (L + i * SW) + '" y2="' + (T + rows * FH) + '"/>';
+    var SW = 14, FH = 16, L = 12, T = 17, W = L + (NSTR - 1) * SW + 26, H = T + rows * FH + 17, g = "", r = rootPc(name), i, k;
+    for (i = 0; i < NSTR; i++) g += '<line class="str" x1="' + (L + i * SW) + '" y1="' + T + '" x2="' + (L + i * SW) + '" y2="' + (T + rows * FH) + '"/>';
     for (k = 0; k <= rows; k++) {
       var y = T + k * FH;
-      g += (k === 0 && start === 1) ? '<line class="nut" x1="' + (L - 1) + '" y1="' + y + '" x2="' + (L + 5 * SW + 1) + '" y2="' + y + '"/>'
-        : '<line class="frt" x1="' + L + '" y1="' + y + '" x2="' + (L + 5 * SW) + '" y2="' + y + '"/>';
+      g += (k === 0 && start === 1) ? '<line class="nut" x1="' + (L - 1) + '" y1="' + y + '" x2="' + (L + (NSTR - 1) * SW + 1) + '" y2="' + y + '"/>'
+        : '<line class="frt" x1="' + L + '" y1="' + y + '" x2="' + (L + (NSTR - 1) * SW) + '" y2="' + y + '"/>';
     }
-    if (start > 1) g += '<text class="fno" x="' + (L + 5 * SW + 9) + '" y="' + (T + FH * 0.72) + '">' + start + "fr</text>";
+    if (start > 1) g += '<text class="fno" x="' + (L + (NSTR - 1) * SW + 9) + '" y="' + (T + FH * 0.72) + '">' + start + "fr</text>";
     var bar = barreOf(f);
     if (bar) { var by = T + (bar[0] - start + 0.5) * FH; g += '<rect class="bar" x="' + (L + bar[1] * SW - 5.5) + '" y="' + (by - 5.5) + '" width="' + ((bar[2] - bar[1]) * SW + 11) + '" height="11" rx="5.5"/>'; }
     f.forEach(function (x, i) {
@@ -122,7 +122,7 @@
     });
     var out = [], f = [0, 0, 0, 0, 0, 0];
     (function rec(i) {
-      if (i === 6) { check(f.slice()); return; }
+      if (i === NSTR) { check(f.slice()); return; }
       for (var j = 0; j < opt[i].length; j++) { f[i] = opt[i][j]; rec(i + 1); }
     })(0);
     function check(f) {
@@ -255,7 +255,7 @@
       var degs = {};
       Array.prototype.forEach.call(svg0.querySelectorAll("text.deg"), function (t) {
         var i = Math.round((parseFloat(t.getAttribute("x")) - 12) / 14);
-        if (i >= 0 && i < 6 && g0.f[i] >= 0) degs[(OPEN[i] + g0.f[i]) % 12] = t.textContent;
+        if (i >= 0 && i < NSTR && g0.f[i] >= 0) degs[(OPEN[i] + g0.f[i]) % 12] = t.textContent;
       });
       var list = null, idx = 0, mark = step.getAttribute("data-mark") || String(si);
       function build() {

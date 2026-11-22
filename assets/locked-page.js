@@ -16,6 +16,7 @@
   function plain(v) { try { if (v === undefined) return sessionStorage.getItem(plainKey()) === "1"; sessionStorage.setItem(plainKey(), "1"); } catch (e) { return false; } }
   var root = document.documentElement;
   var copy = document.querySelector('meta[name="ff-locked-copy"]');
+  if (copy && window.FF_LEAVING) return;          /* assets/eight.js is taking this visit to the 8-string page */
   if (copy) {
     if (key() && S && !plain()) { root.style.visibility = "hidden"; location.replace(copy.getAttribute("content") + location.hash); }
     return;

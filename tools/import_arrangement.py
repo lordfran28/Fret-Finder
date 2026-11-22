@@ -18,6 +18,7 @@ import argparse, datetime, json, os, re, shutil, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import shelf_voice
+import eight
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, ".."))
@@ -45,6 +46,8 @@ def shelf_look(html, instrument="guitar", back="../../"):
     html = html.replace(ring, "")
     # The singer's track, locked: playable only on the owner's devices.
     html = shelf_voice.mark_locked(shelf_voice.add_voice_script(html))
+    # The 8-string checkbox: ticked, a song with an 8-string version opens it (assets/eight.js, tools/eight.py).
+    html = eight.add_script(html)
     html = html.replace("</body>", ring + "</body>", 1) if "</body>" in html else html + ring
     # Slower tracks for practising along: a row of speeds under every player, the pitch unchanged.
     speed = '<script src="../../assets/speed.js" defer></script>'
