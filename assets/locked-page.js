@@ -6,6 +6,7 @@
    - On the copy's address (a small stub page), <meta name="ff-locked-file" content="real.html.locked"> names the file.
      This script opens it with the key and writes it in as the page. If it can't, it goes back to the open page and
      stays there for the rest of the visit.
+   - The stub may also name scripts from assets/ with <meta name="ff-also" content="NAME.js">; they are added to the copy.
    - A page of the Classical section is locked whole: its stub also names <meta name="ff-locked-back" content="../../">,
      where a device without the key goes instead. */
 (function () {
@@ -54,6 +55,14 @@
   fetch(file.getAttribute("content"), { cache: "no-cache" })
     .then(function (r) { if (!r.ok) throw new Error("missing"); return r.arrayBuffer(); })
     .then(function (b) { return open(b, key()); })
-    .then(function (pt) { var html = new TextDecoder().decode(pt); document.open(); document.write(html); document.close(); })
+    .then(function (pt) {
+      var html = new TextDecoder().decode(pt);
+      /* the stub can name more of the site's scripts for the copy (<meta name="ff-also" content="songtab.js">):
+         they join the page after its own, so a copy gains a feature without being locked again */
+      Array.prototype.forEach.call(document.querySelectorAll('meta[name="ff-also"]'), function (m) {
+        var f = m.getAttribute("content"); if (/^[a-z0-9-]+\.js$/.test(f)) html += '\n<script src="' + base + f + '" defer></script>';
+      });
+      document.open(); document.write(html); document.close();
+    })
     .catch(back);
 })();
