@@ -16,10 +16,10 @@
   if (on() && eightTo) return go(eightTo.getAttribute("content"));
   if (!on() && sixTo) return go(sixTo.getAttribute("content"));
 
-  var PIC = null;      /* "../../assets/eight-headstock.jpg" once the real photo or drawing is in; until then no picture is asked for */
+  var PIC = "../../assets/eight-headstock.jpg";   /* a real photo of an 8-string classical headstock, turned on its side */
   var css = ".ff-eight{display:inline-flex;align-items:center;gap:7px;margin-left:auto;font:inherit;font-size:.95em;cursor:pointer;" +
     "white-space:nowrap;user-select:none}.ff-eight input{width:1.05em;height:1.05em;margin:0;accent-color:currentColor;cursor:pointer}" +
-    ".ff-eight img{height:2.1em;width:auto;display:block;border-radius:2px}.ff-eight small{opacity:.7;font-style:italic;white-space:normal}" +
+    ".ff-eight img{height:2.2em;width:auto;display:block;border-radius:3px}.ff-eight small{opacity:.7;font-style:italic;white-space:normal}" +
     ".ff-shelf{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px}";
   function build() {
     var hd = document.querySelector("header.ff-shelf");
