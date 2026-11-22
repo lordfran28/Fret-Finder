@@ -16,7 +16,7 @@
   if (on() && eightTo) return go(eightTo.getAttribute("content"));
   if (!on() && sixTo) return go(sixTo.getAttribute("content"));
 
-  /* An 8-string classical headstock, from his photo, engraved: parallel lines whose weight follows the shade, cut out of
+  /* An 8-string classical headstock, from his photo (the full-size one), engraved: lines along the neck whose weight follows the shade, cut out of
      the photo's background. The file is the lines alone; the page's ink colours them, so it prints in either theme. */
   var PIC = "../../assets/eight-headstock-engraved.png";
   var css = ".ff-eight{display:inline-flex;align-items:center;gap:7px;margin-left:auto;font:inherit;font-size:.95em;cursor:pointer;" +
@@ -25,7 +25,7 @@
     "border:1.5px solid var(--muted,#6A5546);border-radius:2px;background:transparent;transition:background-color .25s ease,border-color .25s ease}" +
     ".ff-eight input:checked{border-color:var(--accent,#8A2E1E);background:var(--accent,#8A2E1E) url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 5.2l2 2 4-4.4' fill='none' stroke='%23FFF6EE' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\") center/100% no-repeat}" +
     ".ff-eight input:focus-visible{outline:2px solid var(--accent,#8A2E1E);outline-offset:2px}" +
-    ".ff-eight .ff-plate{display:block;height:2.7em;aspect-ratio:392/200;background:var(--muted,#6A5546);" +
+    ".ff-eight .ff-plate{display:block;height:2.7em;aspect-ratio:420/203;background:var(--muted,#6A5546);" +
     "-webkit-mask:url(" + PIC + ") center/contain no-repeat;mask:url(" + PIC + ") center/contain no-repeat;transition:background-color .35s ease}" +
     ".ff-eight input:checked~.ff-plate{background:var(--accent,#8A2E1E)}" +
     ".ff-eight span.ff-eight-name{font:italic 400 1.05rem var(--display,serif);color:var(--muted)}" +
