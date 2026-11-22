@@ -5,7 +5,9 @@
  "files": [
   "index.html",
   "nearness-guitar.mp3",
-  "nearness-voice.mp3.locked"
+  "nearness-voice.mp3.locked",
+  "eight.html",
+  "nearness-guitar-8.mp3"
  ],
  "source": "https://claude.ai/artifact/M1DSrJauRhENDChxHhqPoL",
  "addedAt": "2026-11-08T07:17:46Z"
