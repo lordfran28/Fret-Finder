@@ -5,7 +5,9 @@
  "files": [
   "index.html",
   "moaol-guitar.mp3",
-  "moaol-voice.mp3.locked"
+  "moaol-voice.mp3.locked",
+  "eight.html",
+  "moaol-guitar-8.mp3"
  ],
  "source": "https://claude.ai/artifact/AGyGzPVkPp5yz1it26wRYz",
  "addedAt": "2026-11-01"
