@@ -95,3 +95,15 @@ if os.path.exists(WORD):
         msgs = [l for l in subprocess.run(['git', '-C', g, 'log', '--since=2026-11-14', '--format=%h %s%n%b'], capture_output=True, text=True).stdout.splitlines()
                 if re.search(r'\b' + re.escape(w) + r'\b', l, re.I)]
         print(site, 'singer key word: in', len(files), 'files', files, '; in', len(msgs), 'new commit messages')
+
+# Songs with a locked copy whose open page changed after the copy (22 Nov): the owner opens the copy, so the change
+# hasn't reached him. List them for the night report.
+FF = SITE + 'Fret-Finder/'
+for d in sorted(os.listdir(FF + 'songs')):
+    page = FF + 'songs/' + d + '/index.html'
+    if not os.path.exists(page) or 'name="ff-locked-copy"' not in open(page, encoding='utf-8').read(): continue
+    def when(rel):
+        p = subprocess.run(['git', '-C', FF, 'log', '-1', '--format=%ct', '--', rel], capture_output=True, text=True)
+        return int(p.stdout.strip() or 0)
+    a, b = when('songs/%s/index.html' % d), when('songs/%s/real.html.locked' % d)
+    if a > b: print('locked copy older than its open page:', d)
