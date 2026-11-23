@@ -66,7 +66,10 @@
   "i-only-have-eyes-for-you": "2026-11-19",
   "that-old-feeling": "2026-11-19",
   "kf:where-or-when": "2026-11-20",
-  "kf:barquito-de-papel": "2026-11-20"
+  "kf:barquito-de-papel": "2026-11-20",
+  "till-there-was-you": "2026-11-23",
+  "our-love-is-here-to-stay": "2026-11-23",
+  "im-in-the-mood-for-love": "2026-11-23"
  },
  "nights": [
   {
@@ -355,6 +358,29 @@
    "proposals": [
     "Barquito de papel: where E9 or E7♭9 lasts two beats (bars 15, 17, 23, 25, 45, 47, 55, 57, 63, 65), the rolling figure never reaches the D string, so the chord's 3rd (G♯) isn't heard; the track would need rebuilding from the record, which isn't in the workspace any more",
     "Classical: the Romance and Tárrega's Sueño come from ClassTab files that were played freely, so their bar lines are only approximate (the Romance is also barred in 4/4, not 3/4); a score of each would put them right"
+   ]
+  },
+  {
+   "date": "2026-11-23",
+   "site_check": "Fret Finder, Key Finder and Valve Finder from their live branches: 642 pages at 390 px with no trouble; every track the pages name is there and plays; the song, exercise and Classical lists match their folders; all 557 locked files start as locked files should (not opened: the singer key stays out of the review)",
+   "songs": [
+    "Till There Was You (not on Key Finder)",
+    "Our Love Is Here to Stay (not on Key Finder)",
+    "I'm in the Mood for Love (not on Key Finder)"
+   ],
+   "fixes": [
+    "I'm in the Mood for Love, bars 13 and 37: D major 9's picking now strikes the D string (F sharp, its 3rd), as bar 5 does; it was never heard",
+    "I'm in the Mood for Love, bar 52: A13's two hits on the D string (F sharp under the G Rod holds; his band doesn't play it) move to the G string, as in bar 28",
+    "Till There Was You, It Keeps You Runnin', Moonglow, Someone to Watch Over Me, I Only Have Eyes for You, That Old Feeling: 'N steps under' now 'N half steps under' (open pages; the locked copies of the last two still say steps)"
+   ],
+   "not_changed": [
+    "I'm in the Mood for Love: the singer's track keeps the old guitar in bars 13, 37 and 52 (it can't be opened; rebuilding it from Rod's separated voice waits for his word)",
+    "Till There Was You: no wrong notes; rubs found are the song's own (G over F minor 6, the major 7th under the last C) or under half a second",
+    "I'm in the Mood for Love: C sharp under Rod's D (bars 27, 40, 51, 63) and G under his F sharp (bar 47) are in the record's band too"
+   ],
+   "proposals": [
+    "Our Love Is Here to Stay: one grip per chord (G minor 9 353335, C13 x30355, F major 9 10x010, C9 and C7 flat 9 to be chosen with him); needs the singer's track rebuilt from Rod's separated voice",
+    "Till There Was You, bars 28 and 52: A7 (x0x223) for A9, since the tune touches B flat twice over the A9's B"
    ]
   }
  ],

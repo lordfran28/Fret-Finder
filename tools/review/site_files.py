@@ -26,6 +26,9 @@ for site in ('Fret-Finder', 'Key-Finder'):
         sj = root + d + '/song.json'
         if not os.path.exists(sj): probs.append(d + ': no song.json')
         # no CAGED names (17 Nov: “the A-shape at the 3rd fret” on You'd Be So Nice): positions by fret and string
+        # a move of key said in half steps (23 Nov: "four steps under Rod Stewart" for E to C, four half steps)
+        for m in re.finditer(r'\b(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven) steps (?:under|lower|below|above|higher|down from)\b', html):
+            probs.append(f'{d}: “{m.group(0)}” (a key move is said in half steps)')
         for m in re.finditer(r'\b[CAGED][- ](?:shape|form)\b', html):
             probs.append(f'{d}: CAGED name “{html[max(0, m.start() - 30):m.end() + 20]}”')
     print('  problems:', len(probs)); [print('   ', p) for p in probs]
