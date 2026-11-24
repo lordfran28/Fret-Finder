@@ -4,13 +4,12 @@
  "instrument": "guitar",
  "files": [
   "index.html",
-  "iwonder-bass.mp3",
   "iwonder-full.mp3",
   "iwonder-short.mp3",
   "iwonder-short-dean.mp3.locked",
   "iwonder-full-dean.mp3.locked",
   "eight.html",
-  "iwonder-bass-8.mp3"
+  "iwonder-short-8.mp3"
  ],
  "source": "https://claude.ai/artifact/2UiV3kZd44SBgjFsJicj9t",
  "addedAt": "2026-10-28T12:00:00Z"
