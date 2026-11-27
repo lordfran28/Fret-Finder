@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-27T05:43:42Z",
+ "generatedAt": "2026-11-27T09:13:57Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -586,6 +586,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-27T05:43:02Z"
+  },
+  {
+   "id": "propuesta",
+   "file": "songs/propuesta/",
+   "page": "songs/propuesta/",
+   "title": "Propuesta",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-27T09:09:44Z"
   }
  ]
 }
