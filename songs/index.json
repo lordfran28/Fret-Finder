@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-20T23:46:19Z",
+ "generatedAt": "2026-11-27T05:43:42Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -577,6 +577,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-20T23:43:41Z"
+  },
+  {
+   "id": "llegar-a-viejo",
+   "file": "songs/llegar-a-viejo/",
+   "page": "songs/llegar-a-viejo/",
+   "title": "Llegar a viejo",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-27T05:43:02Z"
   }
  ]
 }
