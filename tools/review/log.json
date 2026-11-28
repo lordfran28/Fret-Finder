@@ -69,7 +69,10 @@
   "kf:barquito-de-papel": "2026-11-20",
   "till-there-was-you": "2026-11-23",
   "our-love-is-here-to-stay": "2026-11-23",
-  "im-in-the-mood-for-love": "2026-11-23"
+  "im-in-the-mood-for-love": "2026-11-23",
+  "the-very-thought-of-you": "2026-11-28",
+  "pretend-you-dont-see-her": "2026-11-28",
+  "i-get-along-without-you-very-well": "2026-11-28"
  },
  "nights": [
   {
@@ -381,6 +384,18 @@
    "proposals": [
     "Our Love Is Here to Stay: one grip per chord (G minor 9 353335, C13 x30355, F major 9 10x010, C9 and C7 flat 9 to be chosen with him); needs the singer's track rebuilt from Rod's separated voice",
     "Till There Was You, bars 28 and 52: A7 (x0x223) for A9, since the tune touches B flat twice over the A9's B"
+   ]
+  },
+  {
+   "date": "2026-11-28",
+   "site_check": "1039 pages at 390 px, no errors; files and indexes fine; 660 locked files (key not in the scratchpad, sizes and headers checked); Llegar a viejo note had a CAGED name (fixed)",
+   "fixes": [
+    "The Very Thought of You, bars 21, 49, 60 (and the piano chorus): D°7 to Dø7, the pianist keeps the C she holds",
+    "The Very Thought of You, intro bar 8: E major 7 to E6 then E, the record has no D♯ and her pickup C arrives under it"
+   ],
+   "proposals": [
+    "TVT bar 28 Dm7♭5 under her G (the record has it too); bar 121 Cm7 under her D (the piano plays A♭6/9 there); bars 129-131 F♯°7 and D♭maj7 under her A♭ and G♭ (the pianist’s own colours)",
+    "IGAW: her guitarist’s own rubs against her blue notes, left as the record has them; Pretend: three short rubs under his bends, left"
    ]
   }
  ],
