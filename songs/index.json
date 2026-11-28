@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-28T06:02:53Z",
+ "generatedAt": "2026-11-28T06:17:32Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -613,6 +613,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-28T06:02:28Z"
+  },
+  {
+   "id": "pretend-you-dont-see-her",
+   "file": "songs/pretend-you-dont-see-her/",
+   "page": "songs/pretend-you-dont-see-her/",
+   "title": "Pretend You Don't See Her",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-28T06:17:26Z"
   }
  ]
 }
