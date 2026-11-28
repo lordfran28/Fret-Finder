@@ -72,7 +72,10 @@
   "im-in-the-mood-for-love": "2026-11-23",
   "the-very-thought-of-you": "2026-11-28",
   "pretend-you-dont-see-her": "2026-11-28",
-  "i-get-along-without-you-very-well": "2026-11-28"
+  "i-get-along-without-you-very-well": "2026-11-28",
+  "gorod-vlyublyonnyh-lyudey": "2026-11-28",
+  "maria": "2026-11-28",
+  "ty-mama": "2026-11-28"
  },
  "nights": [
   {
@@ -391,11 +394,14 @@
    "site_check": "1039 pages at 390 px, no errors; files and indexes fine; 660 locked files (key not in the scratchpad, sizes and headers checked); Llegar a viejo note had a CAGED name (fixed)",
    "fixes": [
     "The Very Thought of You, bars 21, 49, 60 (and the piano chorus): D°7 to Dø7, the pianist keeps the C she holds",
-    "The Very Thought of You, intro bar 8: E major 7 to E6 then E, the record has no D♯ and her pickup C arrives under it"
+    "The Very Thought of You, intro bar 8: E major 7 to E6 then E, the record has no D♯ and her pickup C arrives under it",
+    "Город влюблённых людей: bass on 1 and 3 in the 20 intro and instrumental bars that had none (the right-hand hits kept)",
+    "Maria and Ты мама: the same in the few voiceless bars that lacked it"
    ],
    "proposals": [
     "TVT bar 28 Dm7♭5 under her G (the record has it too); bar 121 Cm7 under her D (the piano plays A♭6/9 there); bars 129-131 F♯°7 and D♭maj7 under her A♭ and G♭ (the pianist’s own colours)",
-    "IGAW: her guitarist’s own rubs against her blue notes, left as the record has them; Pretend: three short rubs under his bends, left"
+    "IGAW: her guitarist’s own rubs against her blue notes, left as the record has them; Pretend: three short rubs under his bends, left",
+    "Город bar 50 E under her F, bar 81 E3 under her F, bar 123 G under her G♯ (her own passing notes over the record’s chords); Maria bar 19 G under her F♯; Ты мама bar 9 A under her B♭ (1.3 s, her blue note over the record’s chord)"
    ]
   }
  ],
