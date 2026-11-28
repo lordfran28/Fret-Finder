@@ -75,7 +75,9 @@
   "i-get-along-without-you-very-well": "2026-11-28",
   "gorod-vlyublyonnyh-lyudey": "2026-11-28",
   "maria": "2026-11-28",
-  "ty-mama": "2026-11-28"
+  "ty-mama": "2026-11-28",
+  "propuesta": "2026-11-28",
+  "llegar-a-viejo": "2026-11-28"
  },
  "nights": [
   {
@@ -399,12 +401,15 @@
     "Maria and Ты мама: the same in the few voiceless bars that lacked it",
     "Город bars 40, 50, 81 (second halves): E♭7 → E♭7sus4, C7 → C7sus4, G°7 → Gø7, the piano keeps the note she holds",
     "Maria bar 33, second half: B♭m7 → E♭/B♭ (its D♭ sat over her held C; the piano plays E♭ over B♭)",
-    "Ты мама bar 32, last beat: E♭/B♭ → Gm/B♭ (the piano stays on G minor under her D)"
+    "Ты мама bar 32, last beat: E♭/B♭ → Gm/B♭ (the piano stays on G minor under her D)",
+    "Propuesta bar 36: D → D sus 4 then D (he holds a G for a second; the piano holds it with him)",
+    "Llegar a viejo bar 51: B7 → B6 (the piano plays no A under the G♯ he holds)"
    ],
    "proposals": [
     "TVT bar 28 Dm7♭5 under her G (the record has it too); bar 121 Cm7 under her D (the piano plays A♭6/9 there); bars 129-131 F♯°7 and D♭maj7 under her A♭ and G♭ (the pianist’s own colours)",
     "IGAW: her guitarist’s own rubs against her blue notes, left as the record has them; Pretend: three short rubs under his bends, left",
-    "Город bar 123 G under her A♭ (the piano has both); Maria bars 17, 19, 57, 82 and Ты мама bars 9, 18: her notes sit a quarter tone between two pitches, or the piano has the same rub; left"
+    "Город bar 123 G under her A♭ (the piano has both); Maria bars 17, 19, 57, 82 and Ты мама bars 9, 18: her notes sit a quarter tone between two pitches, or the piano has the same rub; left",
+    "Llegar bars 97, 105, 107, 110, 122 and Propuesta bars 54, 85: his own passing notes over the record’s chords, or a note ringing from the bar before; left"
    ]
   }
  ],
