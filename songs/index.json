@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-28T05:27:48Z",
+ "generatedAt": "2026-11-28T06:02:53Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -604,6 +604,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-28T05:27:18Z"
+  },
+  {
+   "id": "i-get-along-without-you-very-well",
+   "file": "songs/i-get-along-without-you-very-well/",
+   "page": "songs/i-get-along-without-you-very-well/",
+   "title": "I Get Along Without You Very Well",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-28T06:02:28Z"
   }
  ]
 }
