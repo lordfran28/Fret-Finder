@@ -1,6 +1,6 @@
 {
  "app": "Fret Finder",
- "generatedAt": "2026-11-27T09:13:57Z",
+ "generatedAt": "2026-11-28T05:27:48Z",
  "songs": [
   {
    "id": "i-wonder-whos-kissing-her-now",
@@ -595,6 +595,15 @@
    "kind": "arrangement",
    "instrument": "guitar",
    "addedAt": "2026-11-27T09:09:44Z"
+  },
+  {
+   "id": "the-very-thought-of-you",
+   "file": "songs/the-very-thought-of-you/",
+   "page": "songs/the-very-thought-of-you/",
+   "title": "The Very Thought of You",
+   "kind": "arrangement",
+   "instrument": "guitar",
+   "addedAt": "2026-11-28T05:27:18Z"
   }
  ]
 }
